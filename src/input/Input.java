@@ -34,8 +34,8 @@ public class Input {
 
         if(Input.isDown(Input.InputKey.RIGHT)) x++;
         if(Input.isDown(Input.InputKey.LEFT)) x--;
-        if(Input.isDown(Input.InputKey.DOWN)) y--;
-        if(Input.isDown(Input.InputKey.UP)) y++;
+        if(Input.isDown(Input.InputKey.DOWN)) y++;
+        if(Input.isDown(Input.InputKey.UP)) y--;
 
         //Vector fix
         if(x != 0 && y != 0){
@@ -47,33 +47,33 @@ public class Input {
     }
 
 
-    //just pretend this is set up correctly :(
     public Input(){
 
         for(InputKey a : InputKey.values()){
             pffft.put(a.key, 0);
         }
 
-        Renderer.instance.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                pffft.put(e.getKeyCode(), 0);
-//                super.keyReleased(e);
-            }
+        Renderer.instance.addKeyListener(new KeyHandler());
+    }
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-                pffft.compute(e.getKeyCode(), (_, v) -> v + 1);
-//                System.out.println(e.getKeyCode());
-//                super.keyPressed(e);
-            }
+    private static class KeyHandler extends KeyAdapter{
+        @Override
+        public void keyReleased(KeyEvent e) {
+            int keyCode = e.getKeyCode();
 
-            @Override
-            public void keyTyped(KeyEvent e) {
-//                super.keyTyped(e);
-            }
-        });
+            if(!pffft.containsKey(keyCode)) return;
 
+            pffft.put(keyCode, 0);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+
+            if(!pffft.containsKey(keyCode)) return;
+
+            pffft.compute(keyCode, (_, v) -> v + 1);
+        }
     }
 
 }

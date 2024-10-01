@@ -1,5 +1,6 @@
 package game;
 
+import input.Input;
 import math.Axis2D;
 import math.Vector2D;
 import render.Renderable;
@@ -9,11 +10,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public abstract class Sprite implements Renderable {
+public class Sprite implements Renderable {
 
     protected final BufferedImage image;
 
-    protected Vector2D position = new Vector2D();
+    protected Vector2D position = new Vector2D(30, 30);
     protected float scale = 1;
     protected boolean flipX = false;
     protected boolean flipY = false;
@@ -30,8 +31,13 @@ public abstract class Sprite implements Renderable {
         registerRender();
     }
 
+    public void setScale(float scale){
+        this.scale = scale;
+    }
+
     @Override
     public void draw(Graphics g) {
+
         int x = position.get(Axis2D.X).intValue();
         int y = position.get(Axis2D.Y).intValue();
 
@@ -43,7 +49,7 @@ public abstract class Sprite implements Renderable {
         if(flipY) h = -h;
         y -= h / 2;
 
-        g.drawImage(image, x, y,x + width, y + height, null);
+        g.drawImage(image, x, y,width, height, null);
     }
 
     public static BufferedImage loadImage(String assetName){

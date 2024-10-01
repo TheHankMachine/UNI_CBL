@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 import game.Config;
+import game.Sprite;
+import game.SpriteSheet;
 import render.Renderer;
 import input.Input;
 
@@ -14,10 +16,10 @@ public class Main {
         Timer timer = new Timer(Config.TARGET_TICK_MS, Main::update);
         timer.start();
 
+        var a = new SpriteSheet("player.png", 16, 16);
+        a.setScale(10);
 
-
-        new Sprite();
-
+//        new Sprite("dvd.png");
     }
 
     public static void update(ActionEvent e){
