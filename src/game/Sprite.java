@@ -36,8 +36,7 @@ public class Sprite implements Renderable {
     }
 
     @Override
-    public void draw(Graphics g) {
-
+    public void draw(Graphics2D g) {
         int x = position.get(Axis2D.X).intValue();
         int y = position.get(Axis2D.Y).intValue();
 
@@ -49,7 +48,7 @@ public class Sprite implements Renderable {
         if(flipY) h = -h;
         y -= h / 2;
 
-        g.drawImage(image, x, y,width, height, null);
+        g.drawImage(image, x, y, width, height, null);
     }
 
     public static BufferedImage loadImage(String assetName){

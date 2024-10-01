@@ -17,7 +17,6 @@ public class Main {
         timer.start();
 
         var a = new SpriteSheet("player.png", 16, 16);
-        a.setScale(10);
 
 //        new Sprite("dvd.png");
     }

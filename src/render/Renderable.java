@@ -15,7 +15,7 @@ public interface Renderable {
         Renderer.add(this);
     }
 
-    void draw(Graphics g);
+    void draw(Graphics2D g);
 
     default DepthLayer getDepth(){
         return DepthLayer.MIDDLEGROUND;

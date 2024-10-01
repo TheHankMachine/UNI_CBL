@@ -49,7 +49,7 @@ public class SpriteSheet extends Sprite{
     int i = 0;
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics2D g) {
         int x = position.get(Axis2D.X).intValue();
         int y = position.get(Axis2D.Y).intValue();
 

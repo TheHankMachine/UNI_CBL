@@ -1,7 +1,12 @@
 package render;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.EnumMap;
+
+import game.Config;
 import render.Renderable.DepthLayer;
 
 import javax.swing.*;
@@ -34,9 +39,30 @@ public class Renderer extends JFrame {
     }
 
     public static void render(Graphics g){
+        // TODO: clean up this shit.
+        float w = instance.getWidth();
+        float h = w * Config.ASPECT_RATIO;
+
+        if(h > instance.getHeight()){
+            h = instance.getHeight();
+            w = h / Config.ASPECT_RATIO;
+        }
+
+        float scaleX = (float) w / Config.WIDTH;
+        float scaleY = (float) h / Config.HEIGHT;
+
+        Graphics2D g2d = (Graphics2D) g;
+
+        g2d.translate((instance.getWidth() - w) / 2, (instance.getHeight() - h) / 2);
+
+        AffineTransform t = AffineTransform.getScaleInstance(scaleX, scaleY);
+        g2d.transform(t);
+
+        g2d.fillRect(0, 0, Config.WIDTH, Config.HEIGHT);
+
         for(DepthLayer layer : DepthLayer.values()){
             for(Renderable renderable : renderList.get(layer)){
-                renderable.draw(g);
+                renderable.draw(g2d);
             }
         }
     }
@@ -46,9 +72,12 @@ public class Renderer extends JFrame {
     public Renderer(){
         super("Frame");
 
+//        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         screen = new Screen();
-        screen.setLayout(new GridLayout(1, 1));
-        this.add(screen);
+        screen.setLayout(new BorderLayout());
+
+        getContentPane().add(screen);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -56,6 +85,10 @@ public class Renderer extends JFrame {
         setSize(
             500, 500
         );
+
+//        pack();
+
+//        setResizable(false);
 
         setVisible(true);
 
