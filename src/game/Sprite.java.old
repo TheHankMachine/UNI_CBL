@@ -1,0 +1,91 @@
+//import input.Input;
+//import math.Axis2D;
+//import render.Renderable;
+//import javax.imageio.ImageIO;
+//import java.awt.*;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
+//
+//import math.Vector2D;
+//
+//
+////TODO: make me abstract
+//public class Sprite implements Renderable {
+//
+//    private final BufferedImage image;
+//
+//    private final int framesPerRow, framesPerColumn;
+//    private final int totalFrames;
+//
+//    private int cropX1, cropY1, cropX2, cropY2;
+//
+//    protected Vector2D position = new Vector2D(100, 100);
+//
+//    protected float scale = 10;
+//    protected boolean flipX = false;
+//    protected boolean flipY = false;
+//
+//
+//    private final int frameWidth = 15;
+//    private final int frameHeight = 12;
+//
+//    private int frame = 0;
+//
+//    public Sprite(String file){
+//        image = loadImage("dvd.png");
+//
+//        framesPerRow = image.getWidth() / frameWidth;
+//        framesPerColumn = image.getHeight() / frameHeight;
+//
+//        totalFrames = framesPerRow * framesPerColumn;
+//
+//        setFrame(0);
+//
+//        registerRender();
+//    }
+//
+//    public void setFrame(int frameIndex){
+//        //swagalicious
+//        frame = frameIndex % totalFrames;
+//
+//        int row = frame % framesPerRow;
+//        int column = frame / framesPerColumn;
+//
+//        cropX1 = row * frameWidth;
+//        cropY1 = column * frameHeight;
+//
+//        cropX2 = (row + 1) * frameWidth;
+//        cropY2 = (column + 1) * frameHeight;
+//    }
+//
+//    @Override
+//    public void draw(Graphics g) {
+//        int x = position.get(Axis2D.X).intValue();
+//        int y = position.get(Axis2D.Y).intValue();
+//
+//        int width = (int) (frameWidth * scale);
+//        if(flipX){
+//            width = -width;
+//        }
+//        x -= width / 2;
+//
+//        int height = (int) (frameHeight * scale);
+//        if(flipY){
+//            height = -height;
+//        }
+//        y -= height;
+//
+//        g.drawImage(image, x, y,x + width,y + height, cropX1, cropY1, cropX2, cropY2, null);
+//    }
+//
+//    public static BufferedImage loadImage(String assetName){
+//        File file = new File(game.Config.ASSET_FILE_PATH + assetName);
+//
+//        try{
+//             return ImageIO.read(file);
+//        }catch(IOException e){
+//            throw new RuntimeException(String.format("File not found:\n%s", file.getAbsolutePath()));
+//        }
+//    }
+//}
