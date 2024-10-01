@@ -11,7 +11,6 @@ public abstract class SpriteSheet extends Sprite{
     private final int totalFrames;
 
     private int cropX1, cropY1, cropX2, cropY2;
-    private int frame;
 
     public SpriteSheet(String asset, int frameWidth, int frameHeight) {
         super(asset);
@@ -27,10 +26,8 @@ public abstract class SpriteSheet extends Sprite{
         setFrame(0);
     }
 
-    public void setFrame(int frameIndex){
+    public void setFrame(int frame){
         //swagalicious
-        frame = frameIndex % totalFrames;
-
         int row = frame % framesPerRow;
         int column = frame / framesPerColumn;
 
