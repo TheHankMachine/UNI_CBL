@@ -38,26 +38,17 @@ public class Renderer extends JFrame {
         return instance.screen.getHeight();
     }
 
+    private static float graphicsScaleX, graphicsScaleY;
+    private static int graphicsOffsetX, graphicsOffsetY;
+
     public static void render(Graphics g){
-        // TODO: clean up this shit.
-        float w = instance.getWidth();
-        float h = w * Config.ASPECT_RATIO;
-
-        if(h > instance.getHeight()){
-            h = instance.getHeight();
-            w = h / Config.ASPECT_RATIO;
-        }
-
-        float scaleX = (float) w / Config.WIDTH;
-        float scaleY = (float) h / Config.HEIGHT;
-
         Graphics2D g2d = (Graphics2D) g;
 
-        g2d.translate((instance.getWidth() - w) / 2, (instance.getHeight() - h) / 2);
-
-        AffineTransform t = AffineTransform.getScaleInstance(scaleX, scaleY);
+        g2d.translate(graphicsOffsetX, graphicsOffsetY);
+        AffineTransform t = AffineTransform.getScaleInstance(graphicsScaleX, graphicsScaleY);
         g2d.transform(t);
 
+        g2d.setColor(Color.black);
         g2d.fillRect(0, 0, Config.WIDTH, Config.HEIGHT);
 
         for(DepthLayer layer : DepthLayer.values()){
@@ -72,8 +63,6 @@ public class Renderer extends JFrame {
     public Renderer(){
         super("Frame");
 
-//        setExtendedState(JFrame.MAXIMIZED_BOTH);
-
         screen = new Screen();
         screen.setLayout(new BorderLayout());
 
@@ -81,14 +70,9 @@ public class Renderer extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-//        setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
-        setSize(
-            500, 500
-        );
+        setSize(600, 400);
 
-//        pack();
-
-//        setResizable(false);
+        addComponentListener(new ResizeHandler());
 
         setVisible(true);
 
@@ -101,7 +85,40 @@ public class Renderer extends JFrame {
 
     private static class Screen extends JPanel{
         public void paintComponent(Graphics g){
+            long startTime = System.nanoTime();
+
             render(g);
+
+            g.setColor(Color.blue);
+
+            g.drawString(String.format("render time: %dms",
+                (System.nanoTime() - startTime) / 1_000_000
+            ),10, 10);
+        }
+    }
+
+    private static class ResizeHandler extends ComponentAdapter{
+        public void componentResized(ComponentEvent evt) {
+            Component c = (Component) evt.getSource();
+
+            int width = c.getWidth();
+            int height = c.getHeight();
+
+            int frameWidth, frameHeight;
+
+            frameWidth = width;
+            frameHeight = (int) (frameWidth * Config.ASPECT_RATIO);
+
+            if(frameHeight > height){
+                frameHeight = height;
+                frameWidth = (int) (frameHeight / Config.ASPECT_RATIO);
+            }
+
+            graphicsScaleX = (float) frameWidth / Config.WIDTH;
+            graphicsScaleY = (float) frameHeight / Config.HEIGHT;
+
+            graphicsOffsetX = (width - frameWidth) / 2;
+            graphicsOffsetY = (height - frameHeight) / 2;
         }
     }
 

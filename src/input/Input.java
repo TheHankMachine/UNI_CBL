@@ -3,13 +3,17 @@ package input;
 import math.Vector2D;
 import render.Renderer;
 
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.HashMap;
 
 public class Input {
 
     public enum InputKey {
+        SPACE(32),
         UP(87),
         LEFT(65),
         DOWN(83),
@@ -22,10 +26,30 @@ public class Input {
         }
     }
 
-    private static HashMap<Integer, Integer> pffft = new HashMap<>();
+    private static HashMap<Integer, Boolean> keyDownMap = new HashMap<>();
+    private static HashMap<Integer, Integer> keyDurationMap = new HashMap<>();
 
+    private static Point lastMouseLocation;
+
+    /**
+     * Returns true while a key is being pressed.
+     */
     public static boolean isDown(InputKey key){
-        return pffft.get(key.key) > 0;
+        boolean down = keyDownMap.get(key.key);
+
+        if(down){
+            keyDurationMap.compute(key.key, (_, v) -> v + 1);
+        }
+
+        return down;
+    }
+
+    /**
+     * Returns true once only for the duration of the key press.
+     */
+    public static boolean isPressed(InputKey key){
+        isDown(key);
+        return keyDurationMap.get(key.key) == 1;
     }
 
     public static Vector2D getInputVector(){
@@ -48,12 +72,18 @@ public class Input {
 
 
     public Input(){
-
         for(InputKey a : InputKey.values()){
-            pffft.put(a.key, 0);
+            keyDownMap.put(a.key, false);
+            keyDurationMap.put(a.key, 0);
         }
 
         Renderer.instance.addKeyListener(new KeyHandler());
+        Renderer.instance.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                lastMouseLocation = e.getPoint();
+            }
+        });
     }
 
     private static class KeyHandler extends KeyAdapter{
@@ -61,18 +91,18 @@ public class Input {
         public void keyReleased(KeyEvent e) {
             int keyCode = e.getKeyCode();
 
-            if(!pffft.containsKey(keyCode)) return;
+            if(!keyDownMap.containsKey(keyCode)) return;
 
-            pffft.put(keyCode, 0);
+            keyDownMap.put(keyCode, false);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
 
-            if(!pffft.containsKey(keyCode)) return;
+            if(!keyDownMap.containsKey(keyCode)) return;
 
-            pffft.compute(keyCode, (_, v) -> v + 1);
+            keyDownMap.put(keyCode, true);
         }
     }
 
