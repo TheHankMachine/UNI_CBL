@@ -5,6 +5,7 @@ import math.Axis2D;
 import math.Vector2D;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class SpriteSheet extends Sprite{
 
@@ -30,7 +31,16 @@ public class SpriteSheet extends Sprite{
         setFrame(0);
     }
 
+    public float getWidth(){
+        return frameWidth * scale;
+    }
+
+    public float getHeight(){
+        return frameHeight * scale;
+    }
+
     public void setFrame(int frameIndex){
+        //@Niels, I am keeping this here forever
         //swagalicious
         this.frame = frameIndex % totalFrames;
 
@@ -46,26 +56,9 @@ public class SpriteSheet extends Sprite{
         cropY2 = (row + 1) * frameHeight;
     }
 
-    int i = 0;
-
     @Override
-    public void draw(Graphics2D g) {
-        int x = position.get(Axis2D.X).intValue();
-        int y = position.get(Axis2D.Y).intValue();
-
-        int width = (int) (frameWidth * scale);
-        if(flipX){
-            width = -width;
-        }
-        x -= width / 2;
-
-        int height = (int) (frameHeight * scale);
-        if(flipY){
-            height = -height;
-        }
-        y -= height / 2;
-
-        g.drawImage(image, x, y,x + width,y + height, cropX1, cropY1, cropX2, cropY2, null);
+    public void drawImage(Graphics2D g, BufferedImage image, int x, int y, int w, int h) {
+        g.drawImage(image, x, y,x + w,y + h, cropX1, cropY1, cropX2, cropY2, null);
     }
 
 }
