@@ -2,10 +2,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 import game.Config;
-import game.Sprite;
 import game.SpriteSheet;
-import render.Renderer;
-import input.Input;
+import engine.render.Renderer;
+import engine.input.Input;
 
 public class Main {
     public static void main(String[] args) {

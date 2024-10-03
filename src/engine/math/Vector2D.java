@@ -1,9 +1,9 @@
-package math;
+package engine.math;
 
 import java.util.EnumMap;
 import java.util.function.BiFunction;
 
-import static math.Axis2D.*;
+import static engine.math.Axis2D.*;
 
 public class Vector2D extends EnumMap<Axis2D, Float> {
 

@@ -1,6 +1,7 @@
-package render;
+package engine.render;
 
 import java.awt.*;
+import engine.Game;
 
 public interface Renderable {
 
@@ -12,7 +13,7 @@ public interface Renderable {
     }
 
     default void registerRender(){
-        Renderer.add(this);
+        Game.getInstance().getRenderer().add(this);
     }
 
     void draw(Graphics2D g);

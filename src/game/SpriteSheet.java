@@ -1,9 +1,5 @@
 package game;
 
-import input.Input;
-import math.Axis2D;
-import math.Vector2D;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

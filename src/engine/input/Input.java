@@ -1,7 +1,8 @@
-package input;
+package engine.input;
 
-import math.Vector2D;
-import render.Renderer;
+import engine.Game;
+import engine.math.Vector2D;
+import engine.render.Renderer;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -10,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.HashMap;
 
-public class Input {
+public class Input{
 
     public enum InputKey {
         SPACE(32),
@@ -26,15 +27,15 @@ public class Input {
         }
     }
 
-    private static HashMap<Integer, Boolean> keyDownMap = new HashMap<>();
-    private static HashMap<Integer, Integer> keyDurationMap = new HashMap<>();
+    private final HashMap<Integer, Boolean> keyDownMap = new HashMap<>();
+    private final HashMap<Integer, Integer> keyDurationMap = new HashMap<>();
 
-    private static Point lastMouseLocation;
+    private Point lastMouseLocation;
 
     /**
      * Returns true while a key is being pressed.
      */
-    public static boolean isDown(InputKey key){
+    public boolean isDown(InputKey key){
         boolean down = keyDownMap.get(key.key);
 
         if(down){
@@ -47,19 +48,19 @@ public class Input {
     /**
      * Returns true once only for the duration of the key press.
      */
-    public static boolean isPressed(InputKey key){
+    public boolean isPressed(InputKey key){
         isDown(key);
         return keyDurationMap.get(key.key) == 1;
     }
 
-    public static Vector2D getInputVector(){
+    public Vector2D getInputVector(){
         float x = 0;
         float y = 0;
 
-        if(Input.isDown(Input.InputKey.RIGHT)) x++;
-        if(Input.isDown(Input.InputKey.LEFT)) x--;
-        if(Input.isDown(Input.InputKey.DOWN)) y++;
-        if(Input.isDown(Input.InputKey.UP)) y--;
+        if(isDown(Input.InputKey.RIGHT)) x++;
+        if(isDown(Input.InputKey.LEFT)) x--;
+        if(isDown(Input.InputKey.DOWN)) y++;
+        if(isDown(Input.InputKey.UP)) y--;
 
         //Vector fix
         if(x != 0 && y != 0){
@@ -77,8 +78,10 @@ public class Input {
             keyDurationMap.put(a.key, 0);
         }
 
-        Renderer.instance.addKeyListener(new KeyHandler());
-        Renderer.instance.addMouseMotionListener(new MouseMotionAdapter() {
+        Renderer renderer = Game.getInstance().getRenderer();
+
+        renderer.addKeyListener(new KeyHandler());
+        renderer.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 lastMouseLocation = e.getPoint();
@@ -86,7 +89,7 @@ public class Input {
         });
     }
 
-    private static class KeyHandler extends KeyAdapter{
+    private class KeyHandler extends KeyAdapter{
         @Override
         public void keyReleased(KeyEvent e) {
             int keyCode = e.getKeyCode();

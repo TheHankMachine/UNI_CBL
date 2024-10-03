@@ -1,9 +1,8 @@
 package game;
 
-import input.Input;
-import math.Axis2D;
-import math.Vector2D;
-import render.Renderable;
+import engine.math.Axis2D;
+import engine.math.Vector2D;
+import engine.render.Renderable;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
