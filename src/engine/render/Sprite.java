@@ -1,13 +1,11 @@
-package game;
+package engine.render;
 
+import engine.Game;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
-import engine.render.Renderable;
-import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Sprite implements Renderable {
 
@@ -113,13 +111,6 @@ public class Sprite implements Renderable {
     }
 
     public static BufferedImage loadImage(String assetName){
-        File file = new File(Config.ASSET_FILE_PATH + assetName);
-
-        try{
-             return ImageIO.read(file);
-        }catch(IOException e){
-            throw new RuntimeException(String.format("File not found:\n%s", file.getAbsolutePath()));
-        }
+        return Game.getInstance().loadImage(assetName);
     }
-
 }

@@ -23,7 +23,7 @@ public class Renderer extends JFrame {
 
     private int graphicsOffsetX, graphicsOffsetY;
 
-    private Screen screen;
+    private final Screen screen;
 
     public Renderer(GameConfig config){
         super("Frame");
@@ -37,6 +37,8 @@ public class Renderer extends JFrame {
 
         screen = new Screen();
         screen.setLayout(new BorderLayout());
+
+        setBackground(Color.BLACK);
 
         //TODO: remove me
         getContentPane().add(screen);
@@ -57,14 +59,17 @@ public class Renderer extends JFrame {
         AffineTransform t = AffineTransform.getScaleInstance(graphicsScale, graphicsScale);
         g2d.transform(t);
 
-        g2d.setColor(Color.black);
+        g2d.setColor(config.backgroundColor);
         g2d.fillRect(0, 0, config.width, config.height);
+
+        g2d.clipRect(0, 0, config.width, config.height);
 
         for(DepthLayer layer : DepthLayer.values()){
             for(Renderable renderable : renderList.get(layer)){
                 renderable.draw(g2d);
             }
         }
+
     }
 
     private class Screen extends JPanel{
@@ -75,7 +80,7 @@ public class Renderer extends JFrame {
 
             g.setColor(Color.blue);
 
-            g.drawString(String.format("engine.render time: %dms",
+            g.drawString(String.format("render time: %dms",
                 (System.nanoTime() - startTime) / 1_000_000
             ),10, 10);
         }

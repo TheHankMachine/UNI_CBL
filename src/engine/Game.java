@@ -3,8 +3,12 @@ package engine;
 import engine.input.Input;
 import engine.render.Renderer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class Game {
 
@@ -16,7 +20,7 @@ public abstract class Game {
         return instance;
     }
 
-    private final GameConfig config;
+    protected final GameConfig config;
 
     private final Renderer renderer;
     private final Input input;
@@ -43,5 +47,15 @@ public abstract class Game {
 
     public final Input getInput(){
         return input;
+    }
+
+    public BufferedImage loadImage(String assetName){
+        File file = new File(config.assetFilePath + assetName);
+
+        try{
+            return ImageIO.read(file);
+        }catch(IOException e){
+            throw new RuntimeException(String.format("File not found:\n%s", file.getAbsolutePath()));
+        }
     }
 }
