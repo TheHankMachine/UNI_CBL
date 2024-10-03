@@ -18,9 +18,7 @@ public class Renderer extends JFrame {
     private final EnumMap<DepthLayer, ArrayList<Renderable>> renderList;
     private final GameConfig config;
 
-//    private float graphicsScaleX, graphicsScaleY;
     private float graphicsScale;
-
     private int graphicsOffsetX, graphicsOffsetY;
 
     private final Screen screen;
@@ -43,7 +41,7 @@ public class Renderer extends JFrame {
         //TODO: remove me
         getContentPane().add(screen);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(config.width, config.height);
         addComponentListener(new ResizeHandler());
         setVisible(true);
     }
@@ -52,16 +50,13 @@ public class Renderer extends JFrame {
         renderList.get(e.getDepth()).add(e);
     }
 
-    public void render(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
-
+    public void render(Graphics2D g2d){
         g2d.translate(graphicsOffsetX, graphicsOffsetY);
         AffineTransform t = AffineTransform.getScaleInstance(graphicsScale, graphicsScale);
         g2d.transform(t);
 
         g2d.setColor(config.backgroundColor);
         g2d.fillRect(0, 0, config.width, config.height);
-
         g2d.clipRect(0, 0, config.width, config.height);
 
         for(DepthLayer layer : DepthLayer.values()){
@@ -76,7 +71,7 @@ public class Renderer extends JFrame {
         public void paintComponent(Graphics g){
             long startTime = System.nanoTime();
 
-            render(g);
+            render((Graphics2D) g);
 
             g.setColor(Color.blue);
 

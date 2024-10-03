@@ -37,7 +37,7 @@ public class GameConfig {
     }
 
     public GameConfig(int width, int height){
-        this(width, height, Color.BLACK);
+        this(width, height, Color.WHITE);
     }
 
 }

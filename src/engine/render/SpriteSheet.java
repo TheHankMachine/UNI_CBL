@@ -35,9 +35,11 @@ public class SpriteSheet extends Sprite{
         return frameHeight * scale;
     }
 
+    public float getFrame(){
+        return frame;
+    }
+
     public void setFrame(int frameIndex){
-        //@Niels, I am keeping this here forever
-        //swagalicious
         frame = frameIndex % totalFrames;
 
         int column = frame % framesPerRow;
@@ -53,8 +55,6 @@ public class SpriteSheet extends Sprite{
     @Override
     public void drawImage(Graphics2D g, BufferedImage image, int x, int y, int w, int h) {
         g.drawImage(image, x, y,x + w,y + h, cropX1, cropY1, cropX2, cropY2, null);
-
-        setFrame(frame + 1);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 
 import static engine.math.Axis2D.*;
 
+//Works Cited: Björn Baumeier
 public class Vector2D extends EnumMap<Axis2D, Float> {
 
     public Vector2D(){
@@ -77,6 +78,9 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         scale(to / getLength());
     }
 
+    /**
+     * @return a new vector with same values as this
+     */
     public Vector2D copy(){
         return new Vector2D(this);
     }
