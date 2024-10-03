@@ -41,6 +41,8 @@ public abstract class Game {
         renderer.repaint();
     }
 
+    public abstract void update();
+
     public final Renderer getRenderer(){
         return renderer;
     }
