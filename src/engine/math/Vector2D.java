@@ -53,6 +53,10 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         computeForEach((k, v) -> v + vector.get(k));
     }
 
+    public void subtract(Vector2D vector){
+        computeForEach((k, v) -> v - vector.get(k));
+    }
+
     /**
      * Scales the vector.
      *

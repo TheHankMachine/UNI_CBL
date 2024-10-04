@@ -1,0 +1,11 @@
+- Add java docs to everything
+- Create sprite-like interface with methods for
+a visibly drawn class:
+  - ```setOrigin()```
+  - ```setPosition()```
+  - ```setFlipX()```
+  - ```setFlipY()```
+  - ```setVisible()```
+  - ```setScale()```
+- Clean up messy methods in ```Sprite``` ```SpriteSheet``` ```TextSprite```
+- Complete ```Updateable``` interface

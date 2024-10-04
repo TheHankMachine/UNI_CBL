@@ -14,11 +14,11 @@ import java.util.HashMap;
 public class Input{
 
     public enum InputKey {
-        SPACE(32),
         UP(87),
         LEFT(65),
         DOWN(83),
-        RIGHT(68);
+        RIGHT(68),
+        SPACE(32);
 
         public final int key;
 

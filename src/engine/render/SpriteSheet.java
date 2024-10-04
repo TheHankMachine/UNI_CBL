@@ -1,5 +1,7 @@
 package engine.render;
 
+import engine.math.Vector2D;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -13,7 +15,7 @@ public class SpriteSheet extends Sprite{
 
     private int frame;
 
-    public SpriteSheet(String asset, int frameWidth, int frameHeight) {
+    protected SpriteSheet(String asset, int frameWidth, int frameHeight) {
         super(asset);
 
         this.frameWidth = frameWidth;
@@ -27,6 +29,16 @@ public class SpriteSheet extends Sprite{
         setFrame(0);
     }
 
+    public SpriteSheet(String asset, int frameWidth, int frameHeight, float x, float y){
+        this(asset, frameWidth, frameHeight);
+        setPosition(x, y);
+    }
+
+    public SpriteSheet(String asset, int frameWidth, int frameHeight, Vector2D position){
+        this(asset, frameWidth, frameHeight);
+        setPosition(position);
+    }
+
     public float getWidth(){
         return frameWidth * scale;
     }
@@ -35,7 +47,7 @@ public class SpriteSheet extends Sprite{
         return frameHeight * scale;
     }
 
-    public float getFrame(){
+    public int getFrame(){
         return frame;
     }
 

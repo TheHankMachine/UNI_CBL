@@ -8,26 +8,42 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Sprite implements Renderable {
-
     private final BufferedImage image;
 
-    private Vector2D position = new Vector2D(30, 30);
+    private Vector2D position = new Vector2D();
 
     private boolean flipX = false;
     private boolean flipY = false;
     private boolean visible = true;
 
+    private float originX = 0.5f;
+    private float originY = 0.5f;
+
     protected float scale = 1;
     protected int width;
     protected int height;
 
-    public Sprite(String asset){
+    protected Sprite(String asset){
         image = loadImage(asset);
 
         width = image.getWidth();
         height = image.getHeight();
 
         registerRender();
+    }
+
+    public Sprite(String asset, float x, float y){
+        this(asset);
+        setPosition(x, y);
+    }
+
+    public Sprite(String asset, Vector2D position){
+        this(asset);
+        setPosition(position);
+    }
+
+    public void move(Vector2D vector){
+        position.add(vector);
     }
 
     /**
@@ -87,6 +103,24 @@ public class Sprite implements Renderable {
         return height * scale;
     }
 
+    public void setFlip(boolean flipX, boolean flipY){
+        setFlipX(flipX);
+        setFlipY(flipY);
+    }
+
+    public void setFlipX(boolean flipX){
+        this.flipX = flipX;
+    }
+
+    public void setFlipY(boolean flipY){
+        this.flipY = flipY;
+    }
+
+    public void setOrigin(float ox, float oy){
+        this.originX = ox;
+        this.originY = oy;
+    }
+
     @Override
     public void draw(Graphics2D g) {
         if(!visible) return;
@@ -94,13 +128,22 @@ public class Sprite implements Renderable {
         int x = position.get(Axis2D.X).intValue();
         int y = position.get(Axis2D.Y).intValue();
 
+        float ox = originX;
+        float oy = originY;
+
         int w = (int) getWidth();
-        if(flipX) w = -w;
-        x -= w / 2;
+        if(flipX) {
+            w = -w;
+            ox = 1 - ox;
+        }
+        x -= (int) (w * ox);
 
         int h = (int) getHeight();
-        if(flipY) h = -h;
-        y -= h / 2;
+        if(flipY) {
+            h = -h;
+            oy = 1 - oy;
+        }
+        y -= (int) (h * oy);
 
         drawImage(g, image, x, y, w, h);
     }

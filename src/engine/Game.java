@@ -32,12 +32,15 @@ public abstract class Game {
 
         renderer = new Renderer(config);
         input = new Input();
+    }
 
+    public final void register(){
         Timer timer = new Timer(config.targetTickMs, this::periodic);
         timer.start();
     }
 
     public final void periodic(ActionEvent e){
+        update();
         renderer.repaint();
     }
 
