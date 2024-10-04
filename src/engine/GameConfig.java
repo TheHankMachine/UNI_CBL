@@ -3,7 +3,6 @@ package engine;
 import java.awt.*;
 
 public class GameConfig {
-
     public final int targetTicksPerSecond;
     public final int targetTickMs;
 
@@ -13,7 +12,6 @@ public class GameConfig {
 
     public final int width, height;
     public final float aspectRatio;
-
 
     public GameConfig(int width, int height, Color backgroundColor, String assetFilePath, int targetTicksPerSecond){
         this.width = width;

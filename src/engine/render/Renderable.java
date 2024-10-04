@@ -1,11 +1,8 @@
 package engine.render;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-
 import engine.Game;
-import engine.math.Axis2D;
-import engine.math.Vector2D;
+
+import java.awt.*;
 
 public interface Renderable {
 
@@ -25,31 +22,5 @@ public interface Renderable {
     default DepthLayer getDepth(){
         return DepthLayer.MIDDLEGROUND;
     };
-
-//    void move(Vector2D vector);
-//
-//    void setPosition(Vector2D to);
-//
-//    void setPosition(float x, float y);
-//
-//    void setPositionRef(Vector2D ref);
-//
-//    void setVisible(boolean visible);
-//
-//    void setScale(float scale);
-//
-//    float getScale();
-//
-//    float getWidth();
-//
-//    float getHeight();
-//
-//    void setFlip(boolean flipX, boolean flipY);
-//
-//    void setFlipX(boolean flipX);
-//
-//    void setFlipY(boolean flipY);
-//
-//    void setOrigin(float ox, float oy);
 
 }

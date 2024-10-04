@@ -1,6 +1,5 @@
 package engine.render;
 
-import engine.math.Axis2D;
 import engine.math.Vector2D;
 
 import java.awt.*;
@@ -8,44 +7,37 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class TextSprite implements Renderable {
+public abstract class SpriteFont extends DisplayObject {
 
-    //TODO: kill it. burn it. do what ever the fuck you need to get rid of this shit.
-    private static final HashMap<Class<? extends TextSprite>, HashMap<Character, Integer>> classToCharacterMap = new HashMap<>();
+    private static final HashMap<Class<? extends SpriteFont>, Map<Character, Integer>> classToCharacterMap = new HashMap<>();
 
     private final ArrayList<SpriteSheet> sprites = new ArrayList<>();
-    private Vector2D position = new Vector2D();
     private String text;
 
-    private float scale = 3;
-
-    private int width;
-    private int height;
-
-    private TextSprite(String text){
+    private SpriteFont(String text){
         initialiseFont(this);
         setText(text);
         this.registerRender();
     }
 
-    public TextSprite(String text, Vector2D position){
+    public SpriteFont(String text, Vector2D position){
         this(text);
         setPosition(position);
     }
 
-    public TextSprite(String text, float x, float y){
+    public SpriteFont(String text, float x, float y){
         this(text);
         setPosition(x, y);
     }
 
     public void setText(String text){
-        this.text = text.toUpperCase();
+        this.text = forceUpperCase()? text.toUpperCase() : text;
         updateText();
     }
 
     //TODO: clean up
     public void updateText() {
-        Map<Character, Integer> charMap = getCharacterMap();
+        Map<Character, Integer> characterToFrame = getCharacterMap();
 
         sprites.forEach(e -> e.setVisible(false));
 
@@ -54,32 +46,28 @@ public abstract class TextSprite implements Renderable {
 
         int x = 0;
         int y = 0;
-
         int i = 0;
         for(char character : text.toCharArray()){
-
             if(character == '\n'){
                 x = 0;
                 y += (int) (getFrameHeight() * scale);
 
-                if(y > height){
-                    height = y;
-                }
+                if(y > height) height = y;
 
                 continue;
             }
 
-            if(charMap.containsKey(character)){
+            if(characterToFrame.containsKey(character)){
                 if(sprites.size() <= i){
-                    sprites.add(addSprite());
+                    sprites.add(createNewSprite());
                 }
 
                 SpriteSheet sprite = sprites.get(i);
 
-                sprite.setFrame(charMap.get(character));
-                sprite.setPosition(x, y);
-                sprite.setScale(scale);
+                sprite.setFrame(characterToFrame.get(character));
                 sprite.setVisible(true);
+                sprite.setScale(scale);
+                sprite.setPosition(x, y);
 
                 i++;
             }
@@ -93,78 +81,106 @@ public abstract class TextSprite implements Renderable {
 
         height += (int) (getFrameHeight() * scale);
 
-        translate(position);
-
+        translateSprites(position);
     }
 
-    public SpriteSheet addSprite(){
-        SpriteSheet sprite = new SpriteSheet(
-            getAsset(), getFrameWidth(), getFrameHeight()
-        ){
+    public SpriteSheet createNewSprite(){
+        SpriteSheet sprite = new SpriteSheet(getAsset(), getFrameWidth(), getFrameHeight()){
             @Override public void registerRender() {;}
         };
 
-        sprite.setOrigin(0, 0);
+        sprite.setOriginX(0);
+        sprite.setOriginY(0);
 
         return sprite;
     }
 
+    // TODO: reduce this redundancy
+    @Override
     public void setPosition(Vector2D to){
         Vector2D change = position.copy();
 
-        position.setTo(to);
+        super.setPosition(to);
 
         change.subtract(position);
         change.scale(-1);
-        translate(change);
+
+        translateSprites(change);
     }
 
+    @Override
     public void setPosition(float x, float y){
         Vector2D change = position.copy();
 
-        position.setTo(x, y);
+        super.setPosition(x, y);
 
         change.subtract(position);
         change.scale(-1);
-        translate(change);
-    }
-
-    public void translate(Vector2D vector){
-        sprites.forEach(e -> e.move(vector));
-    }
-
-    public float getWidth(){
-        return width;
-    }
-
-    public float getHeight(){
-        return height;
+        translateSprites(change);
     }
 
     public void draw(Graphics2D g){
         sprites.forEach(e -> e.draw(g));
     }
 
+    private void translateSprites(Vector2D vector){
+        sprites.forEach(e -> e.move(vector));
+    }
+
+    @Override
+    public float getWidth(){
+        return width;
+    }
+
+    @Override
+    public float getHeight(){
+        return height;
+    }
+
+    @Override
+    public void setScale(float scale){
+        super.setScale(scale);
+        updateText();
+    }
+
+    /**
+     * @return an array of characters in order that they appear
+     * in the sprite sheet
+     */
     public abstract char[] getCharacters();
+    /**
+     * @return the filepath to the sprite sheet
+     */
     public abstract String getAsset();
+    /**
+     * @return the width in pixels of each character
+     */
     public abstract int getFrameWidth();
+    /**
+     * @return the height in pixels of each character
+     */
     public abstract int getFrameHeight();
+    /**
+     * @return if all input characters should be treated
+     * as upper-case
+     */
+    public abstract boolean forceUpperCase();
 
     public final Map<Character, Integer> getCharacterMap(){
         return classToCharacterMap.get(getClass());
     }
 
-    public static void initialiseFont(TextSprite textSprite){
-        if(classToCharacterMap.containsKey(textSprite.getClass())) return;
+    public static void initialiseFont(SpriteFont spriteFont){
+        if(classToCharacterMap.containsKey(spriteFont.getClass())) return;
 
         HashMap<Character, Integer> characterMap = new HashMap<>();
 
-        char[] chars = textSprite.getCharacters();
+        char[] chars = spriteFont.getCharacters();
         for(int i = 0; i < chars.length; i++){
             characterMap.put(chars[i], i);
         }
 
-        classToCharacterMap.put(textSprite.getClass(), characterMap);
+        classToCharacterMap.put(spriteFont.getClass(), characterMap);
     }
 
 }

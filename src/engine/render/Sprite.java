@@ -7,24 +7,11 @@ import engine.math.Vector2D;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Sprite implements Renderable {
+public class Sprite extends DisplayObject {
     private final BufferedImage image;
 
-    private Vector2D position = new Vector2D();
-
-    private boolean flipX = false;
-    private boolean flipY = false;
-    private boolean visible = true;
-
-    private float originX = 0.5f;
-    private float originY = 0.5f;
-
-    protected float scale = 1;
-    protected int width;
-    protected int height;
-
-    protected Sprite(String asset){
-        image = loadImage(asset);
+    protected Sprite(String fileName){
+        image = loadImage(fileName);
 
         width = image.getWidth();
         height = image.getHeight();
@@ -32,93 +19,20 @@ public class Sprite implements Renderable {
         registerRender();
     }
 
-    public Sprite(String asset, float x, float y){
-        this(asset);
+    /**
+     * Creates new sprite at location x, y
+     */
+    public Sprite(String fileName, float x, float y){
+        this(fileName);
         setPosition(x, y);
     }
 
-    public Sprite(String asset, Vector2D position){
-        this(asset);
+    /**
+     * Creates a new sprite at location position
+     */
+    public Sprite(String fileName, Vector2D position){
+        this(fileName);
         setPosition(position);
-    }
-
-    public void move(Vector2D vector){
-        position.add(vector);
-    }
-
-    /**
-     * Sets the position of the sprite.
-     *
-     * @param to Vector2D object which the
-     *          position is set to
-     */
-    public void setPosition(Vector2D to){
-        position.setTo(to);
-    }
-
-    /**
-     * Sets the position of the sprite.
-     *
-     * @param x the x position for the sprite
-     * @param y the y position for the sprite
-     */
-    public void setPosition(float x, float y){
-        position.setTo(x, y);
-    }
-
-    /**
-     * Sets the position vector to point to another
-     * vector.
-     *
-     * @param ref The vector object which position
-     *            will now point to
-     */
-    public void setPositionRef(Vector2D ref){
-        position = ref;
-    }
-
-    public void setVisible(boolean visible){
-        this.visible = visible;
-    }
-
-    public void setScale(float scale){
-        this.scale = scale;
-    }
-
-    public float getScale(){
-        return scale;
-    }
-
-    /**
-     * @return the width of the sprite after scaling
-     */
-    public float getWidth(){
-        return width * scale;
-    }
-
-    /**
-     * @return the width of the sprite after scaling
-     */
-    public float getHeight(){
-        return height * scale;
-    }
-
-    public void setFlip(boolean flipX, boolean flipY){
-        setFlipX(flipX);
-        setFlipY(flipY);
-    }
-
-    public void setFlipX(boolean flipX){
-        this.flipX = flipX;
-    }
-
-    public void setFlipY(boolean flipY){
-        this.flipY = flipY;
-    }
-
-    public void setOrigin(float ox, float oy){
-        this.originX = ox;
-        this.originY = oy;
     }
 
     @Override
@@ -132,28 +46,29 @@ public class Sprite implements Renderable {
         float oy = originY;
 
         int w = (int) getWidth();
+        int h = (int) getHeight();
+
         if(flipX) {
             w = -w;
             ox = 1 - ox;
         }
-        x -= (int) (w * ox);
-
-        int h = (int) getHeight();
         if(flipY) {
             h = -h;
             oy = 1 - oy;
         }
+
+        x -= (int) (w * ox);
         y -= (int) (h * oy);
 
         drawImage(g, image, x, y, w, h);
     }
 
-    // exists so that spritesheet can override just this
+    //Exists to be overridden by SpriteSheet
     public void drawImage(Graphics2D g, BufferedImage image, int x, int y, int w, int h){
         g.drawImage(image, x, y, w, h, null);
     }
 
-    public static BufferedImage loadImage(String assetName){
-        return Game.getInstance().loadImage(assetName);
+    public static BufferedImage loadImage(String fileName){
+        return Game.getInstance().loadImage(fileName);
     }
 }

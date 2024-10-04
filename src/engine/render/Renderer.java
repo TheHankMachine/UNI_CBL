@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 import engine.GameConfig;
+import engine.Game;
 import engine.render.Renderable.DepthLayer;
 
 import javax.swing.*;
@@ -64,7 +65,6 @@ public class Renderer extends JFrame {
                 renderable.draw(g2d);
             }
         }
-
     }
 
     private class Screen extends JPanel{
@@ -73,11 +73,7 @@ public class Renderer extends JFrame {
 
             render((Graphics2D) g);
 
-            g.setColor(Color.blue);
-
-            g.drawString(String.format("render time: %dms",
-                (System.nanoTime() - startTime) / 1_000_000
-            ),10, 10);
+            Game.debug_renderTimeMs = (int) (System.nanoTime() - startTime) / 1_000_000;
         }
     }
 
