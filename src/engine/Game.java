@@ -1,9 +1,10 @@
 package engine;
 
-import engine.Util.DefaultFont;
+import engine.defaults.DefaultFont;
 import engine.input.Input;
 import engine.render.Renderer;
 import engine.render.SpriteFont;
+import engine.update.Updateable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,7 +40,12 @@ public abstract class Game {
         renderer = new Renderer(config);
         input = new Input();
 
-        debug_displayText = new DefaultFont("test", 0, 0);
+        debug_displayText = new DefaultFont("test", 0, 0){
+            @Override
+            public DepthLayer getDepth() {
+                return DepthLayer.FOREGROUND;
+            }
+        };
     }
 
     public final void register(){
@@ -52,12 +58,15 @@ public abstract class Game {
 
         update();
 
+        Updateable.updateAll();
+
         debug_updateTimeMs = (int) (System.nanoTime() - startTime) / 1_000_000;
 
         renderer.repaint();
 
-        debug_displayText.setText(String.format("update time: %dms\nrender time: %dms",
-            Game.debug_updateTimeMs, Game.debug_renderTimeMs
+        debug_displayText.setText(String.format("Update time: %dms\nRender time: %dms\nUptime: %d\'/.",
+            debug_updateTimeMs, debug_renderTimeMs,
+            (debug_updateTimeMs + debug_renderTimeMs) * 100 / config.targetTickMs
         ));
     }
 
@@ -71,8 +80,16 @@ public abstract class Game {
         return input;
     }
 
-    public BufferedImage loadImage(String assetName){
-        File file = new File(config.assetFilePath + assetName);
+    public int getWidth(){
+        return config.width;
+    }
+
+    public int getHeight(){
+        return config.height;
+    }
+
+    public BufferedImage loadImage(String fileName){
+        File file = new File(config.assetFilePath + fileName);
 
         try{
             return ImageIO.read(file);

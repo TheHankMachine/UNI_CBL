@@ -14,6 +14,11 @@ public abstract class SpriteFont extends DisplayObject {
     private final ArrayList<SpriteSheet> sprites = new ArrayList<>();
     private String text;
 
+    private boolean requiresUpdate = true;
+
+    protected float originX = 0;
+    protected float originY = 0;
+
     private SpriteFont(String text){
         initialiseFont(this);
         setText(text);
@@ -32,7 +37,7 @@ public abstract class SpriteFont extends DisplayObject {
 
     public void setText(String text){
         this.text = forceUpperCase()? text.toUpperCase() : text;
-        updateText();
+        requiresUpdate = true;
     }
 
     //TODO: clean up
@@ -81,7 +86,10 @@ public abstract class SpriteFont extends DisplayObject {
 
         height += (int) (getFrameHeight() * scale);
 
-        translateSprites(position);
+        Vector2D topLeftPosition = position.copy();
+        topLeftPosition.add(-width * originX, -height * originY);
+
+        moveSprites(topLeftPosition);
     }
 
     public SpriteSheet createNewSprite(){
@@ -105,7 +113,7 @@ public abstract class SpriteFont extends DisplayObject {
         change.subtract(position);
         change.scale(-1);
 
-        translateSprites(change);
+        moveSprites(change);
     }
 
     @Override
@@ -116,14 +124,24 @@ public abstract class SpriteFont extends DisplayObject {
 
         change.subtract(position);
         change.scale(-1);
-        translateSprites(change);
+        moveSprites(change);
     }
 
+    @Override
     public void draw(Graphics2D g){
+        if(requiresUpdate){
+            updateText();
+            requiresUpdate = false;
+        }
         sprites.forEach(e -> e.draw(g));
     }
 
-    private void translateSprites(Vector2D vector){
+    // This is a consequence of setting up the way that I did :/
+    public void draw(Graphics2D g, int x, int y, int w, int h){
+        ;
+    }
+
+    private void moveSprites(Vector2D vector){
         sprites.forEach(e -> e.move(vector));
     }
 
@@ -140,7 +158,19 @@ public abstract class SpriteFont extends DisplayObject {
     @Override
     public void setScale(float scale){
         super.setScale(scale);
-        updateText();
+        requiresUpdate = true;
+    }
+
+    @Override
+    public void setOriginX(float originX){
+        super.setOriginX(originX);
+        requiresUpdate = true;
+    }
+
+    @Override
+    public void setOriginY(float originY){
+        super.setOriginY(originY);
+        requiresUpdate = true;
     }
 
     /**

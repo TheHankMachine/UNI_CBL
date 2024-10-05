@@ -65,7 +65,7 @@ public class SpriteSheet extends Sprite{
     }
 
     @Override
-    public void drawImage(Graphics2D g, BufferedImage image, int x, int y, int w, int h) {
+    public void draw(Graphics2D g, int x, int y, int w, int h) {
         g.drawImage(image, x, y,x + w,y + h, cropX1, cropY1, cropX2, cropY2, null);
     }
 

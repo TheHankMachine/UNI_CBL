@@ -12,4 +12,8 @@ public interface Updateable {
 
     void update();
 
+    static void updateAll(){
+        updateList.forEach(Updateable::update);
+    }
+
 }

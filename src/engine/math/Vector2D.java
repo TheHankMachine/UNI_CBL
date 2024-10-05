@@ -53,6 +53,18 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         computeForEach((k, v) -> v + vector.get(k));
     }
 
+    public void add(float x, float y){
+        compute(X, (_, v) -> v + x);
+        compute(Y, (_, v) -> v + y);
+    }
+
+    /**
+     * Reflects the vector on the respective axis
+     */
+    public void flip(Axis2D axis){
+        compute(axis, (_, v) -> -v);
+    }
+
     public void subtract(Vector2D vector){
         computeForEach((k, v) -> v - vector.get(k));
     }
@@ -80,6 +92,19 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
      */
     public void normalise(float to){
         scale(to / getLength());
+    }
+
+
+
+    public void rotate(float angle){
+        float x = get(X);
+        float y = get(Y);
+
+        float cos = (float) Math.cos(angle);
+        float sin = (float) Math.sin(angle);
+
+        put(X, x * cos - y * sin);
+        put(Y, x * sin + y * cos);
     }
 
     /**

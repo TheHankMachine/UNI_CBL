@@ -3,6 +3,8 @@ package engine.render;
 import engine.math.Vector2D;
 import engine.math.Axis2D;
 
+import java.awt.*;
+
 public abstract class DisplayObject implements Renderable {
 
     protected Vector2D position = new Vector2D();
@@ -66,6 +68,10 @@ public abstract class DisplayObject implements Renderable {
         position.add(delta);
     }
 
+    public void move(float x, float y){
+        position.add(x, y);
+    }
+
     /**
      * Sets the position of the object
      */
@@ -73,9 +79,6 @@ public abstract class DisplayObject implements Renderable {
         position.setTo(to);
     }
 
-    /**
-     * Sets the position of the object
-     */
     public void setPosition(float x, float y){
         position.setTo(x, y);
     }
@@ -145,5 +148,71 @@ public abstract class DisplayObject implements Renderable {
     public void setOriginY(float originY){
         this.originY = originY;
     }
+
+    /**
+     * Sets the dispaly origin of the object
+     * @param originX value between 0 and 1 inclusive
+     * @param originY value between 0 and 1 inclusive
+     */
+    public void setOrigin(float originX, float originY){
+        this.originX = originX;
+        this.originY = originY;
+    }
+
+    // Congrats, you have scrolled to the
+    // important part of the code
+
+    /**
+     * Calls the abstract draw providing x and y
+     * (after offsetting for the origin)
+     * as well as width and height (after accounting
+     * for scaling and mirroring)
+     */
+    @Override
+    public void draw(Graphics2D g) {
+        if(!visible) return;
+
+        int x = position.get(Axis2D.X).intValue();
+        int y = position.get(Axis2D.Y).intValue();
+
+        float ox = originX;
+        float oy = originY;
+
+        int w = (int) getWidth();
+        int h = (int) getHeight();
+
+        if(flipX) {
+            w = -w;
+            ox = 1 - ox;
+        }
+        if(flipY) {
+            h = -h;
+            oy = 1 - oy;
+        }
+
+        x -= (int) (w * ox);
+        y -= (int) (h * oy);
+
+        draw(g, x, y, w, h);
+    }
+
+    /**
+     * Override to draws the object to the graphics2D
+     * object g. Unless overridden, draw(g) will pass
+     * in the parameters as specified
+     * @param x the x of the top left corner where
+     *          the object should be drawn (origin
+     *          and flip accounted for)
+     * @param y the y of the top left corner where
+     *          the object should be drawn (origin
+     *          and flip accounted for)
+     * @param w the width that the object should be
+     *          drawn to (scaling accounted for)
+     * @param h the height that the object should be
+     *          drawn to (scaling account for)
+     *
+     * NOTE: w and h can be negative due to flipping
+     */
+    abstract void draw(Graphics2D g, int x, int y, int w, int h);
 
 }

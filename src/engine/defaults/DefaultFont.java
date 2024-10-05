@@ -1,5 +1,4 @@
-//Sorry David...
-package engine.Util;
+package engine.defaults;
 
 import engine.render.SpriteFont;
 
@@ -10,7 +9,7 @@ public class DefaultFont extends SpriteFont {
 
     @Override
     public char[] getCharacters() {
-        return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?!.:;,()[]\'\"-ÄÖÜäöüëïß%@<>".toCharArray();
+        return "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?!.:;,()[]\'\"-/ÄÖÜäöüëïß%@<>".toCharArray();
     }
 
     @Override
