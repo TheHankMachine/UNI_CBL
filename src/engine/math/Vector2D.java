@@ -40,6 +40,16 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
     }
 
     /**
+     * @returns the angle of the vector about the
+     * horizontal. Counterclockwise relative to
+     * cartesian coordinates, clockwise relative
+     * to the screen.
+     */
+    public float getAngle(){
+        return (float) Math.atan2(get(Y), get(X));
+    }
+
+    /**
      * Adds to a specified axis of the vector.
      *
      * @param axis to add to
@@ -59,14 +69,39 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
     }
 
     /**
+     * Does the exact same thing as add, but the other way.
+     * Crazy right?
+     */
+    public void subtract(Vector2D vector){
+        computeForEach((k, v) -> v - vector.get(k));
+    }
+
+    /**
+     * Reflects the vector across all axes
+     */
+    public void flip(){
+        computeForEach((_, v) -> -v);
+    }
+
+    /**
      * Reflects the vector on the respective axis
      */
     public void flip(Axis2D axis){
         compute(axis, (_, v) -> -v);
     }
 
-    public void subtract(Vector2D vector){
-        computeForEach((k, v) -> v - vector.get(k));
+    /**
+     * Reflects the vector across another vector
+     */
+    public void flip(Vector2D vector){
+        Vector2D n = vector.copy();
+        n.normalise();
+
+        var scale = 2 * dot(n);
+        n.scale(scale);
+
+        flip();
+        add(n);
     }
 
     /**
@@ -95,7 +130,13 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
     }
 
 
-
+    /**
+     * Rotates the vector around angle. Rotation is counterclockwise
+     * relative to cartesian coordinates, but clockwise relative
+     * to the screen display.
+     *
+     * @param angle radian amount to rotate the vector
+     */
     public void rotate(float angle){
         float x = get(X);
         float y = get(Y);
@@ -118,18 +159,10 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         forEach((k, _) -> compute(k, operator));
     }
 
-    /**
-     * I doubt this will ever get used. Nevertheless, I put it
-     * here anyway
-     *
-     * @param a vector a
-     * @param b vector b
-     * @return dot product between a and b
-     */
-    public static float dot(Vector2D a, Vector2D b){
+    public float dot(Vector2D b){
         float sum = 0;
         for(Axis2D axis : Axis2D.values()){
-            sum += a.get(axis) * b.get(axis);
+            sum += get(axis) * b.get(axis);
         }
         return sum;
     }

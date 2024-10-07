@@ -2,9 +2,8 @@ package engine.input;
 
 import engine.Game;
 import engine.math.Vector2D;
-import engine.render.Renderer;
+import engine.render.display.Display;
 
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -30,7 +29,11 @@ public class Input{
     private final HashMap<Integer, Boolean> keyDownMap = new HashMap<>();
     private final HashMap<Integer, Integer> keyDurationMap = new HashMap<>();
 
-    private Point lastMouseLocation;
+    private Vector2D lastMousePosition = new Vector2D();
+
+    public Vector2D getMouseLocation(){
+        return lastMousePosition;
+    }
 
     /**
      * Returns true while a key is being pressed.
@@ -78,13 +81,17 @@ public class Input{
             keyDurationMap.put(a.key, 0);
         }
 
-        Renderer renderer = Game.getInstance().getRenderer();
+        Display display = Game.getInstance().getDisplay();
 
-        renderer.addKeyListener(new KeyHandler());
-        renderer.addMouseMotionListener(new MouseMotionAdapter() {
+        display.addKeyListener(new KeyHandler());
+        display.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                lastMouseLocation = e.getPoint();
+                lastMousePosition = display.getScreen().getLocalPositionFromGlobal(e.getX(), e.getY());
+//                 / display.getWidth();
+
+//                e.getX();
+//                lastMouseLocation = e.getPoint();
             }
         });
     }

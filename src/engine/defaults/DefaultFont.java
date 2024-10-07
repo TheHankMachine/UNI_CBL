@@ -14,7 +14,7 @@ public class DefaultFont extends SpriteFont {
 
     @Override
     public String getAsset() {
-        return "defaultFont.png";
+        return "defaults/highContrastFont.png";
     }
 
     @Override

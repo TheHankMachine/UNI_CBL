@@ -2,7 +2,7 @@ package engine;
 
 import engine.defaults.DefaultFont;
 import engine.input.Input;
-import engine.render.Renderer;
+import engine.render.display.Display;
 import engine.render.SpriteFont;
 import engine.update.Updateable;
 
@@ -29,7 +29,7 @@ public abstract class Game {
 
     protected final GameConfig config;
 
-    private final Renderer renderer;
+    private final Display display;
     private final Input input;
 
     public Game(GameConfig config){
@@ -37,13 +37,13 @@ public abstract class Game {
 
         this.config = config;
 
-        renderer = new Renderer(config);
+        display = new Display(config);
         input = new Input();
 
         debug_displayText = new DefaultFont("test", 0, 0){
             @Override
             public DepthLayer getDepth() {
-                return DepthLayer.FOREGROUND;
+                return DepthLayer.UI;
             }
         };
     }
@@ -62,9 +62,9 @@ public abstract class Game {
 
         debug_updateTimeMs = (int) (System.nanoTime() - startTime) / 1_000_000;
 
-        renderer.repaint();
+        display.repaint();
 
-        debug_displayText.setText(String.format("Update time: %dms\nRender time: %dms\nUptime: %d\'/.",
+        debug_displayText.setText(String.format("Update time: %02dms\nRender time: %02dms\nUptime: %02d\'/,",
             debug_updateTimeMs, debug_renderTimeMs,
             (debug_updateTimeMs + debug_renderTimeMs) * 100 / config.targetTickMs
         ));
@@ -72,19 +72,19 @@ public abstract class Game {
 
     public abstract void update();
 
-    public final Renderer getRenderer(){
-        return renderer;
+    public final Display getDisplay(){
+        return display;
     }
 
     public final Input getInput(){
         return input;
     }
 
-    public int getWidth(){
+    public int getDisplayWidth(){
         return config.width;
     }
 
-    public int getHeight(){
+    public int getDisplayHeight(){
         return config.height;
     }
 

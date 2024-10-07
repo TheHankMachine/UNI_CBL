@@ -19,6 +19,10 @@ public abstract class DisplayObject implements Renderable {
     protected int width;
     protected int height;
 
+    protected DisplayObject(){
+        registerRender();
+    }
+
     /**
      * Sets the visibility of the object
      */
@@ -213,6 +217,6 @@ public abstract class DisplayObject implements Renderable {
      *
      * NOTE: w and h can be negative due to flipping
      */
-    abstract void draw(Graphics2D g, int x, int y, int w, int h);
+    protected abstract void draw(Graphics2D g, int x, int y, int w, int h);
 
 }

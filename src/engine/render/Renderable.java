@@ -14,7 +14,7 @@ public interface Renderable {
     }
 
     default void registerRender(){
-        Game.getInstance().getRenderer().add(this);
+        Game.getInstance().getDisplay().add(this);
     }
 
     void draw(Graphics2D g);

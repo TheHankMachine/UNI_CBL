@@ -3,7 +3,6 @@ package engine.render;
 import engine.math.Vector2D;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class SpriteSheet extends Sprite{
 

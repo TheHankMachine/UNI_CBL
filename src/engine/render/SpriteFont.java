@@ -9,9 +9,9 @@ import java.util.Map;
 
 public abstract class SpriteFont extends DisplayObject {
 
-    private static final HashMap<Class<? extends SpriteFont>, Map<Character, Integer>> classToCharacterMap = new HashMap<>();
+    private final Map<Character, Integer> characterToFrame;
 
-    private final ArrayList<SpriteSheet> sprites = new ArrayList<>();
+    private final ArrayList<SpriteSheet> sprites;
     private String text;
 
     private boolean requiresUpdate = true;
@@ -20,9 +20,15 @@ public abstract class SpriteFont extends DisplayObject {
     protected float originY = 0;
 
     private SpriteFont(String text){
-        initialiseFont(this);
+        sprites = new ArrayList<>();
+        characterToFrame = new HashMap<>();
+
+        char[] chars = getCharacters();
+        for(int i = 0; i < chars.length; i++){
+            characterToFrame.put(chars[i], i);
+        }
+
         setText(text);
-        this.registerRender();
     }
 
     public SpriteFont(String text, Vector2D position){
@@ -42,8 +48,6 @@ public abstract class SpriteFont extends DisplayObject {
 
     //TODO: clean up
     public void updateText() {
-        Map<Character, Integer> characterToFrame = getCharacterMap();
-
         sprites.forEach(e -> e.setVisible(false));
 
         width = 0;
@@ -124,6 +128,7 @@ public abstract class SpriteFont extends DisplayObject {
 
         change.subtract(position);
         change.scale(-1);
+
         moveSprites(change);
     }
 
@@ -195,22 +200,5 @@ public abstract class SpriteFont extends DisplayObject {
      * as upper-case
      */
     public abstract boolean forceUpperCase();
-
-    public final Map<Character, Integer> getCharacterMap(){
-        return classToCharacterMap.get(getClass());
-    }
-
-    public static void initialiseFont(SpriteFont spriteFont){
-        if(classToCharacterMap.containsKey(spriteFont.getClass())) return;
-
-        HashMap<Character, Integer> characterMap = new HashMap<>();
-
-        char[] chars = spriteFont.getCharacters();
-        for(int i = 0; i < chars.length; i++){
-            characterMap.put(chars[i], i);
-        }
-
-        classToCharacterMap.put(spriteFont.getClass(), characterMap);
-    }
 
 }

@@ -1,7 +1,6 @@
 package engine.render;
 
 import engine.Game;
-import engine.math.Axis2D;
 import engine.math.Vector2D;
 
 import java.awt.*;
@@ -15,8 +14,6 @@ public class Sprite extends DisplayObject {
 
         width = image.getWidth();
         height = image.getHeight();
-
-        registerRender();
     }
 
     /**
