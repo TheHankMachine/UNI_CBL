@@ -1,4 +1,4 @@
-package engine.defaults;
+package engine.examples;
 
 import engine.Game;
 import engine.math.Axis2D;
@@ -16,7 +16,7 @@ public class DVD extends SpriteSheet implements Updateable {
             (float) (Math.random() * (Game.getInstance().getDisplayHeight() - 12))
         );
 
-//        setOrigin(0, 0);
+        setOrigin(0, 0);
 
         setFrame((int) (Math.random() * 4));
         v.rotate((float) (Math.random() * 2 * Math.PI));

@@ -1,8 +1,7 @@
-package engine.defaults;
+package engine.examples;
 
 import engine.Game;
 import engine.math.Vector2D;
-import engine.render.Sprite;
 import engine.update.Updateable;
 
 public class BoundryBreaker implements Updateable {

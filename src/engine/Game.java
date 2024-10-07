@@ -1,6 +1,6 @@
 package engine;
 
-import engine.defaults.DefaultFont;
+import engine.examples.DefaultFont;
 import engine.input.Input;
 import engine.render.display.Display;
 import engine.render.SpriteFont;

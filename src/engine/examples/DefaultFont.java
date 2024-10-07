@@ -1,4 +1,4 @@
-package engine.defaults;
+package engine.examples;
 
 import engine.render.SpriteFont;
 

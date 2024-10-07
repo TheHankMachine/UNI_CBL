@@ -1,4 +1,4 @@
-package engine.defaults;
+package engine.examples;
 
 import engine.math.Axis2D;
 import engine.math.Vector2D;
