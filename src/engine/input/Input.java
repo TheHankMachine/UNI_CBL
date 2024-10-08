@@ -3,6 +3,7 @@ package engine.input;
 import engine.Game;
 import engine.math.Vector2D;
 import engine.render.display.Display;
+import engine.render.display.Screen;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -29,10 +30,18 @@ public class Input{
     private final HashMap<Integer, Boolean> keyDownMap = new HashMap<>();
     private final HashMap<Integer, Integer> keyDurationMap = new HashMap<>();
 
-    private Vector2D lastMousePosition = new Vector2D();
+    private final Vector2D lastMousePosition = new Vector2D();
 
-    public Vector2D getMouseLocation(){
-        return lastMousePosition;
+    public Vector2D getMousePositionGameRelative(){
+        Vector2D position = lastMousePosition.copy();
+        Display display = Game.getInstance().getDisplay();
+
+        position.add(display.getDisplayOriginX(), display.getDisplayOriginY());
+        return position;
+    }
+
+    public Vector2D getMousePositionScreenRelative(){
+        return lastMousePosition.copy();
     }
 
     /**
@@ -74,24 +83,20 @@ public class Input{
         return new Vector2D(x, y);
     }
 
-
     public Input(){
-        for(InputKey a : InputKey.values()){
-            keyDownMap.put(a.key, false);
-            keyDurationMap.put(a.key, 0);
+        for(InputKey input : InputKey.values()){
+            keyDownMap.put(input.key, false);
+            keyDurationMap.put(input.key, 0);
         }
 
         Display display = Game.getInstance().getDisplay();
+        Screen screen = display.getScreen();
 
         display.addKeyListener(new KeyHandler());
         display.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                lastMousePosition = display.getScreen().getLocalPositionFromGlobal(e.getX(), e.getY());
-//                 / display.getWidth();
-
-//                e.getX();
-//                lastMouseLocation = e.getPoint();
+                lastMousePosition.setTo(screen.getLocalPositionFromGlobal(e.getX(), e.getY()));
             }
         });
     }

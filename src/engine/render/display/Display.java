@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 import engine.GameConfig;
+import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.Renderable;
 import engine.render.Renderable.DepthLayer;
@@ -18,6 +19,8 @@ public class Display extends JFrame {
     private final EnumMap<DepthLayer, ArrayList<Renderable>> renderList;
     private final GameConfig config;
     private final Screen screen;
+
+    private Vector2D displayOrigin = new Vector2D();
 
     public Display(GameConfig config){
         this.config = config;
@@ -49,15 +52,23 @@ public class Display extends JFrame {
         return screen;
     }
 
+    public float getDisplayOriginX(){
+        return displayOrigin.get(Axis2D.X);
+    }
+
+    public float getDisplayOriginY(){
+        return displayOrigin.get(Axis2D.Y);
+    }
+
     /**
      * Sets the position of the display origin
      */
     public void setDisplayOrigin(float x, float y){
-        screen.displayOrigin.setTo(x, y);
+        displayOrigin.setTo(x, y);
     }
 
     public void setDisplayOrigin(Vector2D to){
-        screen.displayOrigin.setTo(to);
+        displayOrigin.setTo(to);
     }
 
     /**
@@ -65,7 +76,7 @@ public class Display extends JFrame {
      * another vector
      */
     public void setDisplayOriginReference(Vector2D ref){
-        screen.displayOrigin = ref;
+        displayOrigin = ref;
     }
 
     private class ResizeHandler extends ComponentAdapter {

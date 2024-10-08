@@ -14,6 +14,6 @@ public class CursorFollower extends Sprite implements Updateable {
 
     @Override
     public void update() {
-        setPosition(Game.getInstance().getInput().getMouseLocation());
+        setPosition(Game.getInstance().getInput().getMousePositionGameRelative());
     }
 }

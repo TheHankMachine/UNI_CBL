@@ -21,8 +21,6 @@ public class Screen extends JPanel {
     private float scale;
     private AffineTransform transform;
 
-    public Vector2D displayOrigin = new Vector2D();
-
     public Screen(GameConfig config, Display display){
         this.display = display;
         this.config = config;
@@ -86,8 +84,8 @@ public class Screen extends JPanel {
         g2d.fillRect(0, 0, config.width, config.height);
         g2d.clipRect(0, 0, config.width, config.height);
 
-        float dox = displayOrigin.get(Axis2D.X);
-        float doy = displayOrigin.get(Axis2D.Y);
+        float dox = display.getDisplayOriginX();
+        float doy = display.getDisplayOriginY();
 
         g2d.translate(-dox, -doy);
 
