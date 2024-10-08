@@ -159,6 +159,9 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         forEach((k, _) -> compute(k, operator));
     }
 
+    /**
+     * @return the dot product between this vector and param b
+     */
     public float dot(Vector2D b){
         float sum = 0;
         for(Axis2D axis : Axis2D.values()){

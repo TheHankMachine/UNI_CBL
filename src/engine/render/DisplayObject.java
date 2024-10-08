@@ -1,11 +1,13 @@
 package engine.render;
 
+import engine.math.BoundingBox;
+import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.math.Axis2D;
 
 import java.awt.*;
 
-public abstract class DisplayObject implements Renderable {
+public abstract class DisplayObject implements Renderable, Collideable {
 
     protected Vector2D position = new Vector2D();
 
@@ -166,24 +168,16 @@ public abstract class DisplayObject implements Renderable {
     // Congrats, you have scrolled to the
     // important part of the code
 
-    /**
-     * Calls the abstract draw providing x and y
-     * (after offsetting for the origin)
-     * as well as width and height (after accounting
-     * for scaling and mirroring)
-     */
     @Override
-    public void draw(Graphics2D g) {
-        if(!visible) return;
-
-        int x = position.get(Axis2D.X).intValue();
-        int y = position.get(Axis2D.Y).intValue();
+    public BoundingBox getBoundingBox() {
+        float x = position.get(Axis2D.X);
+        float y = position.get(Axis2D.Y);
 
         float ox = originX;
         float oy = originY;
 
-        int w = (int) getWidth();
-        int h = (int) getHeight();
+        float w = getWidth();
+        float h = getHeight();
 
         if(flipX) {
             w = -w;
@@ -194,10 +188,49 @@ public abstract class DisplayObject implements Renderable {
             oy = 1 - oy;
         }
 
-        x -= (int) (w * ox);
-        y -= (int) (h * oy);
+        x -= w * ox;
+        y -= h * oy;
 
-        draw(g, x, y, w, h);
+        return new BoundingBox(x, y, x + w, y + h);
+    }
+
+
+    /**
+     * Calls the abstract draw providing x and y
+     * (after offsetting for the origin)
+     * as well as width and height (after accounting
+     * for scaling and mirroring)
+     */
+    @Override
+    public void draw(Graphics2D g) {
+        if(!visible) return;
+
+        BoundingBox b = getBoundingBox();
+
+        draw(g, (int) b.x1, (int) b.y1, (int) b.width, (int) b.height);
+
+//        int x = position.get(Axis2D.X).intValue();
+//        int y = position.get(Axis2D.Y).intValue();
+//
+//        float ox = originX;
+//        float oy = originY;
+//
+//        int w = (int) getWidth();
+//        int h = (int) getHeight();
+//
+//        if(flipX) {
+//            w = -w;
+//            ox = 1 - ox;
+//        }
+//        if(flipY) {
+//            h = -h;
+//            oy = 1 - oy;
+//        }
+//
+//        x -= (int) (w * ox);
+//        y -= (int) (h * oy);
+//
+//        draw(g, x, y, w, h);
     }
 
     /**
