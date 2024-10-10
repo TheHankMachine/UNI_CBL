@@ -8,10 +8,16 @@ import static engine.math.Axis2D.*;
 //Works Cited: Björn Baumeier
 public class Vector2D extends EnumMap<Axis2D, Float> {
 
+    /**
+     * initialises a zero vector
+     */
     public Vector2D(){
         this(0, 0);
     }
 
+    /**
+     * initialises a vector of x and y
+     */
     public Vector2D(float x, float y){
         super(Axis2D.class);
 
@@ -19,6 +25,9 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         put(Y, y);
     }
 
+    /**
+     * initialises a copy of the param from
+     */
     public Vector2D(Vector2D from){
         this(from.get(X), from.get(Y));
     }
@@ -159,6 +168,9 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         forEach((k, _) -> compute(k, operator));
     }
 
+    /**
+     * @return the dot product between this vector and param b
+     */
     public float dot(Vector2D b){
         float sum = 0;
         for(Axis2D axis : Axis2D.values()){

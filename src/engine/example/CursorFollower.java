@@ -1,4 +1,4 @@
-package engine.examples;
+package engine.example;
 
 import engine.Game;
 import engine.render.Sprite;
@@ -7,7 +7,7 @@ import engine.update.Updateable;
 public class CursorFollower extends Sprite implements Updateable {
 
     public CursorFollower(){
-        super("defaults/smile.png");
+        super("example/smile.png");
 
         registerUpdate();
     }
