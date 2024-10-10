@@ -32,11 +32,17 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         this(from.get(X), from.get(Y));
     }
 
+    /**
+     * sets the vector to params x and y
+     */
     public void setTo(float x, float y){
         put(X, x);
         put(Y, y);
     }
 
+    /**
+     * sets the vector to be the same as param copy
+     */
     public void setTo(Vector2D copy){
         computeForEach((k, _) -> copy.get(k));
     }
@@ -49,7 +55,7 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
     }
 
     /**
-     * @returns the angle of the vector about the
+     * @return the angle of the vector about the
      * horizontal. Counterclockwise relative to
      * cartesian coordinates, clockwise relative
      * to the screen.
@@ -68,10 +74,16 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         compute(axis, (_, v) -> v + delta);
     }
 
+    /**
+     * Adds param vector to this vector
+     */
     public void add(Vector2D vector){
         computeForEach((k, v) -> v + vector.get(k));
     }
 
+    /**
+     * Adds params x and y to their respective axis
+     */
     public void add(float x, float y){
         compute(X, (_, v) -> v + x);
         compute(Y, (_, v) -> v + y);
@@ -164,10 +176,6 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         return new Vector2D(this);
     }
 
-    private void computeForEach(BiFunction<Axis2D, Float, Float> operator){
-        forEach((k, _) -> compute(k, operator));
-    }
-
     /**
      * @return the dot product between this vector and param b
      */
@@ -177,6 +185,10 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
             sum += get(axis) * b.get(axis);
         }
         return sum;
+    }
+
+    private void computeForEach(BiFunction<Axis2D, Float, Float> operator){
+        forEach((k, _) -> compute(k, operator));
     }
 
 }

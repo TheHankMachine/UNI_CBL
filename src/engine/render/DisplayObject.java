@@ -68,12 +68,15 @@ public abstract class DisplayObject implements Renderable, Collideable {
     }
 
     /**
-     * moves the position by param delta
+     * moves the position of the object by param delta
      */
     public void move(Vector2D delta){
         position.add(delta);
     }
 
+    /**
+     * moves the position of the object by params x and y
+     */
     public void move(float x, float y){
         position.add(x, y);
     }
@@ -85,6 +88,9 @@ public abstract class DisplayObject implements Renderable, Collideable {
         position.setTo(to);
     }
 
+    /**
+     * Sets the position of the object
+     */
     public void setPosition(float x, float y){
         position.setTo(x, y);
     }
@@ -168,6 +174,9 @@ public abstract class DisplayObject implements Renderable, Collideable {
     // Congrats, you have scrolled to the
     // important part of the code
 
+    /***
+     * @return the bounding box taken up by the sprite
+     */
     @Override
     public BoundingBox getBoundingBox() {
         float x = position.get(Axis2D.X);
@@ -205,9 +214,8 @@ public abstract class DisplayObject implements Renderable, Collideable {
     public void draw(Graphics2D g) {
         if(!visible) return;
 
-//        BoundingBox b = getBoundingBox();
-
-//        draw(g, (int) b.x1, (int) b.y1, (int) b.width, (int) b.height);
+        // bounding box is not called here for it being too
+        // slow to create new objects
 
         int x = position.get(Axis2D.X).intValue();
         int y = position.get(Axis2D.Y).intValue();
