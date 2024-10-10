@@ -80,10 +80,16 @@ public abstract class Game {
         return input;
     }
 
+    /**
+     * @return the width of the game config
+     */
     public int getDisplayWidth(){
         return config.width;
     }
 
+    /**
+     * @return the height of the game config
+     */
     public int getDisplayHeight(){
         return config.height;
     }

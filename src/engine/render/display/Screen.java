@@ -26,6 +26,10 @@ public class Screen extends JPanel {
         this.config = config;
     }
 
+    /**
+     * @return the position of the point represented by params x and y
+     * relative to the screen.
+     */
     public Vector2D getLocalPositionFromGlobal(float x, float y){
         // Dear David,
         //
@@ -47,6 +51,10 @@ public class Screen extends JPanel {
         );
     }
 
+    /**
+     * Starts the chain of functions that draws all elements of renderlist
+     * to the screen
+     */
     public void paintComponent(Graphics g){
         long startTime = System.nanoTime();
 
@@ -55,6 +63,11 @@ public class Screen extends JPanel {
         Game.debug_renderTimeMs = (int) (System.nanoTime() - startTime) / 1_000_000;
     }
 
+    /**
+     * Called on resizing the frame. Sets the transformation and offset
+     * to keep the screen to a constant aspect ratio centered in the middle of the
+     * panel.
+     */
     public void onResize() {
         int frameWidth, frameHeight;
         int width = getWidth();
@@ -75,6 +88,9 @@ public class Screen extends JPanel {
         offsetY = (height - frameHeight) / 2;
     }
 
+    /**
+     * Draws all renderable objects in the renderlist to the screen.
+     */
     public void draw(Graphics2D g2d){
         EnumMap<Renderable.DepthLayer, ArrayList<Renderable>> renderList = display.getRenderList();
         g2d.translate(offsetX, offsetY);
@@ -90,6 +106,8 @@ public class Screen extends JPanel {
         g2d.translate(-dox, -doy);
 
         for(Renderable.DepthLayer layer : Renderable.DepthLayer.values()){
+            //TODO: find better way of handling this
+            //UI should ignore display offset
             if(layer == Renderable.DepthLayer.UI){
                 g2d.translate(dox, doy);
             }

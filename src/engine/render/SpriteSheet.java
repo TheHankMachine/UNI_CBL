@@ -38,18 +38,30 @@ public class SpriteSheet extends Sprite{
         setPosition(position);
     }
 
+    @Override
     public float getWidth(){
         return frameWidth * scale;
     }
 
+    @Override
     public float getHeight(){
         return frameHeight * scale;
     }
 
+    /**
+     * @return the current frame of the sprite
+     */
     public int getFrame(){
         return frame;
     }
 
+    /**
+     * Sets the frame of the sprite. Frames are ordered
+     * in the sprite sheet starting at 0. Frame 0 is located
+     * at the top left hand corner. Subsequent frame indexes
+     * move to the right until the end of a row, where the numbering
+     * continues on the next line down.
+     */
     public void setFrame(int frameIndex){
         frame = frameIndex % totalFrames;
 

@@ -40,22 +40,42 @@ public class Display extends JFrame {
         setSize(config.width, config.height);
     }
 
+    /**
+     * Adds a renderable object to the display list.
+     * The object will then be drawn on all subsequent paints
+     */
     public void add(Renderable e){
         renderList.get(e.getDepth()).add(e);
     }
 
+    /**
+     * @return the renderlist
+     */
     public EnumMap<DepthLayer, ArrayList<Renderable>> getRenderList(){
         return renderList;
     }
 
+    /**
+     * @return the screen (jpanel) of the display
+     */
     public Screen getScreen(){
         return screen;
     }
 
+    /**
+     * @return the x component of the display origin.
+     * This is the offset of which everything is drawn relative
+     * to the top left corner of the screen.
+     */
     public float getDisplayOriginX(){
         return displayOrigin.get(Axis2D.X);
     }
 
+    /**
+     * @return the y component of the display origin.
+     * This is the offset of which everything is drawn relative
+     * to the top left corner of the screen.
+     */
     public float getDisplayOriginY(){
         return displayOrigin.get(Axis2D.Y);
     }
@@ -67,6 +87,9 @@ public class Display extends JFrame {
         displayOrigin.setTo(x, y);
     }
 
+    /**
+     * Sets the position of the display origin
+     */
     public void setDisplayOrigin(Vector2D to){
         displayOrigin.setTo(to);
     }

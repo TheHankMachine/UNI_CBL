@@ -16,9 +16,6 @@ public abstract class SpriteFont extends DisplayObject {
 
     private boolean requiresUpdate = true;
 
-    protected float originX = 0;
-    protected float originY = 0;
-
     private SpriteFont(String text){
         sprites = new ArrayList<>();
         characterToFrame = new HashMap<>();
@@ -28,26 +25,39 @@ public abstract class SpriteFont extends DisplayObject {
             characterToFrame.put(chars[i], i);
         }
 
+        setOrigin(0, 0);
+
         setText(text);
     }
 
+    /**
+     * Creates a new spritefont containing param text as text
+     * at position param position
+     */
     public SpriteFont(String text, Vector2D position){
         this(text);
         setPosition(position);
     }
 
+    /**
+     * Creates a new spritefont containt param text as text
+     * at position params x and y
+     */
     public SpriteFont(String text, float x, float y){
         this(text);
         setPosition(x, y);
     }
 
+    /**
+     * Sets the text of the spritefont
+     */
     public void setText(String text){
         this.text = forceUpperCase()? text.toUpperCase() : text;
         requiresUpdate = true;
     }
 
     //TODO: clean up
-    public void updateText() {
+    private void updateText() {
         sprites.forEach(e -> e.setVisible(false));
 
         width = 0;
@@ -96,7 +106,7 @@ public abstract class SpriteFont extends DisplayObject {
         moveSprites(topLeftPosition);
     }
 
-    public SpriteSheet createNewSprite(){
+    private SpriteSheet createNewSprite(){
         SpriteSheet sprite = new SpriteSheet(getAsset(), getFrameWidth(), getFrameHeight()){
             @Override public void registerRender() {;}
         };
@@ -142,12 +152,16 @@ public abstract class SpriteFont extends DisplayObject {
     }
 
     // This is a consequence of setting up the way that I did :/
+    @Override
     public void draw(Graphics2D g, int x, int y, int w, int h){
         ;
     }
 
-    private void moveSprites(Vector2D vector){
-        sprites.forEach(e -> e.move(vector));
+    /**
+     * translates the positions of all letter sprites by param delta
+     */
+    private void moveSprites(Vector2D delta){
+        sprites.forEach(e -> e.move(delta));
     }
 
     @Override
