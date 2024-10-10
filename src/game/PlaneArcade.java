@@ -8,7 +8,7 @@ import java.awt.*;
 public class PlaneArcade extends Game {
 
     public PlaneArcade(){
-        super(new GameConfig(320, 240, Color.WHITE, "src/assets/", 50));
+        super(new GameConfig(320, 240, new Color(0x51a6dc), "src/assets/", 50));
 
         // for(int i = 0; i < 500; i++) new DVD();
 
