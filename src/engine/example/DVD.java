@@ -1,18 +1,17 @@
-package engine.examples;
+package engine.example;
 
 import engine.Game;
 import engine.math.Axis2D;
-import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
 
 public class DVD extends SpriteSheet implements Updateable {
 
-    Vector2D v = new Vector2D(0.2f, 0);
+    public Vector2D v = new Vector2D(0.2f, 0);
 
     public DVD(){
-        super("defaults/dvd.png", 15, 12,
+        super("example/dvd.png", 15, 12,
             (float) (Math.random() * (Game.getInstance().getDisplayWidth() - 15)),
             (float) (Math.random() * (Game.getInstance().getDisplayHeight() - 12))
         );
@@ -29,11 +28,13 @@ public class DVD extends SpriteSheet implements Updateable {
     public void update() {
         move(v);
 
-        Vector2D pos = Game.getInstance().getInput().getMousePositionGameRelative();
+//        Vector2D pos = Game.getInstance().getInput().getMousePositionGameRelative();
 
-        if(Collideable.collides(pos, this)){
-            setFrame(1);
-        }
+//        if(Collideable.collides(pos, this)){
+//            setFrame(1);
+//        }else{
+//            setFrame(0);
+//        }
 
         if(getX() < 0 || getX() + getWidth() > Game.getInstance().getDisplayWidth()){
             v.flip(Axis2D.X);

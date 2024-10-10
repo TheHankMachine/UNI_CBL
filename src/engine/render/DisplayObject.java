@@ -205,32 +205,32 @@ public abstract class DisplayObject implements Renderable, Collideable {
     public void draw(Graphics2D g) {
         if(!visible) return;
 
-        BoundingBox b = getBoundingBox();
+//        BoundingBox b = getBoundingBox();
 
-        draw(g, (int) b.x1, (int) b.y1, (int) b.width, (int) b.height);
+//        draw(g, (int) b.x1, (int) b.y1, (int) b.width, (int) b.height);
 
-//        int x = position.get(Axis2D.X).intValue();
-//        int y = position.get(Axis2D.Y).intValue();
-//
-//        float ox = originX;
-//        float oy = originY;
-//
-//        int w = (int) getWidth();
-//        int h = (int) getHeight();
-//
-//        if(flipX) {
-//            w = -w;
-//            ox = 1 - ox;
-//        }
-//        if(flipY) {
-//            h = -h;
-//            oy = 1 - oy;
-//        }
-//
-//        x -= (int) (w * ox);
-//        y -= (int) (h * oy);
-//
-//        draw(g, x, y, w, h);
+        int x = position.get(Axis2D.X).intValue();
+        int y = position.get(Axis2D.Y).intValue();
+
+        float ox = originX;
+        float oy = originY;
+
+        int w = (int) getWidth();
+        int h = (int) getHeight();
+
+        if(flipX) {
+            w = -w;
+            ox = 1 - ox;
+        }
+        if(flipY) {
+            h = -h;
+            oy = 1 - oy;
+        }
+
+        x -= (int) (w * ox);
+        y -= (int) (h * oy);
+
+        draw(g, x, y, w, h);
     }
 
     /**

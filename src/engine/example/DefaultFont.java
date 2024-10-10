@@ -1,4 +1,4 @@
-package engine.examples;
+package engine.example;
 
 import engine.render.SpriteFont;
 
@@ -14,7 +14,7 @@ public class DefaultFont extends SpriteFont {
 
     @Override
     public String getAsset() {
-        return "defaults/highContrastFont.png";
+        return "example/highContrastFont.png";
     }
 
     @Override

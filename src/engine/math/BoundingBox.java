@@ -12,14 +12,23 @@ public class BoundingBox{
         this.height = this.y2 - this.y1;
     }
 
+    /**
+     * @return the average of x1 and x2
+     */
     public float getCenterX(){
         return (x1 + x2) / 2;
     }
 
+    /**
+     * @return the average of y1 and y1
+     */
     public float getCenterY(){
         return (y1 + y2) / 2;
     }
 
+    /**
+     * @return if a point is contained within the bounding box.
+     */
     public boolean contains(Vector2D point){
         return Math.abs(getCenterX() - point.get(Axis2D.X)) < Math.abs(width) / 2 &&
                 Math.abs(getCenterY() - point.get(Axis2D.Y)) < Math.abs(height) / 2;

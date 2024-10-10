@@ -1,4 +1,4 @@
-package engine.examples;
+package engine.example;
 
 import engine.Game;
 import engine.math.Vector2D;
