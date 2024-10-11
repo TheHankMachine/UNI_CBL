@@ -21,9 +21,27 @@ public class Screen extends JPanel {
     private float scale;
     private AffineTransform transform;
 
+    private Color backgroundColor;
+
     public Screen(GameConfig config, Display display){
         this.display = display;
         this.config = config;
+
+        this.backgroundColor = config.backgroundColor;
+    }
+
+    /**
+     * @return the current background colour of the screen
+     */
+    public Color getBackgroundColor(){
+        return backgroundColor;
+    }
+
+    /**
+     * Sets the background colour to param color
+     */
+    public void setBackgroundColor(Color color){
+        backgroundColor = color;
     }
 
     /**
@@ -96,7 +114,7 @@ public class Screen extends JPanel {
         g2d.translate(offsetX, offsetY);
         g2d.transform(transform);
 
-        g2d.setColor(config.backgroundColor);
+        g2d.setColor(backgroundColor);
         g2d.fillRect(0, 0, config.width, config.height);
         g2d.clipRect(0, 0, config.width, config.height);
 
