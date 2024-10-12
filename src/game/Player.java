@@ -17,7 +17,6 @@ public class Player extends SpriteSheet implements Updateable {
     private final float speed = 2f;
 
     private final Vector2D cameraPosition = new Vector2D();
-    Vector2D screenCenter = new Vector2D();
 
     public Player() {
         super("player.png", 16, 16,
@@ -28,17 +27,16 @@ public class Player extends SpriteSheet implements Updateable {
         setOrigin(0, 0);
         setFrame(0);
 
-        screenCenter = new Vector2D(
-                Game.getInstance().getDisplayWidth() / 2,
-                Game.getInstance().getDisplayHeight() / 2);
-
         registerUpdate();
     }
 
     @Override
     public void update() {
         Vector2D cursorPosition = Game.getInstance().getInput().getMousePositionScreenRelative();
-        cursorPosition.subtract(position);
+        cursorPosition.subtract(new Vector2D(
+                (float) (Game.getInstance().getDisplayWidth() / 2),
+                (float) (Game.getInstance().getDisplayHeight() / 2)
+        ));
 
         float angle = cursorPosition.getAngle() + PI / 2;
 
@@ -72,15 +70,8 @@ public class Player extends SpriteSheet implements Updateable {
 
         move(directionVector);
 
+        cameraPosition.add(directionVector);
+
         setFrame(sprite_index);
-
-        // IDK what I am doing. Ignore this shit.
-        // screenCenter.setTo(position);
-        // screenCenter.setTo(position);
-        // System.out.println(screenCenter);
-
-        // setOrigin(originX - directionVector.get(Axis2D.X), originY - directionVector.get(Axis2D.Y));
-        // cameraPosition.setTo(screenCenter);
-        // cameraPosition.subtract(screenCenter);
     }
 }
