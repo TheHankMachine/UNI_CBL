@@ -16,7 +16,6 @@ public class Cloud extends SpriteSheet implements Updateable {
         // Pick a random cloud sprite
         Random rand = new Random();
         int sprite_index = rand.nextInt(3);
-        System.out.println("Sprite index: " + sprite_index);
 
         // Set the sprite
         setFrame(sprite_index);
@@ -26,7 +25,6 @@ public class Cloud extends SpriteSheet implements Updateable {
 
     @Override
     public void update() {
-        move(1, 0);
     }
 
 }
