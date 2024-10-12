@@ -26,7 +26,7 @@ public class DVD extends SpriteSheet implements Updateable {
 
     @Override
     public void update() {
-        move(v);
+//        move(v);
 
 //        Vector2D pos = Game.getInstance().getInput().getMousePositionGameRelative();
 
