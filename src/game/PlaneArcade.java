@@ -9,12 +9,12 @@ public class PlaneArcade extends Game {
     public PlaneArcade(){
         super(new GameConfig(320, 240, new Color(0x51a6dc), "src/assets/", 50));
 
-        // for(int i = 0; i < 500; i++) new DVD();
+        //  for(int i = 0; i < 50; i++) new DVD();
 
         // new CursorFollower();
         // new BoundryBreaker();
         
-        // new DVD();
+//        new DVD();
         new Player();
         
         register();

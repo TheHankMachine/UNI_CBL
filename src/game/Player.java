@@ -1,6 +1,7 @@
 package game;
 
 import engine.Game;
+import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
@@ -32,11 +33,9 @@ public class Player extends SpriteSheet implements Updateable {
 
     @Override
     public void update() {
-        Vector2D cursorPosition = Game.getInstance().getInput().getMousePositionScreenRelative();
-        cursorPosition.subtract(new Vector2D(
-                (float) (Game.getInstance().getDisplayWidth() / 2),
-                (float) (Game.getInstance().getDisplayHeight() / 2)
-        ));
+        // You probably want game relative
+        Vector2D cursorPosition = Game.getInstance().getInput().getMousePositionGameRelative();
+        cursorPosition.subtract(position);
 
         float angle = cursorPosition.getAngle() + PI / 2;
 
@@ -73,5 +72,22 @@ public class Player extends SpriteSheet implements Updateable {
         cameraPosition.add(directionVector);
 
         setFrame(sprite_index);
+
+        // IDK what I am doing. Ignore this shit.
+        // screenCenter.setTo(position);
+        // screenCenter.setTo(position);
+        // System.out.println(screenCenter);
+
+        // Lemme help you out here
+        // set display origin is in display, which you can access by
+        // writing this very concise line of code:
+        Game.getInstance().getDisplay().setDisplayOrigin(
+                position.get(Axis2D.X).intValue() - Game.getInstance().getDisplayWidth() / 2,
+                position.get(Axis2D.Y).intValue() - Game.getInstance().getDisplayHeight() / 2
+        );
+
+        // setOrigin(originX - directionVector.get(Axis2D.X), originY - directionVector.get(Axis2D.Y));
+        // cameraPosition.setTo(screenCenter);
+        // cameraPosition.subtract(screenCenter);
     }
 }
