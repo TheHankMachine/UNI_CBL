@@ -1,7 +1,6 @@
 package engine.render;
 
 import engine.Game;
-
 import java.awt.*;
 
 public interface Renderable {
@@ -28,7 +27,7 @@ public interface Renderable {
     /**
      * @return the depth layer. This is related to the
      * depth sorting of all objects on the screen. There are
-     * fixed number of depth layers to simply this process.
+     * fixed number of depth layers to simplify this process.
      */
     default DepthLayer getDepth(){
         return DepthLayer.MIDDLEGROUND;

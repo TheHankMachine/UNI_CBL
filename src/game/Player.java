@@ -5,6 +5,7 @@ import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
+import java.util.HashSet;
 
 public class Player extends SpriteSheet implements Updateable {
 
@@ -23,16 +24,35 @@ public class Player extends SpriteSheet implements Updateable {
     // the speed of player's movement
     private final float speed = 2f;
 
+    // top left corner of the last chunk that the player was in, used to render clouds
+    int lastChunkX = 0;
+    int lastChunkY = 0;
+
+    // set of clouded chunks
+    HashSet<Chunk> cloudedChunks = new HashSet<>();
+
+    // screen dimensions
+    int screenWidth = Game.getInstance().getDisplayWidth();
+    int screenHeight = Game.getInstance().getDisplayHeight();
+
     public Player() {
         super("player.png", 16, 16,
-                (float) (Game.getInstance().getDisplayWidth() / 2),
-                (float) (Game.getInstance().getDisplayHeight() / 2));
+                (float) ((Game.getInstance().getDisplayWidth() / 2)),
+                (float) ((Game.getInstance().getDisplayHeight() / 2)));
 
         // setting the origin of coordinate system
         setOrigin(0, 0);
 
         // setting the initial player sprite
         setFrame(0);
+
+        new CloudChunk(0, 320, 0, 240);
+        cloudedChunks.add(new Chunk(0, 0));
+        System.out.println(cloudedChunks.contains(new int[]{0, 0}));
+
+        System.out.println();
+
+        // System.out.println(-2 - (-2 % screenWidth) - screenWidth);
 
         registerUpdate();
     }
@@ -43,6 +63,7 @@ public class Player extends SpriteSheet implements Updateable {
 
         // adjusting the cursor position to be relative to the player
         cursorPosition.subtract(position);
+        cursorPosition.subtract(new Vector2D(8, 8));
 
         // calculating the angle between the X-axis and the vector from the center of the screen to the cursor
         float angle = cursorPosition.getAngle() + PI / 2;
@@ -100,18 +121,62 @@ public class Player extends SpriteSheet implements Updateable {
     }
 
     private void renderClouds() {
+        // player's position
+        int x = position.get(Axis2D.X).intValue();
+        int y = position.get(Axis2D.Y).intValue();
 
+        // top left corner of the chunk that the player is currently in
+        int currentChunkX = x - (x % screenWidth);
+        int currentChunkY = y - (y % screenHeight);
+
+        if (x < 0) {
+            currentChunkX -= screenWidth;
+        }
+
+        if (y < 0) {
+            currentChunkY -= screenHeight;
+        }
+
+        if (lastChunkX != currentChunkX || lastChunkY != currentChunkY) {
+            Chunk[] surroundingChunks = {
+                new Chunk(currentChunkX - screenWidth, currentChunkY - screenHeight),
+                new Chunk(currentChunkX, currentChunkY - screenHeight),
+                new Chunk(currentChunkX + screenWidth, currentChunkY - screenHeight),
+                new Chunk(currentChunkX + screenWidth, currentChunkY),
+                new Chunk(currentChunkX + screenWidth, currentChunkY + screenHeight),
+                new Chunk(currentChunkX, currentChunkY + screenHeight),
+                new Chunk(currentChunkX - screenWidth, currentChunkY + screenHeight),
+                new Chunk(currentChunkX - screenWidth, currentChunkY)
+            };
+
+            for (Chunk chunk : surroundingChunks) {
+                if (!cloudedChunks.contains(chunk)) {
+                    int coordinates[] = chunk.getCoordinates();
+                    new CloudChunk(coordinates[0], coordinates[0] + screenWidth, coordinates[1], coordinates[1] + screenHeight);             
+                    cloudedChunks.add(chunk);
+                }
+            }
+
+            lastChunkX = currentChunkX;
+            lastChunkY = currentChunkY;
+        }
     }
 
     @Override
     public void update() {
         // rotating the player
         rotateToCursor();
-        
+
+        // System.out.println(position.get(Axis2D.X).intValue() % screenWidth);
         // moving the player
         move();
 
         // rendering clouds
         renderClouds();
+    }
+
+    @Override
+    public DepthLayer getDepth() {
+        return DepthLayer.FOREGROUND;
     }
 }
