@@ -23,8 +23,9 @@ public interface Updateable {
      * Calls update on all elements in the updateList
      */
     static void updateAll(){
-        updateList.iterator().forEachRemaining(Updateable::update);
-//        updateList.forEach(Updateable::update);
+        for(int i = 0; i < updateList.size(); i++){
+            updateList.get(i).update();
+        }
     }
 
 }
