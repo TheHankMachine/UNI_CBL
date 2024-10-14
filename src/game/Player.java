@@ -46,7 +46,7 @@ public class Player extends SpriteSheet implements Updateable {
         // setting the initial player sprite
         setFrame(0);
 
-        new CloudChunk(0, 320, 0, 240);
+//        new CloudChunk(0, 320, 0, 240);
         cloudedChunks.add(new Chunk(0, 0));
         System.out.println(cloudedChunks.contains(new int[]{0, 0}));
 
@@ -101,9 +101,15 @@ public class Player extends SpriteSheet implements Updateable {
         setFrame(sprite_index);
     }
 
+    Vector2D directionVector;
+
+    public Vector2D getVelocity(){
+        return directionVector.copy();
+    }
+
     private void move() {
         // calculating the vector along which the player will move
-        Vector2D directionVector = new Vector2D(
+        directionVector = new Vector2D(
                 (float) Math.sin(currentAngle),
                 (float) -Math.cos(currentAngle));
 
@@ -172,7 +178,7 @@ public class Player extends SpriteSheet implements Updateable {
         move();
 
         // rendering clouds
-        renderClouds();
+//        renderClouds();
     }
 
     @Override

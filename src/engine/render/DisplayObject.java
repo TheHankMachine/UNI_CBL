@@ -82,6 +82,13 @@ public abstract class DisplayObject implements Renderable, Collideable {
     }
 
     /**
+     * moves the object's position on a specified axis
+     */
+    public void move(Axis2D axis, float delta){
+        position.add(axis, delta);
+    }
+
+    /**
      * Sets the position of the object
      */
     public void setPosition(Vector2D to){
@@ -101,6 +108,13 @@ public abstract class DisplayObject implements Renderable, Collideable {
      */
     public void setPositionReference(Vector2D ref){
         position = ref;
+    }
+
+    /**
+     * Returns the position vector of the object
+     */
+    public Vector2D getPosition(){
+        return position;
     }
 
     /**
