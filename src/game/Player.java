@@ -22,7 +22,7 @@ public class Player extends SpriteSheet implements Updateable {
     private final float rotationStep = PI / 8;
 
     // the speed of player's movement
-    private final float speed = 2f;
+    private final float speed = 8f;
 
     // top left corner of the last chunk that the player was in, used to render clouds
     int lastChunkX = 0;
@@ -39,6 +39,8 @@ public class Player extends SpriteSheet implements Updateable {
         super("player.png", 16, 16,
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
                 (float) ((Game.getInstance().getDisplayHeight() / 2)));
+
+        setScale(4);
 
         // setting the origin of coordinate system
         setOrigin(0, 0);

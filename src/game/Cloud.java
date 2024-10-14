@@ -20,6 +20,8 @@ public class Cloud extends SpriteSheet implements Updateable {
 
         setOrigin(0, 0);
 
+        setScale(4);
+
         speed = 0.5f + rand.nextFloat() * 2;
 
         registerUpdate();
@@ -27,7 +29,7 @@ public class Cloud extends SpriteSheet implements Updateable {
 
     @Override
     public void update() {
-        move(speed, 0);
+        // move(speed, 0);
     }
         
 
