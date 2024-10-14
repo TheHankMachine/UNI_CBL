@@ -70,14 +70,18 @@ public abstract class Game {
         ));
     }
 
-    public abstract void update();
-
-    public final Display getDisplay(){
-        return display;
+    public float getDefaultScale(){
+        return 1f;
     }
 
     public final Input getInput(){
         return input;
+    }
+
+    public abstract void update();
+
+    public final Display getDisplay(){
+        return display;
     }
 
     /**

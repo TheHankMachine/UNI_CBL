@@ -14,9 +14,15 @@ public class PlaneArcade extends Game {
         // new BoundryBreaker();
 //        new DVD();
         // new Cloud(new Vector2D(200, 0));
-        new Player();
+        var p = new Player();
+        new Clouds(p);
 
         register();
+    }
+
+    @Override
+    public float getDefaultScale() {
+        return 4f;
     }
 
     @Override

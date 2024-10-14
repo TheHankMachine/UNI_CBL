@@ -1,5 +1,6 @@
 package engine.render;
 
+import engine.Game;
 import engine.math.BoundingBox;
 import engine.math.Collideable;
 import engine.math.Vector2D;
@@ -11,7 +12,7 @@ public abstract class DisplayObject implements Renderable, Collideable {
 
     protected Vector2D position = new Vector2D();
 
-    protected float scale = 1f;
+    protected float scale = Game.getInstance().getDefaultScale();
     protected float originY = 0.5f;
     protected float originX = 0.5f;
 
@@ -82,6 +83,13 @@ public abstract class DisplayObject implements Renderable, Collideable {
     }
 
     /**
+     * moves the object's position on a specified axis
+     */
+    public void move(Axis2D axis, float delta){
+        position.add(axis, delta);
+    }
+
+    /**
      * Sets the position of the object
      */
     public void setPosition(Vector2D to){
@@ -101,6 +109,13 @@ public abstract class DisplayObject implements Renderable, Collideable {
      */
     public void setPositionReference(Vector2D ref){
         position = ref;
+    }
+
+    /**
+     * Returns the position vector of the object
+     */
+    public Vector2D getPosition(){
+        return position;
     }
 
     /**
