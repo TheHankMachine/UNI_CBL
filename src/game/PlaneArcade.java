@@ -17,6 +17,8 @@ public class PlaneArcade extends Game {
         Player player = new Player();
         new Clouds(player);
 
+        // new DisplayVector(new Vector2D(680, 480), new Vector2D(1000, 1000));
+
         register();
     }
 

@@ -1,6 +1,7 @@
 package game;
 
 import engine.Game;
+import engine.input.Input.InputKey;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
@@ -93,9 +94,11 @@ public class Player extends SpriteSheet implements Updateable {
         return directionVector.copy();
     }
 
+    float fixedAngle = 0;
+
     private void move() {
         // the player will move in the direction that the sprite is facing
-        float fixedAngle = currentAngle - (currentAngle % rotationStep);
+        fixedAngle = currentAngle - (currentAngle % rotationStep);
 
         // calculating the vector along which the player will move
         directionVector = new Vector2D(
@@ -115,17 +118,22 @@ public class Player extends SpriteSheet implements Updateable {
         );
     }
 
+    private void handleShooting() {
+        if (Game.getInstance().getInput().isDown(InputKey.SPACE)) {
+            // add timer to limit shooting frequency
+            // and add logic to move the bullet to the front of the player
+            // fix update not called on bullet
+            new Bullet(position.get(Axis2D.X).intValue() + (int) getWidth(), position.get(Axis2D.Y).intValue(), fixedAngle + PI / 2);
+        }
+    }
+
     @Override
     public void update() {
-        // rotating the player
         rotateToCursor();
 
-        // System.out.println(position.get(Axis2D.X).intValue() % screenWidth);
-        // moving the player
         move();
 
-        // rendering clouds
-//        renderClouds();
+        handleShooting();
     }
 
     @Override
