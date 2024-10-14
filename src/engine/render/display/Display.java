@@ -37,7 +37,12 @@ public class Display extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addComponentListener(new ResizeHandler());
         setVisible(true);
-        setSize(config.width, config.height);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
+
+        setSize(width * 3 / 4, height * 3 / 4);
     }
 
     /**

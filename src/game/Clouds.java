@@ -15,8 +15,8 @@ public class Clouds implements Updateable {
     public Clouds(Player player) {
         this.player = player;
 
-        for (int i = 0; i < 10; i++) {
-            int frame = (int) (Math.random() * 3);
+        for (int i = 0; i < 20; i++) {
+            int frame = (int) (Math.min(Math.random(), Math.random()) * 3);
             SpriteSheet spriteSheet = new SpriteSheet("clouds.png", 45, 15,
                     (float) Math.random() * Game.getInstance().getDisplayWidth(),
                     (float) Math.random() * Game.getInstance().getDisplayHeight()
