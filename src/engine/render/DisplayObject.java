@@ -1,5 +1,6 @@
 package engine.render;
 
+import engine.Game;
 import engine.math.BoundingBox;
 import engine.math.Collideable;
 import engine.math.Vector2D;
@@ -11,7 +12,7 @@ public abstract class DisplayObject implements Renderable, Collideable {
 
     protected Vector2D position = new Vector2D();
 
-    protected float scale = 1f;
+    protected float scale = Game.getInstance().getDefaultScale();
     protected float originY = 0.5f;
     protected float originX = 0.5f;
 
