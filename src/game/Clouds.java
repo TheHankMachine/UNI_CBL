@@ -1,11 +1,9 @@
 package game;
 
 import engine.Game;
-import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,57 +12,56 @@ public class Clouds implements Updateable {
     private List<SpriteSheet> clouds = new ArrayList<>();
     private Player player;
 
-    public Clouds(Player player){
+    public Clouds(Player player) {
         this.player = player;
 
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             int frame = (int) (Math.random() * 3);
-            var a = new SpriteSheet("clouds.png", 45, 15,
+            SpriteSheet spriteSheet = new SpriteSheet("clouds.png", 45, 15,
                     (float) Math.random() * Game.getInstance().getDisplayWidth(),
                     (float) Math.random() * Game.getInstance().getDisplayHeight()
-            ){
-                public DepthLayer getDepth(){
+            ) {
+                public DepthLayer getDepth() {
                     return List.of(
-                        DepthLayer.BACKGROUND,
-                        DepthLayer.MIDDLEGROUND,
-                        DepthLayer.FOREGROUND
+                            DepthLayer.BACKGROUND,
+                            DepthLayer.MIDDLEGROUND,
+                            DepthLayer.FOREGROUND
                     ).get(frame);
                 }
             };
 
-            a.setFrame(frame);
-            clouds.add(
-                a
-            );
+            spriteSheet.setFrame(frame);
+            clouds.add(spriteSheet);
         }
 
         registerUpdate();
     }
-
 
     @Override
     public void update() {
         int width = Game.getInstance().getDisplayWidth();
         int height = Game.getInstance().getDisplayWidth();
 
-        clouds.forEach(e -> {
+        clouds.forEach(cloud -> {
 
-            Vector2D d = player.getVelocity();
-            d.scale((float) (1 - e.getFrame()) / 2);
+            Vector2D direction = player.getVelocity();
+            direction.scale((float) (1 - cloud.getFrame()) / 2);
 
-            e.move(d);
-//            e.move(player.getV);
+            cloud.move(direction);
+//            cloud.move(player.getV);
 
-            if(e.getX() < player.getX() - width / 2){
-                e.move(width, 0);
-            }else if(e.getX() > player.getX() + width / 2){
-                e.move(-width, 0);
+            float cloudWidth = cloud.getWidth();
+
+            if (cloud.getX() < player.getX() - (width / 2) - cloudWidth) {
+                cloud.move(width + cloudWidth * 2, 0);
+            } else if (cloud.getX() > player.getX() + (width / 2) + cloudWidth) {
+                cloud.move(-width - cloudWidth * 2, 0);
             }
 
-            if(e.getY() < player.getY() - height / 2){
-                e.move(0, height);
-            }else if(e.getY() > player.getY() + height / 2){
-                e.move(0, -height);
+            if (cloud.getY() < player.getY() - height / 2) {
+                cloud.move(0, height);
+            } else if (cloud.getY() > player.getY() + height / 2) {
+                cloud.move(0, -height);
             }
         });
     }
