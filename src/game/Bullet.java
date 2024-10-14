@@ -28,6 +28,8 @@ public class Bullet extends DisplayObject implements Updateable {
             (float) -Math.cos(angle));
 
         velocity.scale(speed);
+
+        registerUpdate();
     }
 
     @Override
@@ -57,7 +59,7 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void update() {
-        System.out.println(velocity);
+        System.out.println("pos: " + position + "  v: " + velocity);
         move(velocity);
     }
 }

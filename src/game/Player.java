@@ -122,7 +122,7 @@ public class Player extends SpriteSheet implements Updateable {
         if (Game.getInstance().getInput().isDown(InputKey.SPACE)) {
             // add timer to limit shooting frequency
             // and add logic to move the bullet to the front of the player
-            // fix update not called on bullet
+            // fix bullet not moving
             new Bullet(position.get(Axis2D.X).intValue() + (int) getWidth(), position.get(Axis2D.Y).intValue(), fixedAngle + PI / 2);
         }
     }
