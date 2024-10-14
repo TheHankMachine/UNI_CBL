@@ -22,6 +22,13 @@ Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException
 
 I think it's because I'm adding stuff to updateList while looping through it. Idk how to solve this.
 
+    Hank: It should be fixed now? If this doesn't work, then I have another idea.
+
 I made the clouds unupdatable and it works but it will be a problem when I have to add enemies.
 
 2. The clouds are shaking for some reason
+    Hank: Each sprite can only be drawn to the nearest pixel. When the plane is moving at weird angles
+          it's causing the clouds to be drawn a little weird.
+          Two ideas to help with this:
+            - Make the player move at one of 16 set angles instead of directly towards the mouse.
+            - Make the player faster (should make gitter less noticeable)
