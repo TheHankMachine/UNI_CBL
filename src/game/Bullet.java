@@ -1,33 +1,29 @@
 package game;
 
+import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.DisplayObject;
 import engine.update.Updateable;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 
 public class Bullet extends DisplayObject implements Updateable {
 
     int x;
     int y;
-    float angle;
 
     Vector2D velocity;
     float speed = 300f;
 
-    public Bullet(int x, int y, float angle) {
+    public Bullet(int x, int y, Vector2D velocity) {
         super();
         this.x = x;
         this.y = y;
-        this.angle = angle;
+        this.velocity = velocity.copy();
 
-
-        velocity = new Vector2D(
-            (float) Math.sin(angle),
-            (float) -Math.cos(angle));
-
-        velocity.scale(speed);
+        this.velocity.normalise();
+        this.velocity.scale(30);
 
         registerUpdate();
     }
@@ -39,27 +35,22 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void draw(Graphics2D g, int x, int y, int w, int h) {
-    // Save the original transform
-    AffineTransform oldTransform = g.getTransform();
+        // Draw the bullet centered at the origin  
+        int endX = x + velocity.get(Axis2D.X).intValue();
+        int endY = y + velocity.get(Axis2D.Y).intValue();
 
-    // Translate to the bullet's position plus half its width and height to center the rotation
-    g.translate(x + w / 2, y + h / 2);
+        g.setColor(Color.YELLOW);
+        g.setStroke(new BasicStroke(9));
+        g.drawLine(x, y, endX, endY);
 
-    // Rotate the graphics context by the angle
-    g.rotate(angle);
-
-    // Draw the bullet centered at the origin
-    g.setColor(Color.RED);
-    g.fillRect(-w / 2, -h / 2, w, h);
-
-    // Restore the original transform
-    g.setTransform(oldTransform);
-        
+        g.setColor(Color.RED);
+        g.setStroke(new BasicStroke(6));
+        g.drawLine(x, y, endX, endY);
     }
 
     @Override
     public void update() {
         System.out.println("pos: " + position + "  v: " + velocity);
-        move(velocity);
+        // move(velocity);
     }
 }
