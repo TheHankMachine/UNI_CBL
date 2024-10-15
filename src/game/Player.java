@@ -115,22 +115,27 @@ public class Player extends SpriteSheet implements Updateable {
     }
 
     private void handleShooting() {
+        // reset the counter after waiting
         if (frameCounter == shootingDelayInFrames) {
             frameCounter = 0;
         }
 
+        // increase the counter
         if (frameCounter > 0) {
             frameCounter += 1;
             return;
         }
 
+        // if space is pressed, instantiate a bullet
         if (Game.getInstance().getInput().isDown(InputKey.SPACE)) {
-            // add timer to limit shooting frequency
+            // start the counter
             frameCounter = 1;
 
+            // the position of the bullet
             Vector2D bulletPosition = position.copy();
             bulletPosition.add(directionVector);
 
+            // instantiate the bullet
             new Bullet(bulletPosition.get(Axis2D.X).intValue(), bulletPosition.get(Axis2D.Y).intValue(), directionVector);
         }
     }
