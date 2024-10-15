@@ -144,8 +144,9 @@ public class Player extends Ship implements Updateable {
 
         move();
 
-        boolean shootTrigger = Game.getInstance().getInput().isDown(InputKey.SPACE);
-        handleShooting(shootTrigger);
+        if(canShoot() && Game.getInstance().getInput().isDown(InputKey.SPACE)){
+            shoot();
+        }
     }
 
     @Override

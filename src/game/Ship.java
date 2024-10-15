@@ -7,23 +7,19 @@ import engine.render.SpriteSheet;
 import engine.update.Updateable;
 
 public class Ship extends SpriteSheet implements Updateable{
-    // PI
+
     private final float PI = (float) Math.PI;
 
-    // the angle of player's rotation
-    float currentAngle = 0;
-
-    // the speed of player's rotation
-    private final float rotationSpeed = 0.34f;
-
-    // the minimum angle of player's rotation
     private final float rotationStep = PI / 8;
-
-    // the speed of player's movement
+    private final float rotationSpeed = 0.34f;
     private final float speed = 8f;
 
-    int shootingDelayInFrames = 10;
-    int frameCounter = 0;
+    private int shootingDelayInFrames = 10;
+    private int frameCounter = 0;
+
+    private Vector2D directionVector;
+    private float currentAngle = 0;
+    private float fixedAngle = 0;
 
     public Ship(String spriteSheetName, float x, float y) {
         super(spriteSheetName, 16, 16, x, y);
@@ -70,13 +66,9 @@ public class Ship extends SpriteSheet implements Updateable{
         setFrame(sprite_index);
     }
 
-    Vector2D directionVector;
-
     public Vector2D getVelocity() {
         return directionVector.copy();
     }
-
-    float fixedAngle = 0;
 
     public void move() {
         // the player will move in the direction that the sprite is facing
@@ -100,7 +92,7 @@ public class Ship extends SpriteSheet implements Updateable{
         );
     }
 
-    public void handleShooting(boolean trigger) {
+    public boolean canShoot(){
         // reset the counter after waiting
         if (frameCounter == shootingDelayInFrames) {
             frameCounter = 0;
@@ -109,21 +101,22 @@ public class Ship extends SpriteSheet implements Updateable{
         // increase the counter
         if (frameCounter > 0) {
             frameCounter += 1;
-            return;
+            return false;
         }
 
-        // if space is pressed, instantiate a bullet
-        if (trigger) {
-            // start the counter
-            frameCounter = 1;
+        return true;
+    }
 
-            // the position of the bullet
-            Vector2D bulletPosition = position.copy();
-            bulletPosition.add(directionVector);
+    public void shoot() {
+        // start the counter
+        frameCounter = 1;
 
-            // instantiate the bullet
-            new Bullet(bulletPosition.get(Axis2D.X).intValue(), bulletPosition.get(Axis2D.Y).intValue(), directionVector);
-        }
+        // the position of the bullet
+        Vector2D bulletPosition = position.copy();
+        bulletPosition.add(directionVector);
+
+        // instantiate the bullet
+        new Bullet(bulletPosition.get(Axis2D.X).intValue(), bulletPosition.get(Axis2D.Y).intValue(), directionVector);
     }
 
     @Override
