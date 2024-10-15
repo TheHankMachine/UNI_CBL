@@ -18,19 +18,15 @@ public class Bullet extends DisplayObject implements Updateable {
 
     public Bullet(int x, int y, Vector2D velocity) {
         super();
-        this.x = x;
-        this.y = y;
+//        this.x = x;
+//        this.y = y;
+        setPosition(x, y);
         this.velocity = velocity.copy();
 
         this.velocity.normalise();
         this.velocity.scale(30);
 
         registerUpdate();
-    }
-
-    @Override
-    public void draw(Graphics2D g) {
-        draw(g, x, y, 50, 5);
     }
 
     @Override
@@ -50,7 +46,7 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void update() {
-        System.out.println("pos: " + position + "  v: " + velocity);
-        // move(velocity);
+//        System.out.println("pos: " + position + "  v: " + velocity);
+         move(velocity);
     }
 }

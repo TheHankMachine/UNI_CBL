@@ -150,6 +150,22 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         scale(to / getLength());
     }
 
+    /**
+     * Interpolates this vector to param to at a fixed rate
+     * (param rate)
+     */
+    public void interpolate(Vector2D to, float rate){
+        Vector2D delta = to.copy();
+        delta.subtract(this);
+
+        if(delta.getLength() <= rate){
+            setTo(to);
+        }else{
+            delta.normalise(rate);
+            add(delta);
+        }
+    }
+
 
     /**
      * Rotates the vector around angle. Rotation is counterclockwise

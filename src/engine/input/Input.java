@@ -121,6 +121,7 @@ public class Input{
             if(!keyDownMap.containsKey(keyCode)) return;
 
             keyDownMap.put(keyCode, false);
+            keyDurationMap.put(keyCode, 0);
         }
 
         @Override

@@ -30,10 +30,9 @@ public class Player extends SpriteSheet implements Updateable {
 
     public Player() {
         super("player.png", 16, 16,
-                (float) ((Game.getInstance().getDisplayWidth() / 2)),
-                (float) ((Game.getInstance().getDisplayHeight() / 2)));
-
-        setScale(4);
+            (float) ((Game.getInstance().getDisplayWidth() / 2)),
+            (float) ((Game.getInstance().getDisplayHeight() / 2))
+        );
 
         // setting the origin of coordinate system
         setOrigin(0, 0);
