@@ -10,21 +10,17 @@ import java.awt.Graphics2D;
 
 public class Bullet extends DisplayObject implements Updateable {
 
-    int x;
-    int y;
-
     Vector2D velocity;
-    float speed = 300f;
+    float speed = 30f;
 
     public Bullet(int x, int y, Vector2D velocity) {
         super();
-//        this.x = x;
-//        this.y = y;
-        setPosition(x, y);
         this.velocity = velocity.copy();
 
         this.velocity.normalise();
-        this.velocity.scale(30);
+        this.velocity.scale(speed);
+
+        setPosition(x, y);
 
         registerUpdate();
     }
@@ -46,7 +42,6 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void update() {
-//        System.out.println("pos: " + position + "  v: " + velocity);
-         move(velocity);
+        move(velocity);
     }
 }
