@@ -24,9 +24,8 @@ public class Player extends SpriteSheet implements Updateable {
     // the speed of player's movement
     private final float speed = 8f;
 
-    // screen dimensions
-    int screenWidth = Game.getInstance().getDisplayWidth();
-    int screenHeight = Game.getInstance().getDisplayHeight();
+    int shootingDelayInFrames = 10;
+    int frameCounter = 0;
 
     public Player() {
         super("player.png", 16, 16,
@@ -34,9 +33,6 @@ public class Player extends SpriteSheet implements Updateable {
                 (float) ((Game.getInstance().getDisplayHeight() / 2)));
 
         setScale(4);
-
-        // setting the origin of coordinate system
-        setOrigin(0, 0);
 
         // setting the initial player sprite
         setFrame(0);
@@ -119,11 +115,23 @@ public class Player extends SpriteSheet implements Updateable {
     }
 
     private void handleShooting() {
+        if (frameCounter == shootingDelayInFrames) {
+            frameCounter = 0;
+        }
+
+        if (frameCounter > 0) {
+            frameCounter += 1;
+            return;
+        }
+
         if (Game.getInstance().getInput().isDown(InputKey.SPACE)) {
             // add timer to limit shooting frequency
-            // and add logic to move the bullet to the front of the player
-            // fix bullet not moving
-            new Bullet(position.get(Axis2D.X).intValue() + (int) getWidth(), position.get(Axis2D.Y).intValue(), directionVector);
+            frameCounter = 1;
+
+            Vector2D bulletPosition = position.copy();
+            bulletPosition.add(directionVector);
+
+            new Bullet(bulletPosition.get(Axis2D.X).intValue(), bulletPosition.get(Axis2D.Y).intValue(), directionVector);
         }
     }
 
