@@ -18,7 +18,7 @@ public class Player extends Ship implements Updateable {
         super("player.png",
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
                 (float) ((Game.getInstance().getDisplayHeight() / 2)),
-                12f);
+                12f, 0.34f);
 
         oldPosition = position.copy();
 

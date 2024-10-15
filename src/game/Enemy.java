@@ -8,7 +8,7 @@ public class Enemy extends Ship implements Updateable {
     // private Vector2D directionVector;
 
     public Enemy(int x, int y, String spriteSheetName, Player player) {
-        super(spriteSheetName, x, y, 6f);
+        super(spriteSheetName, x, y, 6f, 0.1f);
 
         this.player = player;  
 

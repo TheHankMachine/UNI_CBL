@@ -10,20 +10,22 @@ public class Ship extends SpriteSheet implements Updateable{
     private final float PI = (float) Math.PI;
 
     private final float rotationStep = PI / 8;
-    private final float rotationSpeed = 0.34f;
+    
 
-    private int shootingDelayInFrames = 10;
+    private final int shootingDelayInFrames = 10;
     private int frameCounter = 0;
 
     private Vector2D directionVector;
     private float currentAngle = 0;
     private float fixedAngle = 0;
     private float speed = 8f;
+    private float rotationSpeed = 0.34f;
 
-    public Ship(String spriteSheetName, float x, float y, float speed) {
+    public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed) {
         super(spriteSheetName, 16, 16, x, y);
 
         this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
     }
 
     public void rotateToVector(Vector2D vector) {
