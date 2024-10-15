@@ -1,11 +1,11 @@
 package game;
 
 import engine.Game;
+import engine.input.Input.InputKey;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
-import java.util.HashSet;
 
 public class Player extends SpriteSheet implements Updateable {
 
@@ -24,13 +24,6 @@ public class Player extends SpriteSheet implements Updateable {
     // the speed of player's movement
     private final float speed = 8f;
 
-    // top left corner of the last chunk that the player was in, used to render clouds
-    int lastChunkX = 0;
-    int lastChunkY = 0;
-
-    // set of clouded chunks
-    HashSet<Chunk> cloudedChunks = new HashSet<>();
-
     // screen dimensions
     int screenWidth = Game.getInstance().getDisplayWidth();
     int screenHeight = Game.getInstance().getDisplayHeight();
@@ -47,9 +40,6 @@ public class Player extends SpriteSheet implements Updateable {
 
         // setting the initial player sprite
         setFrame(0);
-
-//        new CloudChunk(0, 320, 0, 240);
-        cloudedChunks.add(new Chunk(0, 0));
 
         registerUpdate();
     }
@@ -104,11 +94,16 @@ public class Player extends SpriteSheet implements Updateable {
         return directionVector.copy();
     }
 
+    float fixedAngle = 0;
+
     private void move() {
+        // the player will move in the direction that the sprite is facing
+        fixedAngle = currentAngle - (currentAngle % rotationStep);
+
         // calculating the vector along which the player will move
         directionVector = new Vector2D(
-                (float) Math.sin(currentAngle - (currentAngle % rotationStep)),
-                (float) -Math.cos(currentAngle - (currentAngle % rotationStep)));
+                (float) Math.sin(fixedAngle),
+                (float) -Math.cos(fixedAngle));
 
         // scaling the vector to make the player move with the desired speed
         directionVector.scale(speed);
@@ -121,63 +116,24 @@ public class Player extends SpriteSheet implements Updateable {
                 position.get(Axis2D.X).intValue() - Game.getInstance().getDisplayWidth() / 2,
                 position.get(Axis2D.Y).intValue() - Game.getInstance().getDisplayHeight() / 2
         );
-
-        System.out.println(position);
     }
 
-    private void renderClouds() {
-        // player's position
-        int x = position.get(Axis2D.X).intValue();
-        int y = position.get(Axis2D.Y).intValue();
-
-        // top left corner of the chunk that the player is currently in
-        int currentChunkX = x - (x % screenWidth);
-        int currentChunkY = y - (y % screenHeight);
-
-        if (x < 0) {
-            currentChunkX -= screenWidth;
-        }
-
-        if (y < 0) {
-            currentChunkY -= screenHeight;
-        }
-
-        if (lastChunkX != currentChunkX || lastChunkY != currentChunkY) {
-            Chunk[] surroundingChunks = {
-                new Chunk(currentChunkX - screenWidth, currentChunkY - screenHeight),
-                new Chunk(currentChunkX, currentChunkY - screenHeight),
-                new Chunk(currentChunkX + screenWidth, currentChunkY - screenHeight),
-                new Chunk(currentChunkX + screenWidth, currentChunkY),
-                new Chunk(currentChunkX + screenWidth, currentChunkY + screenHeight),
-                new Chunk(currentChunkX, currentChunkY + screenHeight),
-                new Chunk(currentChunkX - screenWidth, currentChunkY + screenHeight),
-                new Chunk(currentChunkX - screenWidth, currentChunkY)
-            };
-
-            for (Chunk chunk : surroundingChunks) {
-                if (!cloudedChunks.contains(chunk)) {
-                    int coordinates[] = chunk.getCoordinates();
-                    new CloudChunk(coordinates[0], coordinates[0] + screenWidth, coordinates[1], coordinates[1] + screenHeight);
-                    cloudedChunks.add(chunk);
-                }
-            }
-
-            lastChunkX = currentChunkX;
-            lastChunkY = currentChunkY;
+    private void handleShooting() {
+        if (Game.getInstance().getInput().isDown(InputKey.SPACE)) {
+            // add timer to limit shooting frequency
+            // and add logic to move the bullet to the front of the player
+            // fix bullet not moving
+            new Bullet(position.get(Axis2D.X).intValue() + (int) getWidth(), position.get(Axis2D.Y).intValue(), fixedAngle + PI / 2);
         }
     }
 
     @Override
     public void update() {
-        // rotating the player
         rotateToCursor();
 
-        // System.out.println(position.get(Axis2D.X).intValue() % screenWidth);
-        // moving the player
         move();
 
-        // rendering clouds
-//        renderClouds();
+        handleShooting();
     }
 
     @Override

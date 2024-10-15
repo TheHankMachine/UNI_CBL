@@ -14,8 +14,10 @@ public class PlaneArcade extends Game {
         // new BoundryBreaker();
 //        new DVD();
         // new Cloud(new Vector2D(200, 0));
-        var p = new Player();
-        new Clouds(p);
+        Player player = new Player();
+        new Clouds(player);
+
+        // new DisplayVector(new Vector2D(680, 480), new Vector2D(1000, 1000));
 
         register();
     }

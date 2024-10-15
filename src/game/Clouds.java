@@ -15,9 +15,9 @@ public class Clouds implements Updateable {
     public Clouds(Player player) {
         this.player = player;
 
-        for (int i = 0; i < 100; i++) {
-            int frame = (int) (Math.random() * 3);
-            var a = new SpriteSheet("clouds.png", 45, 15,
+        for (int i = 0; i < 20; i++) {
+            int frame = (int) (Math.min(Math.random(), Math.random()) * 3);
+            SpriteSheet spriteSheet = new SpriteSheet("clouds.png", 45, 15,
                     (float) Math.random() * Game.getInstance().getDisplayWidth(),
                     (float) Math.random() * Game.getInstance().getDisplayHeight()
             ) {
@@ -30,10 +30,8 @@ public class Clouds implements Updateable {
                 }
             };
 
-            a.setFrame(frame);
-            clouds.add(
-                    a
-            );
+            spriteSheet.setFrame(frame);
+            clouds.add(spriteSheet);
         }
 
         registerUpdate();
@@ -44,24 +42,26 @@ public class Clouds implements Updateable {
         int width = Game.getInstance().getDisplayWidth();
         int height = Game.getInstance().getDisplayWidth();
 
-        clouds.forEach(e -> {
+        clouds.forEach(cloud -> {
 
-            Vector2D d = player.getVelocity();
-            d.scale((float) (1 - e.getFrame()) / 2);
+            Vector2D direction = player.getVelocity();
+            direction.scale((float) (1 - cloud.getFrame()) / 2);
 
-            e.move(d);
-//            e.move(player.getV);
+            cloud.move(direction);
+//            cloud.move(player.getV);
 
-            if (e.getX() < player.getX() - width / 2) {
-                e.move(width, 0);
-            } else if (e.getX() > player.getX() + width / 2) {
-                e.move(-width, 0);
+            float cloudWidth = cloud.getWidth();
+
+            if (cloud.getX() < player.getX() - (width / 2) - cloudWidth) {
+                cloud.move(width + cloudWidth * 2, 0);
+            } else if (cloud.getX() > player.getX() + (width / 2) + cloudWidth) {
+                cloud.move(-width - cloudWidth * 2, 0);
             }
 
-            if (e.getY() < player.getY() - height / 2) {
-                e.move(0, height);
-            } else if (e.getY() > player.getY() + height / 2) {
-                e.move(0, -height);
+            if (cloud.getY() < player.getY() - height / 2) {
+                cloud.move(0, height);
+            } else if (cloud.getY() > player.getY() + height / 2) {
+                cloud.move(0, -height);
             }
         });
     }
