@@ -1,6 +1,5 @@
 package game;
 
-import engine.Game;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
@@ -11,18 +10,22 @@ public class Ship extends SpriteSheet implements Updateable{
     private final float PI = (float) Math.PI;
 
     private final float rotationStep = PI / 8;
-    private final float rotationSpeed = 0.34f;
-    private final float speed = 8f;
+    
 
-    private int shootingDelayInFrames = 10;
+    private final int shootingDelayInFrames = 10;
     private int frameCounter = 0;
 
     private Vector2D directionVector;
     private float currentAngle = 0;
     private float fixedAngle = 0;
+    private float speed = 8f;
+    private float rotationSpeed = 0.34f;
 
-    public Ship(String spriteSheetName, float x, float y) {
+    public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed) {
         super(spriteSheetName, 16, 16, x, y);
+
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
     }
 
     public void rotateToVector(Vector2D vector) {
@@ -84,12 +87,6 @@ public class Ship extends SpriteSheet implements Updateable{
 
         // moving the player
         move(directionVector);
-
-        // setting the display origin to the current position of the player
-        Game.getInstance().getDisplay().setDisplayOrigin(
-                position.get(Axis2D.X).intValue() - Game.getInstance().getDisplayWidth() / 2,
-                position.get(Axis2D.Y).intValue() - Game.getInstance().getDisplayHeight() / 2
-        );
     }
 
     public boolean canShoot(){
@@ -100,7 +97,7 @@ public class Ship extends SpriteSheet implements Updateable{
 
         // increase the counter
         if (frameCounter > 0) {
-            frameCounter += 1;
+            frameCounter++;
             return false;
         }
 
@@ -122,5 +119,10 @@ public class Ship extends SpriteSheet implements Updateable{
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public DepthLayer getDepth() {
+        return DepthLayer.FOREGROUND;
     }
 }

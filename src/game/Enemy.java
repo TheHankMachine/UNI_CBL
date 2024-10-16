@@ -1,14 +1,14 @@
 package game;
 
-import engine.render.SpriteSheet;
 import engine.update.Updateable;
 
-public class Enemy extends SpriteSheet implements Updateable {
+public class Enemy extends Ship implements Updateable {
 
-    Player player;
+    private final Player player;
+    // private Vector2D directionVector;
 
     public Enemy(int x, int y, String spriteSheetName, Player player) {
-        super(spriteSheetName, 16, 16, x, y);
+        super(spriteSheetName, x, y, 6f, 0.1f);
 
         this.player = player;  
 
@@ -17,11 +17,7 @@ public class Enemy extends SpriteSheet implements Updateable {
 
     @Override
     public void update() {
-
-    }
-
-    @Override
-    public DepthLayer getDepth() {
-        return DepthLayer.FOREGROUND;
+        rotateToVector(player.getOldPosition());
+        move();
     }
 }

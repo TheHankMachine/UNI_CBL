@@ -90,7 +90,7 @@ public class EnemySpawner implements Updateable {
 
     @Override
     public void update() {
-        frameCounter += 1;
+        frameCounter++;
 
         if (frameCounter == spawnDelayInFrames) {
             spawnEnemy();
