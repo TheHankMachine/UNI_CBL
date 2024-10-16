@@ -12,7 +12,7 @@ public class Player extends Ship implements Updateable {
     private Vector2D oldPosition;
 
     private int frameCounter = 0;
-    private int oldPositionDelay = 75;
+    private int oldPositionDelay = 300;
 
     public Player() {
         super("player.png",
@@ -30,9 +30,9 @@ public class Player extends Ship implements Updateable {
         registerUpdate();
     }
 
-    public Vector2D getOldPosition() {
-        return oldPosition.copy();
-    }
+    // public Vector2D getOldPosition() {
+    //     return position.copy();
+    // }
 
     private void updateOldPosition() {
         if (frameCounter == oldPositionDelay) {
@@ -52,7 +52,7 @@ public class Player extends Ship implements Updateable {
 
         move();
 
-        updateOldPosition();
+        // updateOldPosition();
 
         if (canShoot() && Game.getInstance().getInput().isDown(InputKey.SPACE)) {
             shoot();
