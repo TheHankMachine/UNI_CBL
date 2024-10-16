@@ -1,5 +1,7 @@
 package engine.example.frogger;
 
+import engine.math.Collideable;
+import engine.math.Vector2D;
 import engine.render.DisplayObject;
 import engine.render.Renderable;
 import engine.render.SpriteSheet;
@@ -22,6 +24,10 @@ public class Layer implements Updateable, Renderable {
     public Layer(int index){
         y = index * Frogger.GRID_SIZE;
 
+        if(index == Frogger.GRID_HEIGHT - 1){
+            return;
+        }
+
         speed = (int) Math.signum(Math.random() - 0.5) * (int) (Math.random() * 2 + 1);
 
         for(
@@ -38,14 +44,14 @@ public class Layer implements Updateable, Renderable {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(Color.DARK_GRAY);
-
-        g.fillRect(
-            0,
-            y,
-            Frogger.GRID_WIDTH * Frogger.GRID_SIZE,
-            Frogger.GRID_SIZE
-        );
+//        g.setColor(new Color(0xc3c3c6));
+//
+//        g.fillRect(
+//            0,
+//            y,
+//            Frogger.GRID_WIDTH * Frogger.GRID_SIZE,
+//            Frogger.GRID_SIZE
+//        );
 
 //        g.setColor(Color.getHSBColor((float) Math.random(), 0.5f, 0.5f));
 //        for(int i = 0; i < width; i++) {
@@ -59,8 +65,17 @@ public class Layer implements Updateable, Renderable {
     }
 
     @Override
+    public DepthLayer getDepth() {
+        return DepthLayer.BACKGROUND;
+    }
+
+    @Override
     public void update() {
 
+    }
+
+    public boolean checkCollide(Vector2D pos){
+        return cars.stream().anyMatch(e -> Collideable.collides(pos, e));
     }
 
     public class Car extends SpriteSheet implements Updateable{

@@ -27,15 +27,22 @@ public class Frog extends SpriteSheet implements Updateable {
     }
 
     private final Vector2D realPosition = new Vector2D();
+    private final Map map;
     private Direction direction = Direction.UP;
+
 
     private int animationFrame = 0;
     private int inputCooldown = 0;
 
-    public Frog(float x, float y) {
-        super("/example/frogger/frog.png", 16, 13, x, y);
+    public Frog(Map map) {
+        super("/example/frogger/frog.png", 16, 13,
+            (Frogger.GRID_WIDTH * 0.5f + 0.5f) * Frogger.GRID_SIZE,
+            (Frogger.GRID_HEIGHT - 0.5f) * Frogger.GRID_SIZE
+        );
 
-        realPosition.setTo(x, y);
+        this.map = map;
+
+        realPosition.setTo(getPosition());
 
         registerUpdate();
     }
@@ -44,12 +51,24 @@ public class Frog extends SpriteSheet implements Updateable {
     public void update() {
         doInput();
         playAnimation();
+        checkCollide();
 
         Game.getInstance().getDisplay().setDisplayOrigin(
             0,
             getY() - (float) Frogger.GRID_HEIGHT * Frogger.GRID_SIZE / 2
         );
+    }
 
+    public void checkCollide(){
+        Layer layer = map.getLayer(getY());
+        if(layer.checkCollide(getPosition())){
+            die();
+        }
+    }
+
+    public void die(){
+        throw new RuntimeException("skill issue");
+//        System.out.println("L");
     }
 
     public void doInput(){
