@@ -5,7 +5,7 @@ import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
 
-public class Ship extends SpriteSheet implements Updateable{
+public class Ship extends SpriteSheet implements Updateable {
 
     private final float PI = (float) Math.PI;
 

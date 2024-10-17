@@ -1,6 +1,7 @@
 package game;
 
 import engine.math.Axis2D;
+import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.render.DisplayObject;
 import engine.update.Updateable;
