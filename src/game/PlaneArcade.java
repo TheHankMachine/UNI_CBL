@@ -2,6 +2,8 @@ package game;
 
 import engine.Game;
 import engine.GameConfig;
+import engine.example.DVD;
+
 import java.awt.*;
 
 public class PlaneArcade extends Game {

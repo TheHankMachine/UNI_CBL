@@ -19,6 +19,10 @@ public interface Renderable {
         Game.getInstance().getDisplay().add(this);
     }
 
+    default void deregisterRender(){
+        Game.getInstance().getDisplay().remove(this);
+    }
+
     /**
      * Draws the object to the screen
      */

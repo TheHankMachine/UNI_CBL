@@ -18,6 +18,9 @@ public class Bullet extends DisplayObject implements Updateable {
         super();
         this.velocity = velocity.copy();
 
+        this.width = 2;
+        this.height = 2;
+
         this.velocity.normalise();
         this.velocity.scale(speed);
 
@@ -28,17 +31,22 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void draw(Graphics2D g, int x, int y, int w, int h) {
-        // Draw the bullet centered at the origin  
+        // Draw the bullet centered at the origin
         int endX = x + velocity.get(Axis2D.X).intValue();
         int endY = y + velocity.get(Axis2D.Y).intValue();
 
-        g.setColor(Color.YELLOW);
+        g.setColor(new Color(0xfaa21b));
         g.setStroke(new BasicStroke(9));
         g.drawLine(x, y, endX, endY);
 
-        g.setColor(Color.RED);
+        g.setColor(new Color(0xfff1e9));
         g.setStroke(new BasicStroke(6));
         g.drawLine(x, y, endX, endY);
+
+        // Alternatively, for more pixelated bullets,
+        // you could do something like this
+//        g.setColor(new Color(0xf7ec2f));
+//        g.fillRect(x, y, w, h);
     }
 
     @Override
