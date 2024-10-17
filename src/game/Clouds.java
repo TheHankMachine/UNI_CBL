@@ -48,7 +48,6 @@ public class Clouds implements Updateable {
             direction.scale((float) (1 - cloud.getFrame()) / 2);
 
             cloud.move(direction);
-//            cloud.move(player.getV);
 
             float cloudWidth = cloud.getWidth();
 
