@@ -14,6 +14,10 @@ public interface Updateable {
         updateList.add(this);
     }
 
+    default void deregisterUpdate(){
+        updateList.remove(this);
+    }
+
     /**
      * Called automatically by the game every tick
      */
