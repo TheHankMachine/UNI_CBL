@@ -16,11 +16,11 @@ public class Player extends Ship implements Updateable {
 
     // private float cursorAngleOffset = 
 
-    public Player() {
+    public Player(PlaneArcade game) {
         super("player.png",
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
                 (float) ((Game.getInstance().getDisplayHeight() / 2)),
-                8f, 0.34f);
+                8f, 0.34f, game);
 
         oldPosition = position.copy();
 

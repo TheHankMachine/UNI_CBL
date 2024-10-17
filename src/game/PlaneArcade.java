@@ -2,27 +2,30 @@ package game;
 
 import engine.Game;
 import engine.GameConfig;
-import engine.example.DVD;
-
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PlaneArcade extends Game {
+
+    ArrayList<Enemy> enemies = new ArrayList<>(); 
 
     public PlaneArcade() {
         super(new GameConfig(1280, 960, new Color(0x51a6dc), "src/assets/", 50));
 
-        //  for(int i = 0; i < 50; i++) new DVD();
-        // new CursorFollower();
-        // new BoundryBreaker();
-//        new DVD();
-        // new Cloud(new Vector2D(200, 0));
-        Player player = new Player();
-        new Clouds(player);
-        new EnemySpawner(player);
+        Player player = new Player(this);
 
-        // new DisplayVector(new Vector2D(680, 480), new Vector2D(1000, 1000));
+        new Clouds(player);
+        new EnemySpawner(player, this);
 
         register();
+    }
+
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
     }
 
     @Override

@@ -7,15 +7,19 @@ import java.util.Random;
 
 public class EnemySpawner implements Updateable {
 
-    Player player;
+    private Player player;
 
-    int spawnDelayInFrames = 10;
-    int frameCounter = 0;
+    private int spawnDelayInFrames = 10;
+    private int frameCounter = 0;
+    
+    private PlaneArcade game;
 
-    public EnemySpawner(Player player) {
+
+    public EnemySpawner(Player player, PlaneArcade game) {
         super();
 
         this.player = player;
+        this.game = game;
 
         registerUpdate();
     }
@@ -85,7 +89,8 @@ public class EnemySpawner implements Updateable {
 
         String spriteSheetName = randomSpriteSheet(rand);
 
-        new Enemy(x, y, spriteSheetName, player);
+        Enemy enemy = new Enemy(x, y, spriteSheetName, player, game);
+        game.addEnemy(enemy);
     }
 
     @Override
