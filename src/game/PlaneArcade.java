@@ -24,6 +24,10 @@ public class PlaneArcade extends Game {
         enemies.add(enemy);
     }
 
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }

@@ -1,6 +1,5 @@
 package game;
 
-import engine.math.Axis2D;
 import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.update.Updateable;
@@ -35,14 +34,18 @@ public class Enemy extends Ship implements Updateable {
     }
 
     @Override
+    public void die() {
+        super.die();
+        game.removeEnemy(this);
+    }
+
+    @Override
     public void update() {
         if (Collideable.collides(this, player)) {
-            new Explosion(position.get(Axis2D.X).intValue(), position.get(Axis2D.Y).intValue());
-
-            deregisterRender();
-            deregisterUpdate();
+            die();
+            player.die();
         }
-        
+
         updateOldPosition();
         move();
     }

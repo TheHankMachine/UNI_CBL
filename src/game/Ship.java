@@ -20,7 +20,7 @@ public class Ship extends SpriteSheet implements Updateable {
     private float speed = 8f;
     private float rotationSpeed = 0.34f;
 
-    private PlaneArcade game;
+    protected PlaneArcade game;
 
     public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed, PlaneArcade game) {
         super(spriteSheetName, 16, 16, x, y);
@@ -121,6 +121,13 @@ public class Ship extends SpriteSheet implements Updateable {
         // instantiate the bullet
         new Bullet(bulletPosition.get(Axis2D.X).intValue(),
                 bulletPosition.get(Axis2D.Y).intValue(), directionVector, game);
+    }
+
+    public void die() {
+        new Explosion(position.get(Axis2D.X).intValue(), position.get(Axis2D.Y).intValue());
+
+        deregisterRender();
+        deregisterUpdate();
     }
 
     @Override

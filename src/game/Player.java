@@ -12,7 +12,7 @@ public class Player extends Ship implements Updateable {
     private Vector2D oldPosition;
 
     private int frameCounter = 0;
-    private int oldPositionDelay = 75;
+    private final int oldPositionDelay = 75;
 
     // private float cursorAngleOffset = 
 
@@ -32,10 +32,6 @@ public class Player extends Ship implements Updateable {
         registerUpdate();
     }
 
-    // public Vector2D getOldPosition() {
-    //     return position.copy();
-    // }
-
     private void updateOldPosition() {
         if (frameCounter == oldPositionDelay) {
             oldPosition = position.copy();
@@ -50,6 +46,11 @@ public class Player extends Ship implements Updateable {
     }
 
     @Override
+    public void die() {
+        super.die();
+    }
+
+    @Override
     public void update() {
         // getting mouse position
         Vector2D cursorPosition = Game.getInstance().getInput().getMousePositionGameRelative();
@@ -58,8 +59,6 @@ public class Player extends Ship implements Updateable {
         updateOldPosition();
 
         move();
-
-        // updateOldPosition();
 
         if (canShoot() && Game.getInstance().getInput().isDown(InputKey.SPACE)) {
             shoot();

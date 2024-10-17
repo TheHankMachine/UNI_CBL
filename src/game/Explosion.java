@@ -5,7 +5,7 @@ import engine.update.Updateable;
 
 public class Explosion extends SpriteSheet implements Updateable{
 
-    private final int framesToChangeSprite = 12;
+    private final int framesToChangeSprite = 3;
     private int frameCounter = 0;
     private int currentSprite = 0;
 
