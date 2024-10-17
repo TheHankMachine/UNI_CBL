@@ -1,10 +1,12 @@
 package engine.update;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public interface Updateable {
 
-    ArrayList<Updateable> updateList = new ArrayList<>();
+    List<Updateable> updateList = new LinkedList<>();
 
     /**
      * Adds object to the updatelist. On all subsequent ticks

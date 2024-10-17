@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Screen extends JPanel {
 
@@ -110,7 +112,7 @@ public class Screen extends JPanel {
      * Draws all renderable objects in the renderlist to the screen.
      */
     public void draw(Graphics2D g2d){
-        EnumMap<Renderable.DepthLayer, ArrayList<Renderable>> renderList = display.getRenderList();
+        EnumMap<Renderable.DepthLayer, List<Renderable>> renderList = display.getRenderList();
         g2d.translate(offsetX, offsetY);
         g2d.transform(transform);
 

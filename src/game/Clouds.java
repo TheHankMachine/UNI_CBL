@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Clouds implements Updateable {
 
-    private List<SpriteSheet> clouds = new ArrayList<>();
-    private Player player;
+    private final List<SpriteSheet> clouds = new ArrayList<>();
+    private final Player player;
 
     public Clouds(Player player) {
         this.player = player;

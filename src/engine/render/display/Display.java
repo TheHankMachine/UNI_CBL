@@ -7,6 +7,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import engine.GameConfig;
 import engine.math.Axis2D;
@@ -16,7 +18,7 @@ import engine.render.Renderable.DepthLayer;
 
 public class Display extends JFrame {
 
-    private final EnumMap<DepthLayer, ArrayList<Renderable>> renderList;
+    private final EnumMap<DepthLayer, List<Renderable>> renderList;
     private final GameConfig config;
     private final Screen screen;
 
@@ -29,7 +31,7 @@ public class Display extends JFrame {
 
         renderList = new EnumMap<>(DepthLayer.class);
         for(DepthLayer layer : DepthLayer.values()){
-            renderList.put(layer, new ArrayList<>());
+            renderList.put(layer, new LinkedList<>());
         }
 
         setBackground(Color.BLACK);
@@ -60,7 +62,7 @@ public class Display extends JFrame {
     /**
      * @return the renderlist
      */
-    public EnumMap<DepthLayer, ArrayList<Renderable>> getRenderList(){
+    public EnumMap<DepthLayer, List<Renderable>> getRenderList(){
         return renderList;
     }
 
