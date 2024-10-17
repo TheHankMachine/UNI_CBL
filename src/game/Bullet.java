@@ -1,19 +1,23 @@
 package game;
 
 import engine.math.Axis2D;
+import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.render.DisplayObject;
 import engine.update.Updateable;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class Bullet extends DisplayObject implements Updateable {
 
-    Vector2D velocity;
-    float speed = 30f;
+    private final  Vector2D velocity;
+    private final float speed = 30f;
 
-    public Bullet(int x, int y, Vector2D velocity) {
+    private ArrayList<Enemy> enemies;
+
+    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game) {
         super();
         this.velocity = velocity.copy();
 
@@ -22,6 +26,8 @@ public class Bullet extends DisplayObject implements Updateable {
 
         this.velocity.normalise();
         this.velocity.scale(speed);
+
+        this.enemies = game.getEnemies();
 
         setPosition(x, y);
 
@@ -43,8 +49,14 @@ public class Bullet extends DisplayObject implements Updateable {
         g.drawLine(x, y, endX, endY);
     }
 
+    private void checkCollision(Enemy enemy) {
+        if (Collideable.collides(this, enemy)) System.out.println("boom");
+    }
+
     @Override
     public void update() {
+        enemies.forEach((enemy) -> checkCollision(enemy));
+
         move(velocity);
     }
 }

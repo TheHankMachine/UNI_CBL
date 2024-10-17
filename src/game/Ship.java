@@ -20,11 +20,14 @@ public class Ship extends SpriteSheet implements Updateable {
     private float speed = 8f;
     private float rotationSpeed = 0.34f;
 
-    public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed) {
+    private PlaneArcade game;
+
+    public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed, PlaneArcade game) {
         super(spriteSheetName, 16, 16, x, y);
 
         this.speed = speed;
-        this.rotationSpeed = rotationSpeed;
+        this.rotationSpeed = rotationSpeed;  
+        this.game = game;
     }
 
     public float cursorAngleOffset() {
@@ -92,7 +95,7 @@ public class Ship extends SpriteSheet implements Updateable {
         move(directionVector);
     }
 
-    public boolean canShoot(){
+    public boolean canShoot() {
         // reset the counter after waiting
         if (frameCounter == shootingDelayInFrames) {
             frameCounter = 0;
@@ -116,7 +119,8 @@ public class Ship extends SpriteSheet implements Updateable {
         bulletPosition.add(directionVector);
 
         // instantiate the bullet
-        new Bullet(bulletPosition.get(Axis2D.X).intValue(), bulletPosition.get(Axis2D.Y).intValue(), directionVector);
+        new Bullet(bulletPosition.get(Axis2D.X).intValue(),
+                bulletPosition.get(Axis2D.Y).intValue(), directionVector, game);
     }
 
     @Override
