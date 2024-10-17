@@ -12,13 +12,13 @@ public class Player extends Ship implements Updateable {
     private Vector2D oldPosition;
 
     private int frameCounter = 0;
-    private int oldPositionDelay = 300;
+    private int oldPositionDelay = 75;
 
     public Player() {
         super("player.png",
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
                 (float) ((Game.getInstance().getDisplayHeight() / 2)),
-                12f, 0.34f);
+                8f, 0.34f);
 
         oldPosition = position.copy();
 
@@ -43,12 +43,17 @@ public class Player extends Ship implements Updateable {
         frameCounter++;
     }
 
+    public Vector2D getOldPosition() {
+        return oldPosition.copy();
+    }
+
     @Override
     public void update() {
         // getting mouse position
         Vector2D cursorPosition = Game.getInstance().getInput().getMousePositionGameRelative();
 
         rotateToVector(cursorPosition);
+        updateOldPosition();
 
         move();
 

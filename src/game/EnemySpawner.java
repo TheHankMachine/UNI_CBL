@@ -9,7 +9,7 @@ public class EnemySpawner implements Updateable {
 
     Player player;
 
-    int spawnDelayInFrames = 100;
+    int spawnDelayInFrames = 10;
     int frameCounter = 0;
 
     public EnemySpawner(Player player) {
@@ -58,24 +58,24 @@ public class EnemySpawner implements Updateable {
             // top
             case 0:
                 x = randomX;
-                y = playerY - screenHeight;
+                y = playerY - screenHeight / 2;
 
                 break;
             // bottom
             case 1:
                 x = randomX;
-                y = playerY + screenHeight;
+                y = playerY + screenHeight / 2;
 
                 break;
             // left
             case 2:
-                x = playerX - screenWidth;
+                x = playerX - screenWidth / 2;
                 y = randomY;
 
                 break;
             // right
             case 3:
-                x = playerX + screenWidth;
+                x = playerX + screenWidth / 2;
                 y = randomY;
 
                 break;

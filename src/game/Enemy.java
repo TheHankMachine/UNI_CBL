@@ -10,10 +10,10 @@ public class Enemy extends Ship implements Updateable {
     // private Vector2D directionVector;
 
     private int frameCounter = 0;
-    private final int oldPositionDelay = 10;
+    private final int oldPositionDelay = 100;
 
     public Enemy(int x, int y, String spriteSheetName, Player player) {
-        super(spriteSheetName, x, y, 12f, 0.1f);
+        super(spriteSheetName, x, y, 8f, 0.3f);
 
         this.player = player;  
 
@@ -25,7 +25,7 @@ public class Enemy extends Ship implements Updateable {
 
     private void updateOldPosition() {
         if (frameCounter == oldPositionDelay) {
-            rotateToVector(player.getPosition().copy());
+            rotateToVector(player.getOldPosition());
             frameCounter = 0;
         }
 
