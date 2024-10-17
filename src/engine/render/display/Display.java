@@ -56,7 +56,7 @@ public class Display extends JFrame {
     }
 
     public void remove(Renderable e){
-        renderList.remove(e);
+        renderList.get(e.getDepth()).remove(e);
     }
 
     /**

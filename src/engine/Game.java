@@ -5,6 +5,7 @@ import engine.input.Input;
 import engine.render.display.Display;
 import engine.render.SpriteFont;
 import engine.update.Updateable;
+import jdk.jshell.SourceCodeAnalysis;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,12 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 public abstract class Game {
 
     public static SpriteFont debug_displayText;
-    public static int debug_updateTimeMs;
-    public static int debug_renderTimeMs;
+    public transient int debug_updateTimeMs;
+    public transient int debug_renderTimeMs;
 
     private static Game instance = null;
     public static Game getInstance(){
@@ -49,25 +52,38 @@ public abstract class Game {
     }
 
     public final void register(){
-        Timer timer = new Timer(config.targetTickMs, this::periodic);
+        Timer timer = new Timer(config.targetTickMs,
+            this::periodic
+        );
         timer.start();
     }
 
     public final void periodic(ActionEvent e){
         long startTime = System.nanoTime();
 
-        update();
+//        update();
+        var a = CompletableFuture.runAsync(() -> {
+            update();
+            Updateable.updateAll();
+        });
 
-        Updateable.updateAll();
+//        long startTime = System.nanoTime();
 
-        debug_updateTimeMs = (int) (System.nanoTime() - startTime) / 1_000_000;
 
-        display.repaint();
+        var b = CompletableFuture.runAsync(() -> {
+            display.repaint();
+        });
 
-        debug_displayText.setText(String.format("Update time: %02dms\nRender time: %02dms\nUptime: %02d\'/,",
-            debug_updateTimeMs, debug_renderTimeMs,
-            (debug_updateTimeMs + debug_renderTimeMs) * 100 / config.targetTickMs
+//        b.join();
+
+        while(!a.isDone() || !b.isDone());
+
+        int duration = (int) (System.nanoTime() - startTime) / 1_000_000;
+
+        debug_displayText.setText(String.format("Uptime: %02d'/,",
+                duration * 100 / config.targetTickMs
         ));
+
     }
 
     public float getDefaultScale(){

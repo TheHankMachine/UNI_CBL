@@ -76,11 +76,7 @@ public class Screen extends JPanel {
      * to the screen
      */
     public void paintComponent(Graphics g){
-        long startTime = System.nanoTime();
-
         draw((Graphics2D) g);
-
-        Game.debug_renderTimeMs = (int) (System.nanoTime() - startTime) / 1_000_000;
     }
 
     /**

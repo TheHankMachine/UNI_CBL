@@ -10,7 +10,6 @@ public class Ship extends SpriteSheet implements Updateable {
     private final float PI = (float) Math.PI;
 
     private final float rotationStep = PI / 8;
-    
 
     private final int shootingDelayInFrames = 10;
     private int frameCounter = 0;
