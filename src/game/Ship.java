@@ -28,13 +28,17 @@ public class Ship extends SpriteSheet implements Updateable {
         this.rotationSpeed = rotationSpeed;
     }
 
+    public float cursorAngleOffset() {
+        return rotationStep / 2;
+    }
+
     public void rotateToVector(Vector2D vector) {
         // adjusting the cursor position to be relative to the player
         vector.subtract(position);
         vector.subtract(new Vector2D(8, 8));
 
         // calculating the angle between the X-axis and the vector from the center of the screen to the cursor
-        float angle = vector.getAngle() + PI / 2;
+        float angle = vector.getAngle() + PI / 2 + rotationStep / 2;
 
         // converting negative angle values to positive ones
         if (angle < 0) {

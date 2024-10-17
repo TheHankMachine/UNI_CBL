@@ -14,6 +14,8 @@ public class Player extends Ship implements Updateable {
     private int frameCounter = 0;
     private int oldPositionDelay = 75;
 
+    // private float cursorAngleOffset = 
+
     public Player() {
         super("player.png",
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
