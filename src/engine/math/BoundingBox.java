@@ -34,4 +34,9 @@ public class BoundingBox{
                 Math.abs(getCenterY() - point.get(Axis2D.Y)) < Math.abs(height) / 2;
     }
 
+    public boolean intersects(BoundingBox with){
+        return Math.abs(getCenterX() - with.getCenterX()) < (Math.abs(width) + Math.abs(with.width)) / 2 &&
+                Math.abs(getCenterY() - with.getCenterY()) < (Math.abs(height) + Math.abs(with.height)) / 2;
+
+    }
 }
