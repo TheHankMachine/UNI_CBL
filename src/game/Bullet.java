@@ -15,7 +15,7 @@ public class Bullet extends DisplayObject implements Updateable {
     private final  Vector2D velocity;
     private final float speed = 30f;
 
-    private ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
 
     public Bullet(int x, int y, Vector2D velocity, PlaneArcade game) {
         super();
