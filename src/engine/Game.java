@@ -5,7 +5,6 @@ import engine.input.Input;
 import engine.render.display.Display;
 import engine.render.SpriteFont;
 import engine.update.Updateable;
-import jdk.jshell.SourceCodeAnalysis;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,8 +18,6 @@ import java.util.concurrent.Future;
 public abstract class Game {
 
     public static SpriteFont debug_displayText;
-    public transient int debug_updateTimeMs;
-    public transient int debug_renderTimeMs;
 
     private static Game instance = null;
     public static Game getInstance(){
@@ -61,22 +58,18 @@ public abstract class Game {
     public final void periodic(ActionEvent e){
         long startTime = System.nanoTime();
 
-//        update();
-        var a = CompletableFuture.runAsync(() -> {
+        // this feels wack compared to js promise
+        Future<Void> a = CompletableFuture.runAsync(() -> {
             update();
             Updateable.updateAll();
         });
 
-//        long startTime = System.nanoTime();
-
-
-        var b = CompletableFuture.runAsync(() -> {
+        Future<Void> b = CompletableFuture.runAsync(() -> {
             display.repaint();
         });
 
-//        b.join();
 
-        while(!a.isDone() || !b.isDone());
+        while(!a.isDone() || !b.isDone()){;}
 
         int duration = (int) (System.nanoTime() - startTime) / 1_000_000;
 

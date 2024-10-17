@@ -5,16 +5,18 @@ import java.awt.*;
 
 public interface Renderable {
 
+
     enum DepthLayer {
         BACKGROUND,
         MIDDLEGROUND,
         FOREGROUND,
-        UI
-    }
+        UI;
 
+    }
     /**
      * Adds object to the renderlist
      */
+
     default void registerRender(){
         Game.getInstance().getDisplay().add(this);
     }
