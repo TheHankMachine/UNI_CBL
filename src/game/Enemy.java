@@ -16,7 +16,7 @@ public class Enemy extends Ship implements Updateable {
     public Enemy(int x, int y, String spriteSheetName, Player player, PlaneArcade game) {
         super(spriteSheetName, x, y, 8f, 0.3f, game);
 
-        this.player = player;  
+        this.player = player;
 
         Random rand = new Random();
         rotateToVector(new Vector2D(rand.nextFloat(), rand.nextFloat()));
