@@ -18,7 +18,7 @@ public class Ship extends SpriteSheet implements Updateable {
     private float currentAngle = 0;
     private float fixedAngle = 0;
     private float speed = 8f;
-    private float rotationSpeed = 0.34f;
+    private float rotationSpeed = 0.5f;
 
     protected PlaneArcade game;
 
