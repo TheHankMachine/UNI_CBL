@@ -47,7 +47,7 @@ public class Clouds implements Updateable {
         int width = Game.getInstance().getDisplayWidth();
         int height = Game.getInstance().getDisplayWidth();
 
-        clouds.forEach(cloud -> {
+        clouds.forEach((var cloud) -> {
 
             Vector2D direction = player.getVelocity();
             direction.scale((float) (1 - cloud.getFrame()) / 2);

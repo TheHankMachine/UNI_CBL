@@ -13,6 +13,7 @@ public class PlaneArcade extends Game {
     private final ArrayList<Enemy> enemies = new ArrayList<>(); 
     private final MainMenu mainMenu;
     private EndScreen endScreen;
+    private int enemyCounter = 0;
 
     public PlaneArcade() {
         super(new GameConfig(1280, 960, new Color(0x51a6dc), "src/assets/", 50));
@@ -50,12 +51,17 @@ public class PlaneArcade extends Game {
         enemies.add(enemy);
     }
 
-    
+    public int getEnemyCounter() {
+        return enemyCounter;
+    }
+
+    public void setEnemyCounter(int value) {
+        enemyCounter = value;
+    }
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
-
 
     @Override
     public float getDefaultScale() {

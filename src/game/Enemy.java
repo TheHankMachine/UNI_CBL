@@ -1,14 +1,13 @@
 package game;
 
+import engine.Game;
 import engine.math.Collideable;
-import engine.math.Vector2D;
 import engine.update.Updateable;
-import java.util.Random;
 
 public class Enemy extends Ship implements Updateable {
 
     private final Player player;
-    private final int oldPositionDelay = 100;
+    private final int oldPositionDelay = 60;
 
     private int frameCounter = 0;
     private boolean hittable = true;
@@ -18,35 +17,60 @@ public class Enemy extends Ship implements Updateable {
 
         this.player = player;
 
-        Random rand = new Random();
-        rotateToVector(new Vector2D(rand.nextFloat(), rand.nextFloat()));
+        rotateToVector(player.getPosition().copy());
 
         registerUpdate();
     }
 
-    private void updateOldPosition() {
-        if (frameCounter == oldPositionDelay) {
-            rotateToVector(player.getOldPosition());
-            frameCounter = 0;
-        }
+    private void subtractFromEnemyCounter() {
+        int enemyCounter = game.getEnemyCounter();
 
-        frameCounter++;
+        game.setEnemyCounter(enemyCounter - 1);
     }
 
     public void remove() {
         deregisterRender();
         deregisterUpdate();
         hittable = false;
+
+        subtractFromEnemyCounter();
     }
-    
+
     public boolean isHittable() {
         return hittable;
+    }
+
+    public void screenWrap() {
+        int screenWidth = Game.getInstance().getDisplayWidth();
+        int screenHeight = Game.getInstance().getDisplayHeight();
+
+        if (getX() < player.getX() - screenWidth / 2 - getWidth()) {
+            setPosition(player.getX() + screenWidth / 2 + getWidth(), getY());
+            rotateToVector(player.getPosition().copy());
+        }
+
+        if (getX() > player.getX() + screenWidth / 2 + getWidth()) {
+            setPosition(player.getX() - screenWidth / 2 - getWidth(), getY());
+            rotateToVector(player.getPosition().copy());
+        }
+
+        if (getY() < player.getY() - screenHeight / 2 - getHeight()) {
+            setPosition(getX(), player.getY() + screenHeight / 2 + getHeight());
+            rotateToVector(player.getPosition().copy());
+        }
+
+        if (getY() > player.getY() + screenHeight / 2 + getHeight()) {
+            setPosition(getX(), player.getY() - screenHeight / 2 - getHeight());
+            rotateToVector(player.getPosition().copy());
+        }
     }
 
     @Override
     public void die() {
         super.die();
         hittable = false;
+
+        subtractFromEnemyCounter();
     }
 
     @Override
@@ -56,7 +80,7 @@ public class Enemy extends Ship implements Updateable {
             player.die();
         }
 
-        updateOldPosition();
         move();
+        screenWrap();
     }
 }

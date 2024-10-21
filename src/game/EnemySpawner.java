@@ -7,13 +7,13 @@ import java.util.Random;
 
 public class EnemySpawner implements Updateable {
 
-    private Player player;
+    private final Player player;
+    private final PlaneArcade game;
 
-    private int spawnDelayInFrames = 10;
+    private final int maxEnemies = 10;
+    private final int spawnDelayInFrames = 50;
     private int frameCounter = 0;
     
-    private PlaneArcade game;
-
 
     public EnemySpawner(Player player, PlaneArcade game) {
         super();
@@ -98,7 +98,12 @@ public class EnemySpawner implements Updateable {
         frameCounter++;
 
         if (frameCounter == spawnDelayInFrames) {
-            spawnEnemy();
+            int enemyCounter = game.getEnemyCounter();
+
+            if (enemyCounter < maxEnemies) {
+                spawnEnemy();
+                game.setEnemyCounter(enemyCounter + 1);
+            }
 
             frameCounter = 0;
         }

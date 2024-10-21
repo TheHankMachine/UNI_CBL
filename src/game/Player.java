@@ -8,21 +8,11 @@ import engine.update.Updateable;
 
 public class Player extends Ship implements Updateable {
 
-    // position passed to enemies
-    private Vector2D oldPosition;
-
-    private int frameCounter = 0;
-    private final int oldPositionDelay = 75;
-
-    // private float cursorAngleOffset = 
-
     public Player(PlaneArcade game) {
         super("player.png",
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
                 (float) ((Game.getInstance().getDisplayHeight() / 2)),
                 8f, 0.34f, game);
-
-        oldPosition = position.copy();
 
         setScale(4);
 
@@ -30,19 +20,6 @@ public class Player extends Ship implements Updateable {
         setFrame(0);
 
         registerUpdate();
-    }
-
-    private void updateOldPosition() {
-        if (frameCounter == oldPositionDelay) {
-            oldPosition = position.copy();
-            frameCounter = 0;
-        }
-
-        frameCounter++;
-    }
-
-    public Vector2D getOldPosition() {
-        return oldPosition.copy();
     }
 
     @Override
@@ -57,7 +34,6 @@ public class Player extends Ship implements Updateable {
         Vector2D cursorPosition = Game.getInstance().getInput().getMousePositionGameRelative();
 
         rotateToVector(cursorPosition);
-        updateOldPosition();
 
         move();
 
