@@ -3,13 +3,14 @@ package game;
 import engine.Game;
 import engine.GameConfig;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PlaneArcade extends Game {
     private Player player; 
     private Clouds clouds; 
     private EnemySpawner enemySpawner;
 
-    // private final ArrayList<Enemy> enemies = new ArrayList<>(); 
+    private final ArrayList<Enemy> enemies = new ArrayList<>(); 
     private final MainMenu mainMenu;
     private EndScreen endScreen;
 
@@ -25,7 +26,7 @@ public class PlaneArcade extends Game {
         player = new Player(this);
         clouds = new Clouds(player);
 
-        // enemySpawner = new EnemySpawner(player, this);
+        enemySpawner = new EnemySpawner(player, this);
 
         if (!(mainMenu == null)) {
             mainMenu.close();
@@ -45,17 +46,17 @@ public class PlaneArcade extends Game {
         endScreen = new EndScreen(this);
     }
 
-    // public void addEnemy(Enemy enemy) {
-    //     enemies.add(enemy);
-    // }
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
 
-    // public void removeEnemy(Enemy enemy) {
-    //     enemies.remove(enemy);
-    // }
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
 
-    // public ArrayList<Enemy> getEnemies() {
-    //     return enemies;
-    // }
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
 
 
     @Override

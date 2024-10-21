@@ -90,7 +90,7 @@ public class EnemySpawner implements Updateable {
         String spriteSheetName = randomSpriteSheet(rand);
 
         Enemy enemy = new Enemy(x, y, spriteSheetName, player, game);
-        // game.addEnemy(enemy);
+        game.addEnemy(enemy);
     }
 
     @Override
