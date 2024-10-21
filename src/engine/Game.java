@@ -17,8 +17,6 @@ import java.util.concurrent.Future;
 
 public abstract class Game {
 
-    public static SpriteFont debug_displayText;
-
     private static Game instance = null;
     public static Game getInstance(){
         if(instance == null) {
@@ -39,13 +37,6 @@ public abstract class Game {
 
         display = new Display(config);
         input = new Input();
-
-        debug_displayText = new DefaultFont("test", 0, 0){
-            @Override
-            public DepthLayer getDepth() {
-                return DepthLayer.UI;
-            }
-        };
     }
 
     public final void register(){
@@ -56,27 +47,10 @@ public abstract class Game {
     }
 
     public final void periodic(ActionEvent e){
-        long startTime = System.nanoTime();
+        update();
+        Updateable.updateAll();
 
-        // this feels wack compared to js promise
-//        Future<Void> a = CompletableFuture.runAsync(() -> {
-            update();
-            Updateable.updateAll();
-//        });
-
-//        Future<Void> b = CompletableFuture.runAsync(() -> {
-            display.repaint();
-//        });
-
-
-//        while(!a.isDone() || !b.isDone()){;}
-
-        int duration = (int) (System.nanoTime() - startTime) / 1_000_000;
-
-        debug_displayText.setText(String.format("Uptime: %02d'/,",
-                duration * 100 / config.targetTickMs
-        ));
-
+        display.repaint();
     }
 
     public float getDefaultScale(){
