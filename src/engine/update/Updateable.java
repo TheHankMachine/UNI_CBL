@@ -7,14 +7,16 @@ import java.util.List;
 public interface Updateable {
 
     List<Updateable> updateList = new LinkedList<>();
+
     List<Updateable> removeQueue = new LinkedList<>();
+    List<Updateable> addQueue = new LinkedList<>();
 
     /**
      * Adds object to the updatelist. On all subsequent ticks
      * the update method will be called
      */
     default void registerUpdate(){
-        updateList.add(this);
+        addQueue.add(this);
     }
 
     default void deregisterUpdate(){
@@ -30,6 +32,9 @@ public interface Updateable {
      * Calls update on all elements in the updateList
      */
     static void updateAll(){
+        updateList.addAll(addQueue);
+        addQueue.clear();
+
         for(Updateable updateable : updateList) {
             updateable.update();
         }

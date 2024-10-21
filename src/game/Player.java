@@ -1,7 +1,7 @@
 package game;
 
 import engine.Game;
-import engine.input.Input.InputKey;
+import engine.input.InputHandler.InputKey;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.update.Updateable;

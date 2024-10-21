@@ -1,9 +1,7 @@
 package engine;
 
-import engine.example.DefaultFont;
-import engine.input.Input;
+import engine.input.InputHandler;
 import engine.render.display.Display;
-import engine.render.SpriteFont;
 import engine.update.Updateable;
 
 import javax.imageio.ImageIO;
@@ -12,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 public abstract class Game {
 
@@ -28,7 +24,7 @@ public abstract class Game {
     protected final GameConfig config;
 
     private final Display display;
-    private final Input input;
+    private final InputHandler inputHandler;
 
     public Game(GameConfig config){
         instance = this;
@@ -36,7 +32,7 @@ public abstract class Game {
         this.config = config;
 
         display = new Display(config);
-        input = new Input();
+        inputHandler = new InputHandler();
     }
 
     public final void register(){
@@ -57,8 +53,8 @@ public abstract class Game {
         return 1f;
     }
 
-    public final Input getInput(){
-        return input;
+    public final InputHandler getInput(){
+        return inputHandler;
     }
 
     public abstract void update();

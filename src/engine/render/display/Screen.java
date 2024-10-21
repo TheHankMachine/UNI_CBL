@@ -1,17 +1,13 @@
 package engine.render.display;
 
-import engine.Game;
 import engine.GameConfig;
-import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.Renderable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Screen extends JPanel {
@@ -132,14 +128,6 @@ public class Screen extends JPanel {
             for(Renderable e : renderList.get(layer)){
                 e.draw(g2d);
             }
-
-//            var fuck = renderList.get(layer).iterator();
-//            while(fuck.hasNext()){
-//                fuck.next().draw(g2d);
-//            }
-//            for(var shit = fuck.next() ; fuck.hasNext() ; shit = fuck.next() ){
-//                shit.draw(g2d);
-//            }
         }
     }
 }

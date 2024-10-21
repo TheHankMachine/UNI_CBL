@@ -56,7 +56,8 @@ public abstract class SpriteFont extends DisplayObject {
         requiresUpdate = true;
     }
 
-    //TODO: clean up
+    //TODO:  This method always throws a concurrent modification
+    // exception.
     private void updateText() {
         sprites.forEach(e -> e.setVisible(false));
 

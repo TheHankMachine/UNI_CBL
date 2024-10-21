@@ -8,7 +8,7 @@ import engine.render.display.Screen;
 import java.awt.event.*;
 import java.util.HashMap;
 
-public class Input{
+public class InputHandler {
 
     public enum InputKey {
         UP(87),
@@ -29,7 +29,7 @@ public class Input{
 
     private final Vector2D lastMousePosition = new Vector2D();
 
-    public Input(){
+    public InputHandler(){
         for(InputKey input : InputKey.values()){
             keyDownMap.put(input.key, false);
             keyDurationMap.put(input.key, 0);
@@ -99,10 +99,10 @@ public class Input{
         float x = 0;
         float y = 0;
 
-        if(isDown(Input.InputKey.RIGHT)) x++;
-        if(isDown(Input.InputKey.LEFT)) x--;
-        if(isDown(Input.InputKey.DOWN)) y++;
-        if(isDown(Input.InputKey.UP)) y--;
+        if(isDown(InputHandler.InputKey.RIGHT)) x++;
+        if(isDown(InputHandler.InputKey.LEFT)) x--;
+        if(isDown(InputHandler.InputKey.DOWN)) y++;
+        if(isDown(InputHandler.InputKey.UP)) y--;
 
         //normalisation:
         if(x != 0 && y != 0){
