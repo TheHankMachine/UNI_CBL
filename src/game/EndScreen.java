@@ -27,8 +27,7 @@ public class EndScreen {
         newGameButton = new Button("NEW GAME", screenWidth / 2, screenHeight / 2) {
             @Override
             public void onClick(MouseEvent e) {
-                // game.paly();
-                System.out.println("new game");
+                game.paly();
             }
 
             // Make the button wider to fit the text
@@ -41,8 +40,7 @@ public class EndScreen {
         quitButton = new Button("QUIT", screenWidth / 2, screenHeight * 0.6f) {
             @Override
             public void onClick(MouseEvent e) {
-                // System.exit(0);
-                System.out.println("quit");
+                System.exit(0);
             }
         };
 
