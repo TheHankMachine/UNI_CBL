@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 public class EndScreen {
 
     private SpriteSheet endText;
-    private Button newGameButton;
+    private final Button newGameButton;
     private final Button quitButton;
 
     public EndScreen(PlaneArcade game) {

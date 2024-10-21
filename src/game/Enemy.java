@@ -42,7 +42,7 @@ public class Enemy extends Ship implements Updateable {
     @Override
     public void die() {
         super.die();
-        game.removeEnemy(this);
+        // game.removeEnemy(this);
     }
 
     @Override
