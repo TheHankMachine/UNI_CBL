@@ -121,15 +121,25 @@ public class Screen extends JPanel {
 
         g2d.translate(-dox, -doy);
 
+
         for(Renderable.DepthLayer layer : Renderable.DepthLayer.values()){
             //TODO: find better way of handling this
             //UI should ignore display offset
             if(layer == Renderable.DepthLayer.UI){
                 g2d.translate(dox, doy);
             }
-            for(Renderable renderable : renderList.get(layer)){
-                renderable.draw(g2d);
+
+            for(Renderable e : renderList.get(layer)){
+                e.draw(g2d);
             }
+
+//            var fuck = renderList.get(layer).iterator();
+//            while(fuck.hasNext()){
+//                fuck.next().draw(g2d);
+//            }
+//            for(var shit = fuck.next() ; fuck.hasNext() ; shit = fuck.next() ){
+//                shit.draw(g2d);
+//            }
         }
     }
 }

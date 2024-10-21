@@ -59,17 +59,17 @@ public abstract class Game {
         long startTime = System.nanoTime();
 
         // this feels wack compared to js promise
-        Future<Void> a = CompletableFuture.runAsync(() -> {
+//        Future<Void> a = CompletableFuture.runAsync(() -> {
             update();
             Updateable.updateAll();
-        });
+//        });
 
-        Future<Void> b = CompletableFuture.runAsync(() -> {
+//        Future<Void> b = CompletableFuture.runAsync(() -> {
             display.repaint();
-        });
+//        });
 
 
-        while(!a.isDone() || !b.isDone()){;}
+//        while(!a.isDone() || !b.isDone()){;}
 
         int duration = (int) (System.nanoTime() - startTime) / 1_000_000;
 
