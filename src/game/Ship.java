@@ -11,7 +11,7 @@ public class Ship extends SpriteSheet implements Updateable {
 
     private final float rotationStep = PI / 8;
 
-    private final int shootingDelayInFrames = 10;
+    private final int shootingDelayInFrames = 5;
     private int frameCounter = 0;
 
     private Vector2D directionVector;

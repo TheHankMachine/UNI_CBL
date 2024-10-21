@@ -63,8 +63,25 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void update() {
+        // Dear Kuba,
+
+        // You can't do this:
+        // You are removing elements from the list enemies
+        // while iterating through it. This throws a concurrent
+        // modification exception. This will be thrown in a
+        // enhanced for loop or a for each loop when a modification
+        // happens while iterating through it.
+
+        // sorry for the inconvenience, but please change this
         enemies.forEach((enemy) -> checkCollision(enemy));
 
         move(velocity);
+
+        // this worked before because the part of code
+        // that ran the update method had a try catch.
+        // that was removed. Thus, this is now your problem.
+
+        // Sincerely,
+        // - Hank
     }
 }

@@ -1,9 +1,11 @@
-I really like the enemy AI. It's very simple yet effective. My one comment
-on the enemies would be to give them screen wrap like we did the clouds.
-That way, if I'm constantly flying up and to the right, the enemies
-can catch up to me via the screen wrap, Otherwise, they are rarely ever on screen.
+TODO:
+All enemy planes spawn pointing straight up. This causes them to tend upwards.
+Maybe make their starting angle random.
 
-All planes could probably move a little slower.
+Enemies should be able to shoot bullets.
 
-Player angle input needs slight offset. Point the mouse directly down (and a smidge
-to the right) and you'll see what I mean.
+Explosions could maybe be a little bit faster
+
+Make enemies actually spawn off-screen
+
+Add score
