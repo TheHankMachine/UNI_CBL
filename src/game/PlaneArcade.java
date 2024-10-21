@@ -6,9 +6,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PlaneArcade extends Game {
+    private Player player; 
+    private Clouds clouds; 
+    private EnemySpawner enemySpawner;
 
-    ArrayList<Enemy> enemies = new ArrayList<>(); 
-    MainMenu mainMenu;
+    private final ArrayList<Enemy> enemies = new ArrayList<>(); 
+    private final MainMenu mainMenu;
+    private EndScreen endScreen;
 
     public PlaneArcade() {
         super(new GameConfig(1280, 960, new Color(0x51a6dc), "src/assets/", 50));
@@ -19,12 +23,27 @@ public class PlaneArcade extends Game {
     }
 
     public void paly() {
-        Player player = new Player(this);
+        player = new Player(this);
+        clouds = new Clouds(player);
 
-        new Clouds(player);
-        new EnemySpawner(player, this);
+        enemySpawner = new EnemySpawner(player, this);
 
-        mainMenu.close();
+        if (!(mainMenu == null)) {
+            mainMenu.close();
+        }
+
+        if (!(endScreen == null)) {
+            endScreen.close();
+        }
+    }
+
+    public void endGame() {
+        enemies.forEach((enemy) -> enemy.remove());
+        clouds.destroyClouds();
+        enemySpawner.deregisterUpdate();
+        enemies.clear();
+
+        endScreen = new EndScreen(this);
     }
 
     public void addEnemy(Enemy enemy) {
@@ -38,6 +57,7 @@ public class PlaneArcade extends Game {
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
+
 
     @Override
     public float getDefaultScale() {

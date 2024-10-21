@@ -13,17 +13,16 @@ public class MainMenu {
         float screenWidth = Game.getInstance().getDisplayWidth();
         float screenHeight = Game.getInstance().getDisplayHeight();
 
-        planeArcadeText = new Text("PLANE ARCADE", screenWidth / 2, screenHeight / 2 - screenHeight * 0.2f);
+        planeArcadeText = new Text("PLANE ARCADE", screenWidth / 2, screenHeight * 0.35f);
 
-        playButton = new Button("PLAY", screenWidth / 2, screenHeight / 2 - screenHeight * 0.1f) {
+        playButton = new Button("PLAY", screenWidth / 2, screenHeight / 2) {
             @Override
             public void onClick(MouseEvent e) {
-                System.out.println("play");
                 game.paly();
             }
         };
         
-        quitButton = new Button("QUIT", screenWidth / 2, screenHeight / 2) {
+        quitButton = new Button("QUIT", screenWidth / 2, screenHeight * 0.6f) {
             @Override
             public void onClick(MouseEvent e) {
                 System.exit(0);

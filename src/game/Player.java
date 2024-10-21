@@ -48,7 +48,7 @@ public class Player extends Ship implements Updateable {
     @Override
     public void die() {
         super.die();
-        new EndScreen();
+        game.endGame();    
     }
 
     @Override

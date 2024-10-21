@@ -37,6 +37,11 @@ public class Clouds implements Updateable {
         registerUpdate();
     }
 
+    public void destroyClouds() {
+        clouds.forEach((cloud) -> cloud.deregisterRender());
+        deregisterUpdate();
+    }
+    
     @Override
     public void update() {
         int width = Game.getInstance().getDisplayWidth();

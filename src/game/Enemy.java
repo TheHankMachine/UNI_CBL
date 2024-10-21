@@ -33,6 +33,12 @@ public class Enemy extends Ship implements Updateable {
         frameCounter++;
     }
 
+    public void remove() {
+        deregisterRender();
+        deregisterUpdate();
+        // game.removeEnemy(this);
+    }
+
     @Override
     public void die() {
         super.die();
