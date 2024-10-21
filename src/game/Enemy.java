@@ -8,10 +8,10 @@ import java.util.Random;
 public class Enemy extends Ship implements Updateable {
 
     private final Player player;
-    // private Vector2D directionVector;
+    private final int oldPositionDelay = 100;
 
     private int frameCounter = 0;
-    private final int oldPositionDelay = 100;
+    private boolean hittable = true;
 
     public Enemy(int x, int y, String spriteSheetName, Player player, PlaneArcade game) {
         super(spriteSheetName, x, y, 8f, 0.3f, game);
@@ -36,13 +36,17 @@ public class Enemy extends Ship implements Updateable {
     public void remove() {
         deregisterRender();
         deregisterUpdate();
-        // game.removeEnemy(this);
+        hittable = false;
+    }
+    
+    public boolean isHittable() {
+        return hittable;
     }
 
     @Override
     public void die() {
         super.die();
-        // game.removeEnemy(this);
+        hittable = false;
     }
 
     @Override

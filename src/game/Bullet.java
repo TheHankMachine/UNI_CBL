@@ -51,6 +51,10 @@ public class Bullet extends DisplayObject implements Updateable {
 
     private void checkCollision(Enemy enemy) {
         if (Collideable.collides(this, enemy)) {
+            if (!enemy.isHittable()) {
+                return;
+            }
+            
             enemy.die();
             die();
         }

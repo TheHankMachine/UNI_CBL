@@ -38,10 +38,10 @@ public class PlaneArcade extends Game {
     }
 
     public void endGame() {
-        // enemies.forEach((enemy) -> enemy.remove());
+        enemies.forEach((enemy) -> enemy.remove());
         clouds.destroyClouds();
         enemySpawner.deregisterUpdate();
-        // enemies.clear();
+        enemies.clear();
 
         endScreen = new EndScreen(this);
     }
@@ -50,9 +50,7 @@ public class PlaneArcade extends Game {
         enemies.add(enemy);
     }
 
-    public void removeEnemy(Enemy enemy) {
-        enemies.remove(enemy);
-    }
+    
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
