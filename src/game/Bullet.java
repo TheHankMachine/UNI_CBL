@@ -1,21 +1,23 @@
 package game;
 
 import engine.math.Axis2D;
+import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.render.DisplayObject;
 import engine.update.Updateable;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class Bullet extends DisplayObject implements Updateable {
 
     private final Vector2D velocity;
     private final float speed = 30f;
 
-    // private final ArrayList<Enemy> enemies;
+    private final ArrayList<Enemy> enemies;
 
-    public Bullet(int x, int y, Vector2D velocity) {
+    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game) {
         super();
         this.velocity = velocity.copy();
 
@@ -25,7 +27,7 @@ public class Bullet extends DisplayObject implements Updateable {
         this.velocity.normalise();
         this.velocity.scale(speed);
 
-        // this.enemies = game.getEnemies();
+        this.enemies = game.getEnemies();
 
         setPosition(x, y);
 
@@ -47,12 +49,12 @@ public class Bullet extends DisplayObject implements Updateable {
         g.drawLine(x, y, endX, endY);
     }
 
-    // private void checkCollision(Enemy enemy) {
-    //     if (Collideable.collides(this, enemy)) {
-    //         enemy.die();
-    //         die();
-    //     }
-    // }
+    private void checkCollision(Enemy enemy) {
+        if (Collideable.collides(this, enemy)) {
+            enemy.die();
+            die();
+        }
+    }
 
     private void die() {
         deregisterRender();
@@ -70,7 +72,7 @@ public class Bullet extends DisplayObject implements Updateable {
         // enhanced for loop or a for each loop when a modification
         // happens while iterating through it.
         // sorry for the inconvenience, but please change this
-        // enemies.forEach((enemy) -> checkCollision(enemy));
+        enemies.forEach((enemy) -> checkCollision(enemy));
         move(velocity);
 
         // this worked before because the part of code
