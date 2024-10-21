@@ -3,6 +3,7 @@ package engine.input;
 import engine.Game;
 import engine.math.Collideable;
 import engine.math.Vector2D;
+import engine.render.Renderable;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,18 +15,26 @@ public class ClickListener extends MouseAdapter {
     private static final List<Clickable> clickableList = new ArrayList<>();
 
     /**
-     * Is called when jframe receives a mouse click event. Checksw
+     * Is called when JFrame receives a mouse click event. Checks
      * all elements of clickableList to check for intersection
      * with the mouse. The function returns after the first intersection
      * is found
      */
     public void mouseClicked(MouseEvent e){
-        Vector2D clickLocation = Game.getInstance().getInput().getMousePositionGameRelative();
+        Vector2D clickGameRelative = Game.getInstance().getInput().getMousePositionGameRelative();
+        Vector2D clickScreenRelative = Game.getInstance().getInput().getMousePositionScreenRelative();
 
         for(Clickable clickable : clickableList){
-            if(clickable.getBoundingBox().contains(clickLocation)){
-                clickable.onClick(e);
-                return;
+            if(clickable.getDepth() == Renderable.DepthLayer.UI){
+                if(clickable.getBoundingBox().contains(clickScreenRelative)) {
+                    clickable.onClick(e);
+                    return;
+                }
+            }else{
+                if(clickable.getBoundingBox().contains(clickGameRelative)) {
+                    clickable.onClick(e);
+                    return;
+                }
             }
         }
     }
