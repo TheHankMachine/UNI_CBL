@@ -70,7 +70,7 @@ public class Bullet extends DisplayObject implements Updateable {
         // enhanced for loop or a for each loop when a modification
         // happens while iterating through it.
         // sorry for the inconvenience, but please change this
-        // enemies.forEach((enemy) -> checkCollision(enemy));
+//         enemies.forEach((enemy) -> checkCollision(enemy));
         move(velocity);
 
         // this worked before because the part of code

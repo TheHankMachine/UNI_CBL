@@ -14,7 +14,7 @@ public class ClickListener extends MouseAdapter {
     private static final List<Clickable> clickableList = new ArrayList<>();
 
     /**
-     * Is called when jframe receives a mouse click event. Checksw
+     * Is called when JFrame receives a mouse click event. Checks
      * all elements of clickableList to check for intersection
      * with the mouse. The function returns after the first intersection
      * is found
