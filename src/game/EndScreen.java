@@ -27,7 +27,7 @@ public class EndScreen {
         newGameButton = new Button("NEW GAME", screenWidth / 2, screenHeight / 2) {
             @Override
             public void onClick(MouseEvent e) {
-                game.paly();
+                game.play();
             }
 
             // Make the button wider to fit the text

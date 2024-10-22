@@ -1,15 +1,16 @@
+
 package game;
 
 import engine.Game;
 import engine.math.Collideable;
 import engine.update.Updateable;
+import java.util.Random;
+
 
 public class Enemy extends Ship implements Updateable {
 
     private final Player player;
-    private final int oldPositionDelay = 60;
 
-    private int frameCounter = 0;
     private boolean hittable = true;
 
     public Enemy(int x, int y, String spriteSheetName, Player player, PlaneArcade game) {
@@ -17,9 +18,27 @@ public class Enemy extends Ship implements Updateable {
 
         this.player = player;
 
-        rotateToVector(player.getPosition().copy());
+        setRandomInitialAngle();
 
         registerUpdate();
+    }
+
+    private void setRandomInitialAngle() {
+        Random rand = new Random();
+
+        // float x = rand.nextFloat();
+        // float y = rand.nextFloat();
+
+        // if (rand.nextBoolean()) {
+        //     x *= -1;
+        // }
+
+        // if (rand.nextBoolean()) {
+        //     y *= -1;
+        // }
+
+        int spriteIndex = rand.nextInt(16);
+        setFrame(spriteIndex);
     }
 
     private void subtractFromEnemyCounter() {

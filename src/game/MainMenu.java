@@ -18,7 +18,7 @@ public class MainMenu {
         playButton = new Button("PLAY", screenWidth / 2, screenHeight / 2) {
             @Override
             public void onClick(MouseEvent e) {
-                game.paly();
+                game.play();
             }
         };
         

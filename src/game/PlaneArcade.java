@@ -23,7 +23,7 @@ public class PlaneArcade extends Game {
         register();
     }
 
-    public void paly() {
+    public void play() {
         player = new Player(this);
         clouds = new Clouds(player);
 
@@ -36,6 +36,10 @@ public class PlaneArcade extends Game {
         if (!(endScreen == null)) {
             endScreen.close();
         }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public void endGame() {

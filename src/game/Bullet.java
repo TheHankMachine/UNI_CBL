@@ -19,7 +19,7 @@ public class Bullet extends DisplayObject implements Updateable {
     private final ArrayList<Enemy> enemies;
     private final Player player;
 
-    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game, Player player) {
+    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game) {
         super();
         this.velocity = velocity.copy();
 
@@ -30,7 +30,7 @@ public class Bullet extends DisplayObject implements Updateable {
         this.velocity.scale(speed);
 
         this.enemies = game.getEnemies();
-        this.player = player;
+        this.player = game.getPlayer();
 
         setPosition(x, y);
 
@@ -61,7 +61,7 @@ public class Bullet extends DisplayObject implements Updateable {
             getY() > player.getY() + screenHeight / 2 + getHeight() ||
             getY() < player.getY() - screenHeight / 2 - getHeight()) {
             deregisterRender();
-            deregisterRender();
+            deregisterUpdate();
         }
     }
 
