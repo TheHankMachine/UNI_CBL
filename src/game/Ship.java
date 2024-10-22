@@ -95,9 +95,10 @@ public class Ship extends SpriteSheet implements Updateable {
         fixedAngle = currentAngle - (currentAngle % rotationStep);
 
         // calculating the vector along which the player will move
-        directionVector = new Vector2D(
-                (float) Math.sin(fixedAngle),
-                (float) -Math.cos(fixedAngle));
+        directionVector.setTo(
+            (float) Math.sin(fixedAngle),
+            (float) -Math.cos(fixedAngle)
+        );
 
         // scaling the vector to make the player move with the desired speed
         directionVector.scale(speed);

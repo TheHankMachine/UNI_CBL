@@ -3,21 +3,20 @@ package engine.render;
 import engine.math.Vector2D;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public abstract class SpriteFont extends DisplayObject {
 
     private final Map<Character, Integer> characterToFrame;
 
-    private final ArrayList<SpriteSheet> sprites;
+    private final List<SpriteSheet> sprites;
     private String text;
 
     private boolean requiresUpdate = true;
 
     private SpriteFont(String text){
-        sprites = new ArrayList<>();
+        sprites = new LinkedList<>();
         characterToFrame = new HashMap<>();
 
         char[] chars = getCharacters();

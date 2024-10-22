@@ -45,10 +45,17 @@ public class Enemy extends Ship implements Updateable {
         Vector2D vectorToPlayer = player.getPosition().copy();
         vectorToPlayer.subtract(position);
 
-        float angleToPlayer = vectorToPlayer.getAngle();
+        float angleDiff = vectorToPlayer.getAngle() - getCurrentAngle() + (float) Math.PI / 2;;
 
-        // System.out.println(angleToPlayer);
-        return getCurrentAngle() - angleToPlayer < 0.35;
+        if(angleDiff < 0){
+            angleDiff += (float) Math.PI * 2;
+        }
+
+        if(Math.abs(angleDiff) > Math.PI) {
+            angleDiff -= Math.signum(angleDiff) * (float) Math.PI * 2;
+        }
+
+        return Math.abs(angleDiff) < 0.25;
     }
 
     public void screenWrap() {
