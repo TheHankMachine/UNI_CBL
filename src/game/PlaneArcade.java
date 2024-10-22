@@ -28,7 +28,7 @@ public class PlaneArcade extends Game {
     }
 
     public void play() {
-        player = new Player(this);
+        player = new Player();
         clouds = new Clouds(player);
 
         enemySpawner = new EnemySpawner(this);

@@ -55,7 +55,7 @@ public abstract class EnemyAI {
 
     public static class Chaser extends EnemyAI {
 
-        private float offset = (float) (Math.random() * Math.PI / 2);
+        private int t = 0;
 
         public Chaser(Enemy enemy) {
             super(enemy);
@@ -63,22 +63,25 @@ public abstract class EnemyAI {
 
         @Override
         boolean shoot() {
-            return super.facingPlayer(0.2f);
+            return super.facingPlayer(0.6f);
         }
 
         @Override
         float getTargetAngle() {
-            return enemy.getVelocity().getAngle();
+            t++;
 
-//            if(super.distanceToPlayer() < 300){
-//                return super.angleToPlayer() - (float) Math.PI;
+            if(
+                t % 10 == 0 &&
+                !super.facingPlayer(1f) &&
+                super.distanceToPlayer() > 200f
+            ){
+                return super.angleToPlayer();
+            }
+
+//            if(){
 //            }
 //
-//            return super.angleToPlayer();
-
-//                return enemy.getVelocity().getAngle();
-//            }
-//            return super.facingPlayer(0.3f);
+            return enemy.getVelocity().getAngle();
         }
     }
 

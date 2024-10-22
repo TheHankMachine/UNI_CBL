@@ -1,5 +1,6 @@
 package game.ship;
 
+import engine.Game;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
@@ -15,29 +16,22 @@ public class Ship extends SpriteSheet implements Updateable {
     private final float rotationStep = PI / 8;
     private final Vector2D directionVector = new Vector2D();
 
-    private int shootingDelayInFrames = 10;
     private int frameCounter = 0;
 
     private float currentAngle = 0;
     private float fixedAngle = 0;
     private float speed = 8f;
-    private float rotationSpeed = 0.5f;
+    private float rotationSpeed = PI / 24;
 
     private boolean hittable = true;
     protected PlaneArcade game;
 
-    public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed, PlaneArcade game) {
+    // Removed game from the constructor
+    public Ship(String spriteSheetName, float x, float y) {
         super(spriteSheetName, 16, 16, x, y);
 
-        this.speed = speed;
-        this.rotationSpeed = rotationSpeed;
-        this.game = game;
-
-        // if (this == V) {
-        //     shootingDelayInFrames = 5;
-        // } else {
-        //     shootingDelayInFrames = 10;
-        // }
+        // because it can be cast like this
+        this.game = (PlaneArcade) Game.getInstance();
     }
 
     public float cursorAngleOffset() {
@@ -131,7 +125,7 @@ public class Ship extends SpriteSheet implements Updateable {
 
     public boolean canShoot() {
         // reset the counter after waiting
-        if (frameCounter == shootingDelayInFrames) {
+        if (frameCounter == getShootingDelay()) {
             frameCounter = 0;
         }
 
@@ -162,6 +156,10 @@ public class Ship extends SpriteSheet implements Updateable {
 
         deregisterRender();
         deregisterUpdate();
+    }
+
+    public int getShootingDelay(){
+        return 10;
     }
 
     @Override

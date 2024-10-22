@@ -6,21 +6,16 @@ import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.update.Updateable;
 import game.PlaneArcade;
+import game.effect.Explosion;
 
 public class Player extends Ship implements Updateable {
 
-    // fix this with an overridable method
-    private int shootingDelayInFrames = 5;
-
-    public Player(PlaneArcade game) {
+    public Player() {
         super("player.png",
-                (float) ((Game.getInstance().getDisplayWidth() / 2)),
-                (float) ((Game.getInstance().getDisplayHeight() / 2)),
-                8f, 0.34f, game);
+            (float) ((Game.getInstance().getDisplayWidth() / 2)),
+            (float) ((Game.getInstance().getDisplayHeight() / 2))
+        );
 
-        setScale(4);
-
-        // setting the initial player sprite
         setFrame(0);
 
         registerUpdate();
@@ -30,7 +25,13 @@ public class Player extends Ship implements Updateable {
     public void die() {
         super.die();
         setHittable(false);
-        game.endGame();    
+
+        game.endGame();
+    }
+
+    @Override
+    public int getShootingDelay(){
+        return 6;
     }
 
     @Override

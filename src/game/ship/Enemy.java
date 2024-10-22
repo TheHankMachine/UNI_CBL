@@ -1,23 +1,20 @@
-
 package game.ship;
 
 import engine.Game;
 import engine.math.Collideable;
-import engine.math.Vector2D;
 import engine.update.Updateable;
 import game.EnemyAI;
 import game.PlaneArcade;
-
 
 public class Enemy extends Ship implements Updateable {
 
     private final Player player;
 
     private boolean hittable = true;
-    private EnemyAI AI;
+    private final EnemyAI AI;
 
-    public Enemy(int x, int y, String spriteSheetName, PlaneArcade game) {
-        super(spriteSheetName, x, y, 8f, 0.3f, game);
+    public Enemy(int x, int y, String spriteSheetName) {
+        super(spriteSheetName, x, y);
 
         this.player = game.getPlayer();
 
@@ -87,9 +84,13 @@ public class Enemy extends Ship implements Updateable {
         subtractFromEnemyCounter();
     }
 
+    public int getShootingDelay(){
+        return 15;
+    }
+
     @Override
     public void update() {
-        if (Collideable.collides(this, player)) {
+        if (Collideable.collides(this, player.getPosition())) {
             die();
             player.die();
         }

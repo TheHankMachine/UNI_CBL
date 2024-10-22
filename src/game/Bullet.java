@@ -8,6 +8,7 @@ import engine.render.DisplayObject;
 import engine.update.Updateable;
 import game.ship.Enemy;
 import game.ship.Player;
+import game.ship.Ship;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class Bullet extends DisplayObject implements Updateable {
 
     private final Vector2D velocity;
-    private final float speed = 30f;
+    private final float speed = 20f;
     private boolean shotByPlayer;
 
     private final ArrayList<Enemy> enemies;
@@ -45,16 +46,18 @@ public class Bullet extends DisplayObject implements Updateable {
     @Override
     public void draw(Graphics2D g, int x, int y, int w, int h) {
         // Draw the bullet centered at the origin
-        int endX = x + velocity.get(Axis2D.X).intValue();
-        int endY = y + velocity.get(Axis2D.Y).intValue();
-
-        g.setColor(new Color(0xfaa21b));
-        g.setStroke(new BasicStroke(9));
-        g.drawLine(x, y, endX, endY);
-
+//        int endX = x + velocity.get(Axis2D.X).intValue();
+//        int endY = y + velocity.get(Axis2D.Y).intValue();
+//
+//        g.setColor(new Color(0xfaa21b));
+//        g.setStroke(new BasicStroke(9));
+//        g.drawLine(x, y, endX, endY);
+//
         g.setColor(new Color(0xfff1e9));
-        g.setStroke(new BasicStroke(6));
-        g.drawLine(x, y, endX, endY);
+//        g.setStroke(new BasicStroke(6));
+//        g.drawLine(x, y, endX, endY);
+
+        g.fillRect(x, y, w, h);
     }
 
     private void cleanBullets() {
@@ -71,7 +74,7 @@ public class Bullet extends DisplayObject implements Updateable {
     }
 
     private void checkCollision(Enemy enemy) {
-        if (shotByPlayer && Collideable.collides(this, enemy)) {
+        if (shotByPlayer && Collideable.collides(position, enemy)) {
             if (!enemy.isHittable()) {
                 return;
             }
@@ -82,7 +85,7 @@ public class Bullet extends DisplayObject implements Updateable {
     }
 
     private void checkCollision(Ship player) {
-        if (!shotByPlayer && Collideable.collides(this, player)) {
+        if (!shotByPlayer && Collideable.collides(position, player)) {
             if (!player.isHittable()) {
                 return;
             }
