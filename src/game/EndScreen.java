@@ -50,7 +50,11 @@ public class EndScreen {
 
     public void close() {
         endText.deregisterRender();
+
         newGameButton.deregisterRender();
+        newGameButton.removeClickListener();
+
         quitButton.deregisterRender();
+        quitButton.removeClickListener();
     }
 }

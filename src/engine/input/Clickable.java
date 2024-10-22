@@ -22,6 +22,11 @@ public interface Clickable extends Collideable {
         ClickListener.addClickListenerTo(this);
     }
 
+    default void removeClickListener(){
+        ClickListener.removeClickListenerOf(this);
+    }
+
+
     /**
      * @return the depth layer. This is related to the
      * depth sorting of all objects on the screen. There are

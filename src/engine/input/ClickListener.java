@@ -46,5 +46,12 @@ public class ClickListener extends MouseAdapter {
     public static void addClickListenerTo(Clickable object){
         clickableList.addFirst(object);
     }
+
+    /**
+     * Removes the object from the clickable list.
+     */
+    public static void removeClickListenerOf(Clickable object){
+        clickableList.remove(object);
+    }
     
 }
