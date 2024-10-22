@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public abstract class Game {
 
+    // Singleton instance of the game
     private static Game instance = null;
     public static Game getInstance(){
         if(instance == null) {
@@ -22,7 +23,6 @@ public abstract class Game {
     }
 
     protected final GameConfig config;
-
     private final Display display;
     private final InputHandler inputHandler;
 
@@ -36,9 +36,7 @@ public abstract class Game {
     }
 
     public final void register(){
-        Timer timer = new Timer(config.targetTickMs,
-            this::periodic
-        );
+        Timer timer = new Timer(config.targetTickMs, this::periodic);
         timer.start();
     }
 

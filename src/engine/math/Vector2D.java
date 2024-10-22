@@ -166,7 +166,6 @@ public class Vector2D extends EnumMap<Axis2D, Float> {
         }
     }
 
-
     /**
      * Rotates the vector around angle. Rotation is counterclockwise
      * relative to cartesian coordinates, but clockwise relative
