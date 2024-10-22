@@ -13,16 +13,17 @@ public class Ship extends SpriteSheet implements Updateable {
     private final float PI = (float) Math.PI;
 
     private final float rotationStep = PI / 8;
+    private final Vector2D directionVector = new Vector2D();
 
-    private final int shootingDelayInFrames = 5;
+    private int shootingDelayInFrames = 10;
     private int frameCounter = 0;
 
-    private Vector2D directionVector = new Vector2D();
     private float currentAngle = 0;
     private float fixedAngle = 0;
     private float speed = 8f;
     private float rotationSpeed = 0.5f;
 
+    private boolean hittable = true;
     protected PlaneArcade game;
 
     public Ship(String spriteSheetName, float x, float y, float speed, float rotationSpeed, PlaneArcade game) {
@@ -31,10 +32,24 @@ public class Ship extends SpriteSheet implements Updateable {
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
         this.game = game;
+
+        // if (this == V) {
+        //     shootingDelayInFrames = 5;
+        // } else {
+        //     shootingDelayInFrames = 10;
+        // }
     }
 
     public float cursorAngleOffset() {
         return rotationStep / 2;
+    }
+
+    public void setHittable(boolean value) {
+        hittable = value;
+    }
+
+    public boolean isHittable() {
+        return hittable;
     }
 
     public void setRandomInitialAngle() {
@@ -103,8 +118,8 @@ public class Ship extends SpriteSheet implements Updateable {
 
         // calculating the vector along which the player will move
         directionVector.setTo(
-            (float) Math.sin(fixedAngle),
-            (float) -Math.cos(fixedAngle)
+                (float) Math.sin(fixedAngle),
+                (float) -Math.cos(fixedAngle)
         );
 
         // scaling the vector to make the player move with the desired speed

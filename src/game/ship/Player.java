@@ -9,6 +9,9 @@ import game.PlaneArcade;
 
 public class Player extends Ship implements Updateable {
 
+    // fix this with an overridable method
+    private int shootingDelayInFrames = 5;
+
     public Player(PlaneArcade game) {
         super("player.png",
                 (float) ((Game.getInstance().getDisplayWidth() / 2)),
@@ -26,6 +29,7 @@ public class Player extends Ship implements Updateable {
     @Override
     public void die() {
         super.die();
+        setHittable(false);
         game.endGame();    
     }
 
