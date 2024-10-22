@@ -1,5 +1,6 @@
 package game;
 
+import engine.Game;
 import engine.math.Axis2D;
 import engine.math.Collideable;
 import engine.math.Vector2D;
@@ -16,8 +17,9 @@ public class Bullet extends DisplayObject implements Updateable {
     private final float speed = 30f;
 
     private final ArrayList<Enemy> enemies;
+    private final Player player;
 
-    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game) {
+    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game, Player player) {
         super();
         this.velocity = velocity.copy();
 
@@ -28,6 +30,7 @@ public class Bullet extends DisplayObject implements Updateable {
         this.velocity.scale(speed);
 
         this.enemies = game.getEnemies();
+        this.player = player;
 
         setPosition(x, y);
 
@@ -49,6 +52,19 @@ public class Bullet extends DisplayObject implements Updateable {
         g.drawLine(x, y, endX, endY);
     }
 
+    private void celanBullets() {
+        int screenWidth = Game.getInstance().getDisplayWidth();
+        int screenHeight = Game.getInstance().getDisplayHeight();
+
+        if (getX() > player.getX() + screenWidth / 2 + getWidth() ||
+            getX() < player.getX() - screenWidth / 2 - getWidth() ||
+            getY() > player.getY() + screenHeight / 2 + getHeight() ||
+            getY() < player.getY() - screenHeight / 2 - getHeight()) {
+            deregisterRender();
+            deregisterRender();
+        }
+    }
+
     private void checkCollision(Enemy enemy) {
         if (Collideable.collides(this, enemy)) {
             if (!enemy.isHittable()) {
@@ -67,22 +83,8 @@ public class Bullet extends DisplayObject implements Updateable {
 
     @Override
     public void update() {
-        // Dear Kuba,
-
-        // You can't do this:
-        // You are removing elements from the list enemies
-        // while iterating through it. This throws a concurrent
-        // modification exception. This will be thrown in a
-        // enhanced for loop or a for each loop when a modification
-        // happens while iterating through it.
-        // sorry for the inconvenience, but please change this
         enemies.forEach((enemy) -> checkCollision(enemy));
         move(velocity);
-
-        // this worked before because the part of code
-        // that ran the update method had a try catch.
-        // that was removed. Thus, this is now your problem.
-        // Sincerely,
-        // - Hank
+        celanBullets();
     }
 }
