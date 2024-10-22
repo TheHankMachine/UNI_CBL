@@ -7,10 +7,11 @@ public interface Renderable {
 
     enum DepthLayer {
         BACKGROUND,
+        MIDBACKGROUND,
         MIDDLEGROUND,
+        MIDFORGROUND,
         FOREGROUND,
         UI;
-
     }
     /**
      * Adds object to the renderlist

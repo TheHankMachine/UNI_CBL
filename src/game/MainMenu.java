@@ -32,6 +32,7 @@ public class MainMenu {
 
     public void close() {
         planeArcadeText.deregisterRender();
+
         playButton.deregisterRender();
         playButton.removeClickListener();
 

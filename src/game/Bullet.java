@@ -34,6 +34,7 @@ public class Bullet extends DisplayObject implements Updateable {
 
         this.velocity.normalise(speed);
 
+
         PlaneArcade game = (PlaneArcade) Game.getInstance();
 
         this.enemies = game.getEnemies();
@@ -97,5 +98,10 @@ public class Bullet extends DisplayObject implements Updateable {
         
         move(velocity);
         cleanBullets();
+    }
+
+    @Override
+    public DepthLayer getDepth(){
+        return DepthLayer.MIDBACKGROUND;
     }
 }

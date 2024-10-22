@@ -170,6 +170,6 @@ public class Ship extends SpriteSheet implements Updateable {
 
     @Override
     public DepthLayer getDepth() {
-        return DepthLayer.FOREGROUND;
+        return DepthLayer.MIDFORGROUND;
     }
 }

@@ -20,14 +20,14 @@ public class Clouds implements Updateable {
         for (int i = 0; i < 20; i++) {
             int frame = (int) (Math.min(Math.random(), Math.random()) * 3);
             SpriteSheet spriteSheet = new SpriteSheet("clouds.png", 45, 15,
-                    (float) Math.random() * Game.getInstance().getDisplayWidth(),
-                    (float) Math.random() * Game.getInstance().getDisplayHeight()
+                    (float) Math.random() * Game.getInstance().getDisplayWidth() * 2,
+                    (float) Math.random() * Game.getInstance().getDisplayHeight() * 2
             ) {
                 public DepthLayer getDepth() {
                     return List.of(
-                            DepthLayer.BACKGROUND,
-                            DepthLayer.MIDDLEGROUND,
-                            DepthLayer.FOREGROUND
+                        DepthLayer.BACKGROUND,
+                        DepthLayer.MIDDLEGROUND,
+                        DepthLayer.FOREGROUND
                     ).get(frame);
                 }
             };

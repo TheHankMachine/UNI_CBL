@@ -95,7 +95,6 @@ public class Enemy extends Ship implements Updateable {
             player.die();
         }
 
-        AI.controlShip();
 
 //        if (canShoot() && facingPlayer()) {
 //            shoot(false);
@@ -103,5 +102,7 @@ public class Enemy extends Ship implements Updateable {
 
         move();
         screenWrap();
+
+        AI.controlShip();
     }
 }

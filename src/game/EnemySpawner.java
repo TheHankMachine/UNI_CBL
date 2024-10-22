@@ -65,24 +65,24 @@ public class EnemySpawner implements Updateable {
             // top
             case 0:
                 x = randomX;
-                y = playerY - screenHeight / 2;
+                y = playerY - screenHeight;
 
                 break;
             // bottom
             case 1:
                 x = randomX;
-                y = playerY + screenHeight / 2;
+                y = playerY + screenHeight;
 
                 break;
             // left
             case 2:
-                x = playerX - screenWidth / 2;
+                x = playerX - screenWidth;
                 y = randomY;
 
                 break;
             // right
             case 3:
-                x = playerX + screenWidth / 2;
+                x = playerX + screenWidth;
                 y = randomY;
 
                 break;
