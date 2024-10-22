@@ -24,6 +24,7 @@ public class Ship extends SpriteSheet implements Updateable {
     private float rotationSpeed = PI / 24;
 
     private boolean hittable = true;
+
     protected PlaneArcade game;
 
     // Removed game from the constructor

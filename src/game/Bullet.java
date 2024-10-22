@@ -73,24 +73,13 @@ public class Bullet extends DisplayObject implements Updateable {
         }
     }
 
-    private void checkCollision(Enemy enemy) {
-        if (shotByPlayer && Collideable.collides(position, enemy)) {
-            if (!enemy.isHittable()) {
-                return;
-            }
-            
-            enemy.die();
-            die();
-        }
-    }
-
-    private void checkCollision(Ship player) {
-        if (!shotByPlayer && Collideable.collides(position, player)) {
-            if (!player.isHittable()) {
+    private void checkCollision(Ship ship) {
+        if ((ship.getClass() == Player.class != shotByPlayer) && Collideable.collides(position, ship)) {
+            if (!ship.isHittable()) {
                 return;
             }
 
-            player.die();
+            ship.die();
             die();
         }
     }
