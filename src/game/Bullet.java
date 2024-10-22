@@ -34,11 +34,10 @@ public class Bullet extends DisplayObject implements Updateable {
 
         this.velocity.normalise(speed);
 
-
         PlaneArcade game = (PlaneArcade) Game.getInstance();
 
-        this.enemies = game.getEnemies();
-        this.player = game.getPlayer();
+        enemies = game.getEnemies();
+        player = game.getPlayer();
 
         setPosition(x, y);
 
@@ -55,10 +54,15 @@ public class Bullet extends DisplayObject implements Updateable {
 //        g.setStroke(new BasicStroke(9));
 //        g.drawLine(x, y, endX, endY);
 //
-        g.setColor(new Color(0xfff1e9));
+//        g.setColor(new Color(0xfff1e9));
 //        g.setStroke(new BasicStroke(6));
 //        g.drawLine(x, y, endX, endY);
 
+        if(shotByPlayer) {
+            g.setColor(new Color(0xfff1e9));
+        }else{
+            g.setColor(new Color(0xf7ec2f));
+        }
         g.fillRect(x, y, w, h);
     }
 

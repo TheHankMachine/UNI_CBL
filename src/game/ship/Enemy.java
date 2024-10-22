@@ -95,11 +95,6 @@ public class Enemy extends Ship implements Updateable {
             player.die();
         }
 
-
-//        if (canShoot() && facingPlayer()) {
-//            shoot(false);
-//        }
-
         move();
         screenWrap();
 
