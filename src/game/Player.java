@@ -38,7 +38,7 @@ public class Player extends Ship implements Updateable {
         move();
 
         if (canShoot() && Game.getInstance().getInput().isDown(InputKey.SPACE)) {
-            shoot();
+            shoot(true);
         }
 
         // setting the display origin to the current position of the player

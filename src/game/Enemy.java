@@ -42,13 +42,13 @@ public class Enemy extends Ship implements Updateable {
     }
 
     private boolean facingPlayer() {
-        Vector2D vectorToPlayer = position.copy();
-        vectorToPlayer.subtract(player.getPosition().copy());
+        Vector2D vectorToPlayer = player.getPosition().copy();
+        vectorToPlayer.subtract(position);
 
         float angleToPlayer = vectorToPlayer.getAngle();
 
         // System.out.println(angleToPlayer);
-        return Math.abs(angleToPlayer) < 0.35;
+        return getCurrentAngle() - angleToPlayer < 0.35;
     }
 
     public void screenWrap() {
@@ -92,7 +92,7 @@ public class Enemy extends Ship implements Updateable {
         }
 
         if (canShoot() && facingPlayer()) {
-            shoot();
+            shoot(false);
         }
 
         move();

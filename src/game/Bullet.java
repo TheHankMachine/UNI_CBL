@@ -15,13 +15,15 @@ public class Bullet extends DisplayObject implements Updateable {
 
     private final Vector2D velocity;
     private final float speed = 30f;
+    private boolean shotByPlayer;
 
     private final ArrayList<Enemy> enemies;
     private final Player player;
 
-    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game) {
+    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game, boolean shotByPlayer) {
         super();
         this.velocity = velocity.copy();
+        this.shotByPlayer = shotByPlayer;
 
         this.width = 2;
         this.height = 2;
@@ -52,7 +54,7 @@ public class Bullet extends DisplayObject implements Updateable {
         g.drawLine(x, y, endX, endY);
     }
 
-    private void celanBullets() {
+    private void cleanBullets() {
         int screenWidth = Game.getInstance().getDisplayWidth();
         int screenHeight = Game.getInstance().getDisplayHeight();
 
@@ -66,7 +68,7 @@ public class Bullet extends DisplayObject implements Updateable {
     }
 
     private void checkCollision(Enemy enemy) {
-        if (Collideable.collides(this, enemy)) {
+        if (shotByPlayer && Collideable.collides(this, enemy)) {
             if (!enemy.isHittable()) {
                 return;
             }
@@ -85,6 +87,6 @@ public class Bullet extends DisplayObject implements Updateable {
     public void update() {
         enemies.forEach((enemy) -> checkCollision(enemy));
         move(velocity);
-        celanBullets();
+        cleanBullets();
     }
 }

@@ -14,7 +14,7 @@ public class Ship extends SpriteSheet implements Updateable {
     private final int shootingDelayInFrames = 5;
     private int frameCounter = 0;
 
-    private Vector2D directionVector;
+    private Vector2D directionVector = new Vector2D();
     private float currentAngle = 0;
     private float fixedAngle = 0;
     private float speed = 8f;
@@ -82,6 +82,10 @@ public class Ship extends SpriteSheet implements Updateable {
         setFrame(spriteIndex);
     }
 
+    public float getCurrentAngle() {
+        return fixedAngle;
+    }
+
     public Vector2D getVelocity() {
         return directionVector.copy();
     }
@@ -117,7 +121,7 @@ public class Ship extends SpriteSheet implements Updateable {
         return true;
     }
 
-    public void shoot() {
+    public void shoot(boolean shotByPlayer) {
         // start the counter
         frameCounter = 1;
 
@@ -127,7 +131,7 @@ public class Ship extends SpriteSheet implements Updateable {
 
         // instantiate the bullet
         new Bullet(bulletPosition.get(Axis2D.X).intValue(),
-                bulletPosition.get(Axis2D.Y).intValue(), directionVector, game);
+                bulletPosition.get(Axis2D.Y).intValue(), directionVector, game, shotByPlayer);
     }
 
     public void die() {
