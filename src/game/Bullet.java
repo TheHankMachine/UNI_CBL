@@ -78,6 +78,17 @@ public class Bullet extends DisplayObject implements Updateable {
         }
     }
 
+    private void checkCollision(Ship player) {
+        if (!shotByPlayer && Collideable.collides(this, player)) {
+            if (!player.isHittable()) {
+                return;
+            }
+
+            player.die();
+            die();
+        }
+    }
+
     private void die() {
         deregisterRender();
         deregisterUpdate();
@@ -86,6 +97,8 @@ public class Bullet extends DisplayObject implements Updateable {
     @Override
     public void update() {
         enemies.forEach((enemy) -> checkCollision(enemy));
+        checkCollision(player);
+        
         move(velocity);
         cleanBullets();
     }

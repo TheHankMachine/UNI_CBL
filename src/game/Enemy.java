@@ -11,8 +11,6 @@ public class Enemy extends Ship implements Updateable {
 
     private final Player player;
 
-    private boolean hittable = true;
-
     public Enemy(int x, int y, String spriteSheetName, PlaneArcade game) {
         super(spriteSheetName, x, y, 8f, 0.3f, game);
 
@@ -32,13 +30,9 @@ public class Enemy extends Ship implements Updateable {
     public void remove() {
         deregisterRender();
         deregisterUpdate();
-        hittable = false;
+        setHittable(false);
 
         subtractFromEnemyCounter();
-    }
-
-    public boolean isHittable() {
-        return hittable;
     }
 
     private boolean facingPlayer() {
@@ -86,8 +80,7 @@ public class Enemy extends Ship implements Updateable {
     @Override
     public void die() {
         super.die();
-        hittable = false;
-
+        setHittable(false);
         subtractFromEnemyCounter();
     }
 
