@@ -5,7 +5,6 @@ import java.awt.*;
 
 public interface Renderable {
 
-
     enum DepthLayer {
         BACKGROUND,
         MIDDLEGROUND,

@@ -2,15 +2,19 @@ package game;
 
 import engine.Game;
 import engine.GameConfig;
+import game.effect.Clouds;
+import game.ship.Enemy;
+import game.ship.Player;
+
 import java.awt.*;
 import java.util.ArrayList;
 
 public class PlaneArcade extends Game {
-    private Player player; 
-    private Clouds clouds; 
+    private Player player;
+    private Clouds clouds;
     private EnemySpawner enemySpawner;
 
-    private final ArrayList<Enemy> enemies = new ArrayList<>(); 
+    private final ArrayList<Enemy> enemies = new ArrayList<>();
     private final MainMenu mainMenu;
     private EndScreen endScreen;
     private int enemyCounter = 0;

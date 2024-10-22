@@ -1,10 +1,11 @@
-package game;
+package game.ship;
 
 import engine.Game;
 import engine.input.InputHandler.InputKey;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.update.Updateable;
+import game.PlaneArcade;
 
 public class Player extends Ship implements Updateable {
 

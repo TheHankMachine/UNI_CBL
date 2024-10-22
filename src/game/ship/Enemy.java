@@ -1,10 +1,12 @@
 
-package game;
+package game.ship;
 
 import engine.Game;
 import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.update.Updateable;
+import game.EnemyAI;
+import game.PlaneArcade;
 
 
 public class Enemy extends Ship implements Updateable {
@@ -12,11 +14,14 @@ public class Enemy extends Ship implements Updateable {
     private final Player player;
 
     private boolean hittable = true;
+    private EnemyAI AI;
 
     public Enemy(int x, int y, String spriteSheetName, PlaneArcade game) {
         super(spriteSheetName, x, y, 8f, 0.3f, game);
 
         this.player = game.getPlayer();
+
+        AI = new EnemyAI.Chaser(this);
 
         setRandomInitialAngle();
 
@@ -37,25 +42,16 @@ public class Enemy extends Ship implements Updateable {
         subtractFromEnemyCounter();
     }
 
-    public boolean isHittable() {
-        return hittable;
+    public void shoot(){
+        super.shoot(false);
     }
 
-    private boolean facingPlayer() {
-        Vector2D vectorToPlayer = player.getPosition().copy();
-        vectorToPlayer.subtract(position);
+    public Player getPlayer(){
+        return player;
+    }
 
-        float angleDiff = vectorToPlayer.getAngle() - getCurrentAngle() + (float) Math.PI / 2;;
-
-        if(angleDiff < 0){
-            angleDiff += (float) Math.PI * 2;
-        }
-
-        if(Math.abs(angleDiff) > Math.PI) {
-            angleDiff -= Math.signum(angleDiff) * (float) Math.PI * 2;
-        }
-
-        return Math.abs(angleDiff) < 0.25;
+    public boolean isHittable() {
+        return hittable;
     }
 
     public void screenWrap() {
@@ -98,9 +94,11 @@ public class Enemy extends Ship implements Updateable {
             player.die();
         }
 
-        if (canShoot() && facingPlayer()) {
-            shoot(false);
-        }
+        AI.controlShip();
+
+//        if (canShoot() && facingPlayer()) {
+//            shoot(false);
+//        }
 
         move();
         screenWrap();

@@ -1,9 +1,12 @@
-package game;
+package game.ship;
 
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
+import game.Bullet;
+import game.effect.Explosion;
+import game.PlaneArcade;
 
 public class Ship extends SpriteSheet implements Updateable {
 
@@ -41,13 +44,9 @@ public class Ship extends SpriteSheet implements Updateable {
         currentAngle = spriteIndex * rotationStep;
     }
 
-    public void rotateToVector(Vector2D vector) {
-        // adjusting the cursor position to be relative to the player
-        vector.subtract(position);
-        vector.subtract(new Vector2D(8, 8));
-
-        // calculating the angle between the X-axis and the vector from the center of the screen to the cursor
-        float angle = vector.getAngle() + PI / 2 + rotationStep / 2;
+    public void rotateToAngle(float angle){
+// calculating the angle between the X-axis and the vector from the center of the screen to the cursor
+        angle += PI / 2 + rotationStep / 2;
 
         // converting negative angle values to positive ones
         if (angle < 0) {
@@ -80,6 +79,14 @@ public class Ship extends SpriteSheet implements Updateable {
 
         // setting the sprite sheet frame to the calculated index
         setFrame(spriteIndex);
+    }
+
+    public void rotateToVector(Vector2D vector) {
+        // adjusting the cursor position to be relative to the player
+        vector.subtract(position);
+        vector.subtract(new Vector2D(8, 8));
+
+        rotateToAngle(vector.getAngle());
     }
 
     public float getCurrentAngle() {

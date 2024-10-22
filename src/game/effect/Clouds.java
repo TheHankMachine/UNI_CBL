@@ -1,9 +1,11 @@
-package game;
+package game.effect;
 
 import engine.Game;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
+import game.ship.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 

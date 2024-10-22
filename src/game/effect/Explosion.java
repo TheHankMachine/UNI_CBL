@@ -1,4 +1,4 @@
-package game;
+package game.effect;
 
 import engine.render.SpriteSheet;
 import engine.update.Updateable;

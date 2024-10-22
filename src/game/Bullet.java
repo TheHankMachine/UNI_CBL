@@ -6,6 +6,9 @@ import engine.math.Collideable;
 import engine.math.Vector2D;
 import engine.render.DisplayObject;
 import engine.update.Updateable;
+import game.ship.Enemy;
+import game.ship.Player;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
