@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class Bullet extends DisplayObject implements Updateable {
 
     private final Vector2D velocity;
+    private final boolean shotByPlayer;
     private final float speed = 20f;
-    private boolean shotByPlayer;
 
     private final ArrayList<Enemy> enemies;
     private final Player player;
 
-    public Bullet(int x, int y, Vector2D velocity, PlaneArcade game, boolean shotByPlayer) {
+    public Bullet(int x, int y, Vector2D velocity, boolean shotByPlayer) {
         super();
         this.velocity = velocity.copy();
         this.shotByPlayer = shotByPlayer;
@@ -32,8 +32,9 @@ public class Bullet extends DisplayObject implements Updateable {
         this.width = 2;
         this.height = 2;
 
-        this.velocity.normalise();
-        this.velocity.scale(speed);
+        this.velocity.normalise(speed);
+
+        PlaneArcade game = (PlaneArcade) Game.getInstance();
 
         this.enemies = game.getEnemies();
         this.player = game.getPlayer();

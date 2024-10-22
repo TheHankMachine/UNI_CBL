@@ -149,7 +149,7 @@ public class Ship extends SpriteSheet implements Updateable {
 
         // instantiate the bullet
         new Bullet(bulletPosition.get(Axis2D.X).intValue(),
-                bulletPosition.get(Axis2D.Y).intValue(), directionVector, game, shotByPlayer);
+                bulletPosition.get(Axis2D.Y).intValue(), directionVector, shotByPlayer);
     }
 
     public void die() {
