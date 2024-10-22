@@ -3,8 +3,8 @@ package game;
 
 import engine.Game;
 import engine.math.Collideable;
+import engine.math.Vector2D;
 import engine.update.Updateable;
-import java.util.Random;
 
 
 public class Enemy extends Ship implements Updateable {
@@ -13,32 +13,14 @@ public class Enemy extends Ship implements Updateable {
 
     private boolean hittable = true;
 
-    public Enemy(int x, int y, String spriteSheetName, Player player, PlaneArcade game) {
+    public Enemy(int x, int y, String spriteSheetName, PlaneArcade game) {
         super(spriteSheetName, x, y, 8f, 0.3f, game);
 
-        this.player = player;
+        this.player = game.getPlayer();
 
         setRandomInitialAngle();
 
         registerUpdate();
-    }
-
-    private void setRandomInitialAngle() {
-        Random rand = new Random();
-
-        // float x = rand.nextFloat();
-        // float y = rand.nextFloat();
-
-        // if (rand.nextBoolean()) {
-        //     x *= -1;
-        // }
-
-        // if (rand.nextBoolean()) {
-        //     y *= -1;
-        // }
-
-        int spriteIndex = rand.nextInt(16);
-        setFrame(spriteIndex);
     }
 
     private void subtractFromEnemyCounter() {
@@ -57,6 +39,16 @@ public class Enemy extends Ship implements Updateable {
 
     public boolean isHittable() {
         return hittable;
+    }
+
+    private boolean facingPlayer() {
+        Vector2D vectorToPlayer = position.copy();
+        vectorToPlayer.subtract(player.getPosition().copy());
+
+        float angleToPlayer = vectorToPlayer.getAngle();
+
+        // System.out.println(angleToPlayer);
+        return Math.abs(angleToPlayer) < 0.35;
     }
 
     public void screenWrap() {
@@ -97,6 +89,10 @@ public class Enemy extends Ship implements Updateable {
         if (Collideable.collides(this, player)) {
             die();
             player.die();
+        }
+
+        if (canShoot() && facingPlayer()) {
+            shoot();
         }
 
         move();

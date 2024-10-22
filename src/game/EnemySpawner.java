@@ -15,11 +15,11 @@ public class EnemySpawner implements Updateable {
     private int frameCounter = 0;
     
 
-    public EnemySpawner(Player player, PlaneArcade game) {
+    public EnemySpawner(PlaneArcade game) {
         super();
 
-        this.player = player;
         this.game = game;
+        this.player = game.getPlayer();
 
         registerUpdate();
     }
@@ -89,7 +89,7 @@ public class EnemySpawner implements Updateable {
 
         String spriteSheetName = randomSpriteSheet(rand);
 
-        Enemy enemy = new Enemy(x, y, spriteSheetName, player, game);
+        Enemy enemy = new Enemy(x, y, spriteSheetName, game);
         game.addEnemy(enemy);
     }
 

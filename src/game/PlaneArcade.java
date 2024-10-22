@@ -27,7 +27,7 @@ public class PlaneArcade extends Game {
         player = new Player(this);
         clouds = new Clouds(player);
 
-        enemySpawner = new EnemySpawner(player, this);
+        enemySpawner = new EnemySpawner(this);
 
         if (!(mainMenu == null)) {
             mainMenu.close();

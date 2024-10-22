@@ -26,12 +26,19 @@ public class Ship extends SpriteSheet implements Updateable {
         super(spriteSheetName, 16, 16, x, y);
 
         this.speed = speed;
-        this.rotationSpeed = rotationSpeed;  
+        this.rotationSpeed = rotationSpeed;
         this.game = game;
     }
 
     public float cursorAngleOffset() {
         return rotationStep / 2;
+    }
+
+    public void setRandomInitialAngle() {
+        int spriteIndex = (int) (Math.random() * 16);
+        setFrame(spriteIndex);
+
+        currentAngle = spriteIndex * rotationStep;
     }
 
     public void rotateToVector(Vector2D vector) {
@@ -69,10 +76,10 @@ public class Ship extends SpriteSheet implements Updateable {
         }
 
         // calculating the sprite sheet frame
-        int sprite_index = (int) (currentAngle / rotationStep);
+        int spriteIndex = (int) (currentAngle / rotationStep);
 
         // setting the sprite sheet frame to the calculated index
-        setFrame(sprite_index);
+        setFrame(spriteIndex);
     }
 
     public Vector2D getVelocity() {
