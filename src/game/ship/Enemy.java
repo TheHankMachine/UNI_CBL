@@ -3,8 +3,6 @@ package game.ship;
 import engine.Game;
 import engine.math.Collideable;
 import engine.update.Updateable;
-import game.EnemyAI;
-import game.PlaneArcade;
 
 public class Enemy extends Ship implements Updateable {
 

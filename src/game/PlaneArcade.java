@@ -53,10 +53,12 @@ public class PlaneArcade extends Game {
     }
 
     public void endGame() {
+        active = false;
+
         enemies.forEach((enemy) -> enemy.remove());
-//        clouds.destroyClouds();
         enemySpawner.deregisterUpdate();
         enemies.clear();
+
 
         endScreen = new EndScreen(this);
     }

@@ -58,11 +58,11 @@ public class Bullet extends DisplayObject implements Updateable {
 //        g.setStroke(new BasicStroke(6));
 //        g.drawLine(x, y, endX, endY);
 
-        if(shotByPlayer) {
-            g.setColor(new Color(0xfff1e9));
-        }else{
-            g.setColor(new Color(0xf7ec2f));
-        }
+        g.setColor(new Color(0xfff1e9));
+//        if(shotByPlayer) {
+//        }else{
+//            g.setColor(new Color(0xf7ec2f));
+//        }
         g.fillRect(x, y, w, h);
     }
 

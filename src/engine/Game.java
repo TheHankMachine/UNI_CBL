@@ -41,10 +41,19 @@ public abstract class Game {
     }
 
     public final void periodic(ActionEvent e){
+        long startTime = System.nanoTime();
+
         update();
         Updateable.updateAll();
 
         display.repaint();
+
+        long endTime = System.nanoTime();
+        int dt = (int) (endTime - startTime) / 1_000_000;
+
+        if(dt > config.targetTickMs){
+            System.out.println(dt);
+        }
     }
 
     public float getDefaultScale(){

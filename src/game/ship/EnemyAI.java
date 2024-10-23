@@ -1,7 +1,6 @@
-package game;
+package game.ship;
 
 import engine.math.Vector2D;
-import game.ship.Enemy;
 
 public abstract class EnemyAI {
 
@@ -72,15 +71,12 @@ public abstract class EnemyAI {
 
             if(
                 t % 10 == 0 &&
-                !super.facingPlayer(1f) &&
+                !super.facingPlayer(0.5f) &&
                 super.distanceToPlayer() > 200f
             ){
                 return super.angleToPlayer();
             }
 
-//            if(){
-//            }
-//
             return enemy.getVelocity().getAngle();
         }
     }
