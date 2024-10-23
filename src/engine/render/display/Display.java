@@ -91,6 +91,10 @@ public class Display extends JFrame {
         return displayOrigin.get(Axis2D.Y);
     }
 
+    public Vector2D getDisplayOrigin(){
+        return displayOrigin;
+    }
+
     /**
      * Sets the position of the display origin
      */

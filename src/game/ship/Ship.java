@@ -12,15 +12,15 @@ import game.PlaneArcade;
 public class Ship extends SpriteSheet implements Updateable {
 
     private final float PI = (float) Math.PI;
+    public static float SPEED = 8f;
 
     private final float rotationStep = PI / 8;
     private final Vector2D directionVector = new Vector2D();
 
     private int frameCounter = 0;
 
-    private float currentAngle = 0;
+    private float currentAngle = PI / 2;
     private float fixedAngle = 0;
-    private float speed = 8f;
     private float rotationSpeed = PI / 24;
 
     private boolean hittable = true;
@@ -118,7 +118,7 @@ public class Ship extends SpriteSheet implements Updateable {
         );
 
         // scaling the vector to make the player move with the desired speed
-        directionVector.scale(speed);
+        directionVector.scale(SPEED);
 
         // moving the player
         move(directionVector);

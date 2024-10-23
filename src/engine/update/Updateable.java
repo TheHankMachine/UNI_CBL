@@ -1,5 +1,6 @@
 package engine.update;
 
+import javax.imageio.event.IIOReadUpdateListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +28,15 @@ public interface Updateable {
      * Called automatically by the game every tick
      */
     void update();
+
+    /**
+     * Completely clears the updateList
+     */
+    static void clear(){
+        updateList.clear();
+        addQueue.clear();
+        removeQueue.clear();
+    }
 
     /**
      * Calls update on all elements in the updateList

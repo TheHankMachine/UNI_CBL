@@ -12,8 +12,8 @@ public class Player extends Ship implements Updateable {
 
     public Player() {
         super("player.png",
-            (float) ((Game.getInstance().getDisplayWidth() / 2)),
-            (float) ((Game.getInstance().getDisplayHeight() / 2))
+            Game.getInstance().getDisplay().getDisplayOriginX() + Game.getInstance().getDisplayWidth() / 2f,
+            Game.getInstance().getDisplay().getDisplayOriginY() + Game.getInstance().getDisplayHeight() / 2f
         );
 
         setFrame(0);

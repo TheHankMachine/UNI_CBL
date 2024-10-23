@@ -1,6 +1,7 @@
 package game.effect;
 
 import engine.Game;
+import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
@@ -12,11 +13,9 @@ import java.util.List;
 public class Clouds implements Updateable {
 
     private final List<SpriteSheet> clouds = new ArrayList<>();
-    private final Player player;
+    private final Vector2D lastCameraPosition = new Vector2D();
 
-    public Clouds(Player player) {
-        this.player = player;
-
+    public Clouds() {
         for (int i = 0; i < 20; i++) {
             int frame = (int) (Math.min(Math.random(), Math.random()) * 3);
             SpriteSheet spriteSheet = new SpriteSheet("clouds.png", 45, 15,
@@ -47,28 +46,45 @@ public class Clouds implements Updateable {
     @Override
     public void update() {
         int width = Game.getInstance().getDisplayWidth();
-        int height = Game.getInstance().getDisplayWidth();
+        int height = Game.getInstance().getDisplayHeight();
 
-        clouds.forEach((var cloud) -> {
+        Vector2D delta = Game.getInstance().getDisplay().getDisplayOrigin().copy();
+        delta.subtract(lastCameraPosition);
 
-            Vector2D direction = player.getVelocity();
+        clouds.forEach((cloud) -> {
+            float relativeX = cloud.getX() - Game.getInstance().getDisplay().getDisplayOriginX();
+            float relativeY = cloud.getY() - Game.getInstance().getDisplay().getDisplayOriginY();
+
+            Vector2D direction = delta.copy();
             direction.scale((float) (1 - cloud.getFrame()) / 2);
 
             cloud.move(direction);
 
-            float cloudWidth = cloud.getWidth();
-
-            if (cloud.getX() < player.getX() - (width / 2) - cloudWidth) {
-                cloud.move(width + cloudWidth * 2, 0);
-            } else if (cloud.getX() > player.getX() + (width / 2) + cloudWidth) {
-                cloud.move(-width - cloudWidth * 2, 0);
+            if(relativeX + cloud.getWidth() / 2 < 0){
+                cloud.move(Axis2D.X, width + cloud.getWidth());
+            } else if(relativeX - cloud.getWidth() / 2 > width){
+                cloud.move(Axis2D.X, -width - cloud.getWidth());
             }
 
-            if (cloud.getY() < player.getY() - height / 2) {
-                cloud.move(0, height);
-            } else if (cloud.getY() > player.getY() + height / 2) {
-                cloud.move(0, -height);
+            if(relativeY + cloud.getHeight() / 2 < 0){
+                cloud.move(Axis2D.Y, height + cloud.getHeight());
+            } else if(relativeY - cloud.getHeight() / 2 > height){
+                cloud.move(Axis2D.Y, -height - cloud.getHeight());
             }
+
+//            if (cloud.getX() < player.getX() - (width / 2) - cloudWidth) {
+//                cloud.move(width + cloudWidth * 2, 0);
+//            } else if (cloud.getX() > player.getX() + (width / 2) + cloudWidth) {
+//                cloud.move(-width - cloudWidth * 2, 0);
+//            }
+//
+//            if (cloud.getY() < player.getY() - height / 2) {
+//                cloud.move(0, height);
+//            } else if (cloud.getY() > player.getY() + height / 2) {
+//                cloud.move(0, -height);
+//            }
         });
+
+        lastCameraPosition.setTo(Game.getInstance().getDisplay().getDisplayOrigin());
     }
 }
