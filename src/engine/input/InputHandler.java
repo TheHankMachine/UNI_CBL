@@ -7,6 +7,7 @@ import engine.render.display.Screen;
 
 import java.awt.event.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class InputHandler {
 
@@ -24,8 +25,8 @@ public class InputHandler {
         }
     }
 
-    private final HashMap<Integer, Boolean> keyDownMap = new HashMap<>();
-    private final HashMap<Integer, Integer> keyDurationMap = new HashMap<>();
+    private final Map<Integer, Boolean> keyDownMap = new HashMap<>();
+    private final Map<Integer, Integer> keyDurationMap = new HashMap<>();
 
     private final Vector2D lastMousePosition = new Vector2D();
 

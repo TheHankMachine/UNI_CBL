@@ -1,7 +1,5 @@
 package engine.update;
 
-import javax.imageio.event.IIOReadUpdateListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +7,9 @@ public interface Updateable {
 
     List<Updateable> updateList = new LinkedList<>();
 
+    // queues for adding and removing elements.
+    // Makes adding elements during update safe from
+    // concurrent modification exception
     List<Updateable> removeQueue = new LinkedList<>();
     List<Updateable> addQueue = new LinkedList<>();
 
