@@ -76,7 +76,7 @@ public class Bullet extends DisplayObject implements Updateable {
         }
     }
 
-    private void die() {
+    public void die() {
         deregisterRender();
         deregisterUpdate();
     }

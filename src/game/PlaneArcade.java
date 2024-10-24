@@ -3,12 +3,14 @@ package game;
 import engine.Game;
 import engine.GameConfig;
 import engine.math.Axis2D;
+import engine.update.Updateable;
 import game.effect.Clouds;
 import game.ship.Enemy;
 import game.ship.Player;
 import game.ship.Ship;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class PlaneArcade extends Game {
 
@@ -62,7 +64,7 @@ public class PlaneArcade extends Game {
     public void increaseScore(int increment) {
         score += increment;
         
-        scoreText.setText("score:" + Integer.toString(score));
+        scoreText.setText("score:" + score);
     }
 
     public Player getPlayer() {
@@ -80,6 +82,14 @@ public class PlaneArcade extends Game {
         enemySpawner.deregisterUpdate();
         enemies.clear();
         scoreText.deregisterRender();
+
+        // you could cull bullets by going through the update list
+        // and removing any object that is of type bullet
+        Updateable.updateList.forEach(e -> {
+            if(e.getClass() == Bullet.class) {
+                ((Bullet) e).die();
+            }
+        });
 
         endScreen = new EndScreen(this, score);
 
