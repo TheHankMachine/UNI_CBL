@@ -2,15 +2,31 @@
 I highly recommend viewing this file with a markdown viewer
 -->
 
-For our CBl, we decided to make a simple arcade shooter akin to the arcade game Time Pilot.
-The project was split up into two parts: the engine and the game. Henry was in charge of
-creating a game framework which Jakub would then build a game in.
+### Installation and Gameplay
+
+To play the game, first download [Java](https://www.oracle.com/java/technologies/downloads/) 
+for your operating system. Next, clone or download [this repository](https://github.com/TheHankMachine/UNI_CBL.git).
+Lastly, run the [main](Main.java) file. 
+
+Doing this will open up the game window. From here, you can click on the start
+button to start the game. During gameplay, you can press space to shoot and use the 
+mouse to control the plane.
+
+### About the project
+
+For our CBl, we decided to make a simple arcade shooter akin to the arcade game Time Pilot
+(Henry's favourite arcade game). The project was split up into two parts: the engine and the 
+game. Henry was in charge of creating a game framework which Jakub would then build a game in.
+
+<!--
+add more here
+-->
 
 ### Advanced Topic I: Advanced Object-Oriented Programming
 
-# TODO: add stuff @Kuba
+#### TODO: Finish
 
-### Advanced Topic II: Creating A library
+### Advanced Topic II: Developing A Game Framework
 
 I looked into developing a lightweight game framework in Java using the Java Swing.
 I decided to base my framework off of [Phaser](https://github.com/phaserjs/phaser), 
