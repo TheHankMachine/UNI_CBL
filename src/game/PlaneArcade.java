@@ -34,6 +34,8 @@ public class PlaneArcade extends Game {
     }
 
     public void play() {
+        if(active) return;
+
         active = true;
         player = new Player();
 
@@ -53,6 +55,8 @@ public class PlaneArcade extends Game {
     }
 
     public void endGame() {
+        if(!active) return;
+
         active = false;
 
         enemies.forEach((enemy) -> enemy.remove());

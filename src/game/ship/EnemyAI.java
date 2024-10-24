@@ -17,24 +17,24 @@ public abstract class EnemyAI {
         enemy.rotateToAngle(getTargetAngle());
     }
 
-    abstract boolean shoot();
+    protected abstract boolean shoot();
 
-    abstract float getTargetAngle();
+    protected abstract float getTargetAngle();
 
-    private float distanceToPlayer(){
+    protected float distanceToPlayer(){
         Vector2D vectorToPlayer = enemy.getPlayer().getPosition().copy();
         vectorToPlayer.subtract(enemy.getPosition());
         return vectorToPlayer.getLength();
     }
 
-    private float angleToPlayer(){
+    protected float angleToPlayer(){
         Vector2D vectorToPlayer = enemy.getPlayer().getPosition().copy();
         vectorToPlayer.subtract(enemy.getPosition());
 
         return vectorToPlayer.getAngle();
     }
 
-    private float getAngleDifference(){
+    protected float getAngleDifference(){
         float angleDiff = angleToPlayer() - enemy.getCurrentAngle() + (float) Math.PI / 2;
 
         if(angleDiff < 0){
@@ -48,37 +48,8 @@ public abstract class EnemyAI {
         return angleDiff;
     }
 
-    private boolean facingPlayer(float tolerance) {
+    protected boolean facingPlayer(float tolerance) {
         return Math.abs(getAngleDifference()) <= tolerance;
-    }
-
-    public static class Chaser extends EnemyAI {
-
-        private int t = 0;
-
-        public Chaser(Enemy enemy) {
-            super(enemy);
-        }
-
-        @Override
-        boolean shoot() {
-            return super.facingPlayer(0.6f);
-        }
-
-        @Override
-        float getTargetAngle() {
-            t++;
-
-            if(
-                t % 10 == 0 &&
-                !super.facingPlayer(0.5f) &&
-                super.distanceToPlayer() > 200f
-            ){
-                return super.angleToPlayer();
-            }
-
-            return enemy.getVelocity().getAngle();
-        }
     }
 
 }

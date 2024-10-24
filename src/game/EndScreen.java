@@ -1,12 +1,14 @@
 package game;
 
 import engine.Game;
+import engine.render.DisplayObject;
+import engine.render.SpriteFont;
 import engine.render.SpriteSheet;
 import java.awt.event.MouseEvent;
 
 public class EndScreen {
 
-    private SpriteSheet endText;
+    private DisplayObject endText;
     private final Button newGameButton;
     private final Button quitButton;
 
@@ -14,7 +16,7 @@ public class EndScreen {
         float screenWidth = Game.getInstance().getDisplayWidth();
         float screenHeight = Game.getInstance().getDisplayHeight();
 
-        endText = new SpriteSheet("clouds.png", 45, 15,
+        endText = new Text("You Died",
                 screenWidth / 2,
                 screenHeight * 0.35f) {
 
@@ -44,7 +46,6 @@ public class EndScreen {
             }
         };
 
-        endText.setFrame(3);
         endText.setScale(8);
     }
 

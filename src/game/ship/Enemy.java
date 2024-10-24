@@ -16,7 +16,7 @@ public class Enemy extends Ship implements Updateable {
 
         this.player = game.getPlayer();
 
-        AI = new EnemyAI.Chaser(this);
+        AI = new Chaser(this);
 
         setRandomInitialAngle();
 
