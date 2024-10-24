@@ -5,7 +5,6 @@ import engine.math.Axis2D;
 import engine.update.Updateable;
 import game.ship.Enemy;
 import game.ship.Player;
-
 import java.util.Random;
 
 public class EnemySpawner implements Updateable {
@@ -17,7 +16,6 @@ public class EnemySpawner implements Updateable {
     private final int spawnDelayInFrames = 50;
     private int frameCounter = 0;
     
-
     public EnemySpawner(PlaneArcade game) {
         super();
 

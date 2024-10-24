@@ -2,8 +2,6 @@ package game;
 
 import engine.Game;
 import engine.render.DisplayObject;
-import engine.render.SpriteFont;
-import engine.render.SpriteSheet;
 import java.awt.event.MouseEvent;
 
 public class EndScreen {
@@ -11,8 +9,9 @@ public class EndScreen {
     private DisplayObject endText;
     private final Button newGameButton;
     private final Button quitButton;
+    private Text scoreText;
 
-    public EndScreen(PlaneArcade game) {
+    public EndScreen(PlaneArcade game, int score) {
         float screenWidth = Game.getInstance().getDisplayWidth();
         float screenHeight = Game.getInstance().getDisplayHeight();
 
@@ -26,7 +25,11 @@ public class EndScreen {
             }
         };
 
-        newGameButton = new Button("NEW GAME", screenWidth / 2, screenHeight / 2) {
+        scoreText = new Text("Score:" + Integer.toString(score),
+        screenWidth / 2,
+        screenHeight * 0.45f);
+
+        newGameButton = new Button("NEW GAME", screenWidth / 2, screenHeight * 0.55f) {
             @Override
             public void onClick(MouseEvent e) {
                 game.play();
@@ -39,7 +42,7 @@ public class EndScreen {
             }
         };
 
-        quitButton = new Button("QUIT", screenWidth / 2, screenHeight * 0.6f) {
+        quitButton = new Button("QUIT", screenWidth / 2, screenHeight * 0.65f) {
             @Override
             public void onClick(MouseEvent e) {
                 System.exit(0);
@@ -57,5 +60,7 @@ public class EndScreen {
 
         quitButton.deregisterRender();
         quitButton.removeClickListener();
+
+        scoreText.deregisterRender();
     }
 }

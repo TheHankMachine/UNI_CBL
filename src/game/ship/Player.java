@@ -5,8 +5,6 @@ import engine.input.InputHandler.InputKey;
 import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.update.Updateable;
-import game.PlaneArcade;
-import game.effect.Explosion;
 
 public class Player extends Ship implements Updateable {
 
@@ -16,7 +14,7 @@ public class Player extends Ship implements Updateable {
             Game.getInstance().getDisplay().getDisplayOriginY() + Game.getInstance().getDisplayHeight() / 2f
         );
 
-        setFrame(0);
+        // setFrame(0);
 
         registerUpdate();
     }

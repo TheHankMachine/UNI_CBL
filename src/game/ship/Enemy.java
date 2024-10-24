@@ -8,7 +8,7 @@ public class Enemy extends Ship implements Updateable {
 
     private final Player player;
 
-    private boolean hittable = true;
+    // private boolean hittable = true;
     private final EnemyAI AI;
 
     public Enemy(int x, int y, String spriteSheetName) {
@@ -32,7 +32,8 @@ public class Enemy extends Ship implements Updateable {
     public void remove() {
         deregisterRender();
         deregisterUpdate();
-        hittable = false;
+        // hittable = false;
+        setHittable(false);
 
         subtractFromEnemyCounter();
     }
@@ -45,9 +46,9 @@ public class Enemy extends Ship implements Updateable {
         return player;
     }
 
-    public boolean isHittable() {
-        return hittable;
-    }
+    // public boolean isHittable() {
+    //     return hittable;
+    // }
 
     public void screenWrap() {
         int screenWidth = Game.getInstance().getDisplayWidth();
@@ -77,11 +78,13 @@ public class Enemy extends Ship implements Updateable {
     @Override
     public void die() {
         super.die();
-        hittable = false;
+        // hittable = false;
+        setHittable(false);
 
         subtractFromEnemyCounter();
     }
 
+    @Override
     public int getShootingDelay(){
         return 15;
     }

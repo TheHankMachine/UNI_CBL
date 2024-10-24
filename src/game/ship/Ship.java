@@ -6,8 +6,8 @@ import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
 import game.Bullet;
-import game.effect.Explosion;
 import game.PlaneArcade;
+import game.effect.Explosion;
 
 public class Ship extends SpriteSheet implements Updateable {
 
@@ -21,7 +21,7 @@ public class Ship extends SpriteSheet implements Updateable {
 
     private float currentAngle = PI / 2;
     private float fixedAngle = 0;
-    private float rotationSpeed = PI / 24;
+    private final float rotationSpeed = PI / 24;
 
     private boolean hittable = true;
 
@@ -52,6 +52,10 @@ public class Ship extends SpriteSheet implements Updateable {
         setFrame(spriteIndex);
 
         currentAngle = spriteIndex * rotationStep;
+    }
+
+    public void increaseScore() {
+        game.increaseScore(100);
     }
 
     public void rotateToAngle(float angle){

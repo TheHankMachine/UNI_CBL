@@ -14,6 +14,7 @@ public class MainMenu {
         float screenHeight = Game.getInstance().getDisplayHeight();
 
         planeArcadeText = new Text("PLANE ARCADE", screenWidth / 2, screenHeight * 0.35f);
+        planeArcadeText.setScale(8);
 
         playButton = new Button("PLAY", screenWidth / 2, screenHeight / 2) {
             @Override
