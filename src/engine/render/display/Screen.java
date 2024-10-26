@@ -119,7 +119,6 @@ public class Screen extends JPanel {
 
 
         for(Renderable.DepthLayer layer : Renderable.DepthLayer.values()){
-            //TODO: find better way of handling this
             //UI should ignore display offset
             if(layer == Renderable.DepthLayer.UI){
                 g2d.translate(dox, doy);
