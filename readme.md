@@ -56,8 +56,6 @@ For example [Sprite](src/engine/render/Sprite.java) extends [DisplayObject](src/
 
 Using this approach, we were able to write code that is easily expandable and maintainable.
 
-#### TODO: Finish
-
 ### Advanced Topic II: Developing A Game Framework
 
 I looked into developing a lightweight game framework in Java using the Java Swing.
