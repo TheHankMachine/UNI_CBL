@@ -15,8 +15,21 @@ mouse to control the plane.
 ### About the project
 
 For our CBl, we decided to make a simple arcade shooter akin to the arcade game Time Pilot
-(Henry's favourite arcade game). The project was split up into two parts: the engine and the 
-game. Henry was in charge of creating a game framework which Jakub would then build a game in.
+(Henry's favourite arcade game). In this game, a player controls a ship's movement with a 
+joystick, shooting down planes to rack up a big high-score. To make the game playable on computer,
+we made ship follow the mouse. This is in contrast to other Time Pilot remakes we found, which
+limit the input directions to the arrow keys.
+
+To make the project completable within the time frame, we reduced the game to its basic components
+of controlling the plane, spawning enemy planes, and shooting enemy planes to gain score. Although
+this is a simple game, the code is structured so that it would be simple to add more enemy AI or
+more movement options to make the game more fleshed out.
+
+Building the project was split up into two parts: the engine and the game. Henry was in charge of 
+creating a game framework which Jakub would then build a game in. This eased development as Henry
+was writing code with the intent of modularity as opposed to optimising for the specific game. This
+allowed Jakub to easily implement features that were not discussed in the planning phase such as the
+menus.
 
 <!--
 add more here
