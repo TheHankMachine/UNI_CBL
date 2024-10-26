@@ -1,7 +1,6 @@
 package engine.render;
 
 import engine.math.Vector2D;
-
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -55,8 +54,6 @@ public abstract class SpriteFont extends DisplayObject {
         requiresUpdate = true;
     }
 
-    //TODO:  This method always throws a concurrent modification
-    // exception.
     private void updateText() {
         sprites.forEach(e -> e.setVisible(false));
 
@@ -117,7 +114,6 @@ public abstract class SpriteFont extends DisplayObject {
         return sprite;
     }
 
-    // TODO: reduce this redundancy
     @Override
     public void setPosition(Vector2D to){
         Vector2D change = position.copy();
@@ -154,7 +150,7 @@ public abstract class SpriteFont extends DisplayObject {
     // This is a consequence of setting up the way that I did :/
     @Override
     public void draw(Graphics2D g, int x, int y, int w, int h){
-        ;
+        
     }
 
     /**
