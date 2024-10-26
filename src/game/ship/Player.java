@@ -14,8 +14,6 @@ public class Player extends Ship implements Updateable {
             Game.getInstance().getDisplay().getDisplayOriginY() + Game.getInstance().getDisplayHeight() / 2f
         );
 
-        // setFrame(0);
-
         registerUpdate();
     }
 

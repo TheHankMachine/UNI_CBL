@@ -10,7 +10,6 @@ import game.ship.Player;
 import game.ship.Ship;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class PlaneArcade extends Game {
 
@@ -37,6 +36,11 @@ public class PlaneArcade extends Game {
         register();
     }
 
+    /**
+     * Starts the game.
+     *
+     * @return void
+     */
     public void play() {
         if (active) {
             return;
@@ -47,8 +51,8 @@ public class PlaneArcade extends Game {
 
         enemySpawner = new EnemySpawner(this);
         scoreText = new Text("score:" + Integer.toString(score),
-         Game.getInstance().getDisplayWidth() * 0.85f,
-         Game.getInstance().getDisplayHeight() * 0.05f);
+                Game.getInstance().getDisplayWidth() * 0.85f,
+                Game.getInstance().getDisplayHeight() * 0.05f);
 
         scoreText.setScale(3f);
 
@@ -63,7 +67,7 @@ public class PlaneArcade extends Game {
 
     public void increaseScore(int increment) {
         score += increment;
-        
+
         scoreText.setText("score:" + score);
     }
 
@@ -71,6 +75,11 @@ public class PlaneArcade extends Game {
         return player;
     }
 
+    /**
+     * Ends the game and displays the end screen.
+     *
+     * @return void
+     */
     public void endGame() {
         if (!active) {
             return;
@@ -83,10 +92,8 @@ public class PlaneArcade extends Game {
         enemies.clear();
         scoreText.deregisterRender();
 
-        // you could cull bullets by going through the update list
-        // and removing any object that is of type bullet
         Updateable.updateList.forEach(e -> {
-            if(e.getClass() == Bullet.class) {
+            if (e.getClass() == Bullet.class) {
                 ((Bullet) e).die();
             }
         });

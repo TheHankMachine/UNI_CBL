@@ -3,13 +3,12 @@ package engine;
 import engine.input.InputHandler;
 import engine.render.display.Display;
 import engine.update.Updateable;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public abstract class Game {
 
@@ -41,19 +40,19 @@ public abstract class Game {
     }
 
     public final void periodic(ActionEvent e){
-        long startTime = System.nanoTime();
+        // long startTime = System.nanoTime();
 
         update();
         Updateable.updateAll();
 
         display.repaint();
 
-        long endTime = System.nanoTime();
-        int dt = (int) (endTime - startTime) / 1_000_000;
+        // long endTime = System.nanoTime();
+        // int dt = (int) (endTime - startTime) / 1_000_000;
 
-        if(dt > config.targetTickMs){
-            System.out.println(dt);
-        }
+        // if(dt > config.targetTickMs){
+            // System.out.println(dt);
+        // }
     }
 
     public float getDefaultScale(){

@@ -17,11 +17,9 @@ public class Chaser extends EnemyAI {
     protected float getTargetAngle() {
         t++;
 
-        if(
-            t % 10 == 0 &&
-            !super.facingPlayer(0.5f) &&
-            super.distanceToPlayer() > 200f
-        ){
+        if (t % 10 == 0
+                && !super.facingPlayer(0.5f)
+                && super.distanceToPlayer() > 200f) {
             return super.angleToPlayer();
         }
 

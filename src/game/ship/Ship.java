@@ -27,26 +27,42 @@ public class Ship extends SpriteSheet implements Updateable {
 
     protected PlaneArcade game;
 
-    // Removed game from the constructor
     public Ship(String spriteSheetName, float x, float y) {
         super(spriteSheetName, 16, 16, x, y);
 
-        // because it can be cast like this
         this.game = (PlaneArcade) Game.getInstance();
     }
 
+    /**
+     *
+     * @return how much cursors angle if offset from the actual angle of the
+     * plane
+     */
     public float cursorAngleOffset() {
         return rotationStep / 2;
     }
 
+    /**
+     * @param value
+     * @return sets hittable to provided boolean value
+     */
     public void setHittable(boolean value) {
         hittable = value;
     }
 
+    /**
+     *
+     * @return true if the ship is hittable, false otherwise
+     */
     public boolean isHittable() {
         return hittable;
     }
 
+    /**
+     * Sets a random rotation angle of the ship.
+     *
+     * @return void
+     */
     public void setRandomInitialAngle() {
         int spriteIndex = (int) (Math.random() * 16);
         setFrame(spriteIndex);
@@ -54,12 +70,24 @@ public class Ship extends SpriteSheet implements Updateable {
         currentAngle = spriteIndex * rotationStep;
     }
 
+    /**
+     * Increases the score gained by the player by 100.
+     *
+     * @return void
+     */
     public void increaseScore() {
         game.increaseScore(100);
     }
 
-    public void rotateToAngle(float angle){
-// calculating the angle between the X-axis and the vector from the center of the screen to the cursor
+    /**
+     * Rotates the sprite to the given angle relative to the X-axis.
+     *
+     * @param angle value in radians to which the ship should rotate
+     *
+     * @return void
+     */
+    public void rotateToAngle(float angle) {
+        // calculating the angle between the X-axis and the vector from the center of the screen to the cursor
         angle += PI / 2 + rotationStep / 2;
 
         // converting negative angle values to positive ones
@@ -95,22 +123,44 @@ public class Ship extends SpriteSheet implements Updateable {
         setFrame(spriteIndex);
     }
 
+    /**
+     *
+     * Rotates the ship to the angle between the X-axis and the line from (0, 0)
+     * to (vectorX, vectorY).
+     *
+     * @param vector point towards which the ship should rotate
+     *
+     * @return void
+     */
     public void rotateToVector(Vector2D vector) {
-        // adjusting the cursor position to be relative to the player
+        // adjusting the position to be relative to the player
         vector.subtract(position);
         vector.subtract(new Vector2D(8, 8));
 
         rotateToAngle(vector.getAngle());
     }
 
+    /**
+     *
+     * @return the current rotation of the ship in radians
+     */
     public float getCurrentAngle() {
         return fixedAngle;
     }
 
+    /**
+     *
+     * @return copy of the vector along which the ship is currently moving
+     */
     public Vector2D getVelocity() {
         return directionVector.copy();
     }
 
+    /**
+     * Moves the ship towards the direction that it is facing with set speed.
+     * 
+     * @return void 
+     */
     public void move() {
         // the player will move in the direction that the sprite is facing
         fixedAngle = currentAngle - (currentAngle % rotationStep);
@@ -128,6 +178,10 @@ public class Ship extends SpriteSheet implements Updateable {
         move(directionVector);
     }
 
+    /**
+     *
+     * @return true if the ship is currently able to shoot, false otherwise
+     */
     public boolean canShoot() {
         // reset the counter after waiting
         if (frameCounter == getShootingDelay()) {
@@ -143,6 +197,11 @@ public class Ship extends SpriteSheet implements Updateable {
         return true;
     }
 
+    /**
+     * Instantiates a bullet that moves along the ship's direction vector.
+     * 
+     * @return void 
+     */
     public void shoot(boolean shotByPlayer) {
         // start the counter
         frameCounter = 1;
@@ -156,6 +215,12 @@ public class Ship extends SpriteSheet implements Updateable {
                 bulletPosition.get(Axis2D.Y).intValue(), directionVector, shotByPlayer);
     }
 
+    /**
+     * Renders an explosion at the ship's position.
+     * Removes the ship from render list and update list.
+     * 
+     * @return void
+     */
     public void die() {
         new Explosion(position.get(Axis2D.X).intValue(), position.get(Axis2D.Y).intValue());
 
@@ -163,7 +228,11 @@ public class Ship extends SpriteSheet implements Updateable {
         deregisterUpdate();
     }
 
-    public int getShootingDelay(){
+    /**
+     *
+     * @return how many frames the ship has to wait before shooting another bullet
+     */
+    public int getShootingDelay() {
         return 10;
     }
 

@@ -6,12 +6,17 @@ public abstract class EnemyAI {
 
     protected final Enemy enemy;
 
-    public EnemyAI(Enemy enemy){
+    public EnemyAI(Enemy enemy) {
         this.enemy = enemy;
     }
 
-    public final void controlShip(){
-        if(shoot() && enemy.canShoot()){
+    /**
+     * Controls enemy shooting and rotation.
+     *
+     * @return void
+     */
+    public final void controlShip() {
+        if (shoot() && enemy.canShoot()) {
             enemy.shoot();
         }
         enemy.rotateToAngle(getTargetAngle());
@@ -21,27 +26,27 @@ public abstract class EnemyAI {
 
     protected abstract float getTargetAngle();
 
-    protected float distanceToPlayer(){
+    protected float distanceToPlayer() {
         Vector2D vectorToPlayer = enemy.getPlayer().getPosition().copy();
         vectorToPlayer.subtract(enemy.getPosition());
         return vectorToPlayer.getLength();
     }
 
-    protected float angleToPlayer(){
+    protected float angleToPlayer() {
         Vector2D vectorToPlayer = enemy.getPlayer().getPosition().copy();
         vectorToPlayer.subtract(enemy.getPosition());
 
         return vectorToPlayer.getAngle();
     }
 
-    protected float getAngleDifference(){
+    protected float getAngleDifference() {
         float angleDiff = angleToPlayer() - enemy.getCurrentAngle() + (float) Math.PI / 2;
 
-        if(angleDiff < 0){
+        if (angleDiff < 0) {
             angleDiff += (float) Math.PI * 2;
         }
 
-        if(Math.abs(angleDiff) > Math.PI) {
+        if (Math.abs(angleDiff) > Math.PI) {
             angleDiff -= Math.signum(angleDiff) * (float) Math.PI * 2;
         }
 

@@ -54,6 +54,7 @@ public class EndScreen {
 
     public void close() {
         endText.deregisterRender();
+        scoreText.deregisterRender();
 
         newGameButton.deregisterRender();
         newGameButton.removeClickListener();
@@ -61,6 +62,5 @@ public class EndScreen {
         quitButton.deregisterRender();
         quitButton.removeClickListener();
 
-        scoreText.deregisterRender();
     }
 }

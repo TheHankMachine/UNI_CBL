@@ -5,8 +5,6 @@ import engine.math.Axis2D;
 import engine.math.Vector2D;
 import engine.render.SpriteSheet;
 import engine.update.Updateable;
-import game.ship.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +20,12 @@ public class Clouds implements Updateable {
                     (float) Math.random() * Game.getInstance().getDisplayWidth() * 2,
                     (float) Math.random() * Game.getInstance().getDisplayHeight() * 2
             ) {
+                @Override
                 public DepthLayer getDepth() {
                     return List.of(
-                        DepthLayer.BACKGROUND,
-                        DepthLayer.MIDDLEGROUND,
-                        DepthLayer.FOREGROUND
+                            DepthLayer.BACKGROUND,
+                            DepthLayer.MIDDLEGROUND,
+                            DepthLayer.FOREGROUND
                     ).get(frame);
                 }
             };
@@ -42,7 +41,7 @@ public class Clouds implements Updateable {
         clouds.forEach((cloud) -> cloud.deregisterRender());
         deregisterUpdate();
     }
-    
+
     @Override
     public void update() {
         int width = Game.getInstance().getDisplayWidth();
@@ -60,29 +59,17 @@ public class Clouds implements Updateable {
 
             cloud.move(direction);
 
-            if(relativeX + cloud.getWidth() / 2 < 0){
+            if (relativeX + cloud.getWidth() / 2 < 0) {
                 cloud.move(Axis2D.X, width + cloud.getWidth());
-            } else if(relativeX - cloud.getWidth() / 2 > width){
+            } else if (relativeX - cloud.getWidth() / 2 > width) {
                 cloud.move(Axis2D.X, -width - cloud.getWidth());
             }
 
-            if(relativeY + cloud.getHeight() / 2 < 0){
+            if (relativeY + cloud.getHeight() / 2 < 0) {
                 cloud.move(Axis2D.Y, height + cloud.getHeight());
-            } else if(relativeY - cloud.getHeight() / 2 > height){
+            } else if (relativeY - cloud.getHeight() / 2 > height)  {
                 cloud.move(Axis2D.Y, -height - cloud.getHeight());
             }
-
-//            if (cloud.getX() < player.getX() - (width / 2) - cloudWidth) {
-//                cloud.move(width + cloudWidth * 2, 0);
-//            } else if (cloud.getX() > player.getX() + (width / 2) + cloudWidth) {
-//                cloud.move(-width - cloudWidth * 2, 0);
-//            }
-//
-//            if (cloud.getY() < player.getY() - height / 2) {
-//                cloud.move(0, height);
-//            } else if (cloud.getY() > player.getY() + height / 2) {
-//                cloud.move(0, -height);
-//            }
         });
 
         lastCameraPosition.setTo(Game.getInstance().getDisplay().getDisplayOrigin());

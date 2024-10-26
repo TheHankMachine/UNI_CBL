@@ -2,9 +2,8 @@ package game.ship;
 
 import engine.Game;
 import engine.math.Collideable;
-import engine.update.Updateable;
 
-public class Enemy extends Ship implements Updateable {
+public class Enemy extends Ship {
 
     private final Player player;
 
@@ -22,12 +21,23 @@ public class Enemy extends Ship implements Updateable {
         registerUpdate();
     }
 
+    /**
+     * Decrements enemy counter by one.
+     *
+     * @return void
+     *
+     */
     private void subtractFromEnemyCounter() {
         int enemyCounter = game.getEnemyCounter();
 
         game.setEnemyCounter(enemyCounter - 1);
     }
 
+    /**
+     * Removes the enemy.
+     *
+     * @return void
+     */
     public void remove() {
         deregisterRender();
         deregisterUpdate();
@@ -37,15 +47,30 @@ public class Enemy extends Ship implements Updateable {
         subtractFromEnemyCounter();
     }
 
-    public void shoot(){
+    /**
+     * Renders a bullet that moves along the enemy's direction vector.
+     *
+     * @return void
+     */
+    public void shoot() {
         super.shoot(false);
     }
 
-    public Player getPlayer(){
+    /**
+     *
+     * @return the player instance
+     */
+    public Player getPlayer() {
         return player;
     }
 
-    public void screenWrap() {
+    /**
+     * Whenever an enemy moves outside the screen this method moves it to the
+     * other side and makes it face the opposite direction.
+     *
+     * @return void
+     */
+    private void screenWrap() {
         int screenWidth = Game.getInstance().getDisplayWidth();
         int screenHeight = Game.getInstance().getDisplayHeight();
 
@@ -79,7 +104,7 @@ public class Enemy extends Ship implements Updateable {
     }
 
     @Override
-    public int getShootingDelay(){
+    public int getShootingDelay() {
         return 15;
     }
 
