@@ -31,10 +31,6 @@ was writing code with the intent of modularity as opposed to optimising for the 
 allowed Jakub to easily implement features that were not discussed in the planning phase such as the
 menus.
 
-<!--
-add more here
--->
-
 ### Advanced Topic I: Advanced Object-Oriented Programming
 
 Henry created classes and interfaces in [engine](src/engine), which Jakub implemented while creating the game.
@@ -43,16 +39,24 @@ In the process of developing the game we used OOP principles such as abstraction
 Some examples of using these principles:
 
 * [SpriteFont](src/engine/render/SpriteFont.java) is an abstract class used to create a font from a custom sprite sheet.
-It is designed to be inherited by other classes that display text using this font.
+It is designed to be inherited to create new fonts by overriding methods rather than
+passing in a large number of parameters into the constructor.
 
-* Most of field variables in our classes are private and are accessible by other classes by public getter and setter methods.
-For example [SpriteSheet](src/engine/render/SpriteSheet.java) only has private variables and public methods such as getFrame or setFrame.
+
+* Field variables in our classes make use of proper encapsulation, and are thus are private 
+and are only accessible by public getter and setter methods. For example [SpriteSheet](src/engine/render/SpriteSheet.java) only 
+has private variables and public methods such as getFrame or setFrame. Other fields are set to 
+protected to increase the utility of abstraction.
+
 
 * Many of our classes override methods inherited from their parent classes.
-For example [Text](src/game/Text.java) overrides methods such as getDepth() or getCharacters() inherited from SpriteFont.
+For example [Text](src/game/Text.java) overrides methods such as ```getDepth``` or ```getCharacters``` inherited from SpriteFont.
+
 
 * Most of our classes inherit from other classes.
-For example [Sprite](src/engine/render/Sprite.java) extends [DisplayObject](src/engine/render/DisplayObject.java).
+For example, [Player](src/game/ship/Player.java) extends [Ship](src/game/ship/Ship.java), which extends [SpriteSheet](src/engine/render/SpriteSheet.java), 
+which extends [Sprite](src/engine/render/Sprite.java), which extends [DisplayObject](src/engine/render/DisplayObject.java), 
+which implements [Renderable](src/engine/render/Renderable.java).
 
 Using this approach, we were able to write code that is easily expandable and maintainable.
 
